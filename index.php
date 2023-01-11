@@ -34,6 +34,12 @@ $f3->route('POST /', function()
     $GLOBALS['controller']->route_create_new();
 });
 
+
+$f3->route('GET /test', function()
+{
+    $GLOBALS['controller']->test();
+});
+
 /**
  * home route
  */

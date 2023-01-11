@@ -25,6 +25,11 @@ class Controller
         echo $view->render('views/home.html');
     }
 
+    function test()
+    {
+        $this->_db->deleteUnusedToken();
+    }
+
     function route_create_new()
     {
     		// $prevTokens = $this->_db->getTokens();
