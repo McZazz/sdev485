@@ -3,11 +3,19 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="style/style.css">
 	<title></title>
 </head>
-<body>
+<body class="home">
 
-	<h1>Does this site work</h1>
+	<section>
+		<div>
+			<h1>Advise-It home</h1>		
+		</div>
+		<div>
+			<button>Create New</button>
+		</div>
+	</section>
 
 </body>
 </html>
