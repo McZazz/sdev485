@@ -43,7 +43,7 @@ $f3->route('GET /test', function()
 /**
  * home route
  */
-$f3->route('GET /plan', function()
+$f3->route('GET /plan/@token', function()
 {
     $GLOBALS['controller']->route_plan();
 });
