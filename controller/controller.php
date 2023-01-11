@@ -6,10 +6,13 @@
 class Controller
 {
     private $_f3;
+    private $_db;
 
     function __construct($f3)
     {
         $this->_f3 = $f3;
+        $this->_db = new DataLayer();
+        define('SERVER_ORIGIN', '://localhost/sdev485/'); // local
     }
 
     /**
