@@ -79,7 +79,23 @@ body {
 }
 
 /* PLAN  */
-#plan {
-	background: red;
-	justify-content: center;
+.plan {
+	padding: 25px 0;
+	height: 100%;
+}
+.plan form {
+/*	width: 1200px;*/
+	display: flex;
+	background: black;
+	flex-direction: column;
+	align-items: center;
+}
+
+.plan form div {
+	display: flex;
+}
+
+.plan textarea {
+	width: 275px;
+	height: 300px;
 }

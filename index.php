@@ -43,14 +43,14 @@ $f3->route('GET /test', function()
 /**
  * home route
  */
-$f3->route('GET /plan/@token', function()
+$f3->route('GET|POST /plan/@token', function()
 {
     $GLOBALS['controller']->route_plan();
 });
 
 $f3->set('ONERROR', function()
 {
-		$GLOBALS['controller']->error();
+	$GLOBALS['controller']->error();
 });
 
 // run f3 and clear output buffer

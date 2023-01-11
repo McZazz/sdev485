@@ -36,7 +36,9 @@ class Controller
 		$isUnique = $this->_db->addNewPlan();
 
 		if ($isUnique['status'] == true) {
+            $_SESSION['token'] = $isUnique['token'];
 			$this->_f3->reroute('plan/' . $isUnique['token']);
+            // $this->_f3->reroute('plan');
 		} else {
 			$view = new Template();
             echo $view->render('views/error.html');
@@ -47,9 +49,16 @@ class Controller
 
     function route_plan()
     {
-        // goto home
-        $view = new Template();
-        echo $view->render('views/plan.html');
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_SESSION['token'])) {
+
+            // echo 'saving stuff ' .$_SESSION['token'];
+            $this->_f3->reroute('plan/' . $_SESSION['token']);
+            }
+        } else {
+            $view = new Template();
+            echo $view->render('views/plan.html');
+        }
     }
 
     /**
