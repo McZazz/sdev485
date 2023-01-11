@@ -23,6 +23,11 @@ $f3->route('GET /', function()
     $GLOBALS['controller']->route_home();
 });
 
+$f3->set('ONERROR', function()
+{
+		$GLOBALS['controller']->error();
+});
+
 // run f3 and clear output buffer
 $f3->run();
 ob_flush();

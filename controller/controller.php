@@ -24,4 +24,14 @@ class Controller
         $view = new Template();
         echo $view->render('views/home.html');
     }
+
+    /**
+    * route 404
+    */
+    function error()
+    {
+        // goto home
+        $view = new Template();
+        echo $view->render('views/error.html');
+    }
 }
