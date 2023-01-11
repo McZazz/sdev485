@@ -28,12 +28,12 @@ class Controller
     function route_create_new()
     {
     		// $prevTokens = $this->_db->getTokens();
-    		$isUnique = $this->_db->tokenIsUnique('srwU24');
+    		$isUnique = $this->_db->addNewPlan();
 
-    		if ($isUnique == true) {
-    			echo 'true';
+    		if ($isUnique['status'] == true) {
+    			echo 'true ' . $isUnique['token'];
     		}
-    		else if ($isUnique == false) {
+    		else if ($isUnique['status'] == false) {
     			echo 'false';
     		} else {
     			echo 'broke';

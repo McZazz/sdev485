@@ -28,7 +28,6 @@ class DataLayer
 
         $cntr = 0;
 
-
         while (true) {
             $newToken = $this->createToken(6);
             $isUnique = $this->tokenIsUnique($newToken);
@@ -55,14 +54,21 @@ class DataLayer
         $statement->bindParam(':token', $newToken);
         // $statement->bindParam(':last_saved', $timeNow);
         // $statement->bindParam(':saved', $saved);
-        echo 'eeeee';
         $statement->execute();
 
-        $newId = $this->_db->lastInsertId();
+        $insertSuccess = $this->tokenIsUnique($newToken);
 
-        return $newId;
+        // swapping the meaning of $insertSuccess, it's a success if false
+        // because we need to know its already in the db after creating it
+        if ($this->tokenIsUnique($newToken)) {
+            return array('token'=>$newToken, 'status'=>false);
+        } else {
+            return array('token'=>$newToken, 'status'=>true);
+        }
 
     }
+
+
 
     function tokenIsUnique($token)
     {
