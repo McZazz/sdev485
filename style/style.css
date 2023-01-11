@@ -86,7 +86,7 @@ body {
 .plan form {
 /*	width: 1200px;*/
 	display: flex;
-	background: black;
+/*	background: black;*/
 	flex-direction: column;
 	align-items: center;
 }
@@ -96,6 +96,34 @@ body {
 }
 
 .plan textarea {
+	resize: none;
+	border-radius: 2px;
+	border: 2px solid #D5D6DB;
 	width: 275px;
 	height: 300px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	padding: 3px;
+}
+
+.plan .link-btn {
+	margin-top: 6px;
+}
+
+textarea:focus {
+	outline: none;
+	box-shadow: 0 0 0 3px #999DAC;
+
+}
+
+.plan form div textarea:nth-child(1) {
+	margin-right: 3px;
+}
+
+.plan form div textarea:nth-child(2) {
+	margin-left: 3px;
+}
+
+.plan form div {
+	margin-bottom: 6px;
 }
