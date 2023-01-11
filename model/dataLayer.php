@@ -28,6 +28,8 @@ class DataLayer
 
         $cntr = 0;
 
+        $this->deleteIfUnusedAfter24Hrs();
+
         while (true) {
             $newToken = $this->createToken(6);
             $isUnique = $this->tokenIsUnique($newToken);
@@ -45,15 +47,15 @@ class DataLayer
 
         // add plan
         $sql = "INSERT INTO plan (token, last_saved, saved)
-                VALUES (:token, :last_saved, 0)";
+                VALUES (:token, NOW(), 0)";
 
         $saved = '0';
-        $timeNow = new DateTime();
-        $timeNow = $timeNow->format('Y-m-d H:i:s');
+        // $timeNow = new DateTime();
+        // $timeNow = $timeNow->format('Y-m-d H:i:s');
 
         $statement = $this->_db->prepare($sql);
         $statement->bindParam(':token', $newToken);
-        $statement->bindParam(':last_saved', $timeNow);
+        // $statement->bindParam(':last_saved', $timeNow);
         // $statement->bindParam(':saved', $saved);
         $statement->execute();
 
@@ -74,9 +76,12 @@ class DataLayer
     {
         $prevTokens = $this->getTokens();
 
+        if (sizeof($prevTokens) == 0) {
+            return true;
+        }
+
         // check that token is unique
         foreach ($prevTokens as $row) {
-            echo $row['token'] . '<br>';
             if ($row['token'] == $token) {
                 return false;
             }
@@ -85,41 +90,27 @@ class DataLayer
         return true;
     }
 
-    function rowIsUnusedAfter24Hrs($row)
+
+    function deleteIfUnusedAfter24Hrs()
     {
-        $dtg = new DateTime($row['last_saved']);
-        echo 'orig ' . print_r($dtg) . '<br>';
-        $dtg->modify('+1 day');
-        echo 'day later ' . print_r($dtg) . '<br>';
-
-        $timeNow = new DateTime();
-        echo 'time now ' . print_r($timeNow) . '<br>';
-        // $dateTime->format('Y-m-d H:i:s');
-        
-    }
-
-    function deleteUnusedToken()
-    {
-        $prevTokens = $this->getTokens();
-        foreach ($prevTokens as $row) {
-            // echo print_r($row);
-            // $dtg1 = new DateTime($row['last_saved']);
-            // echo print_r($dtg1) . ' eeee<br>';
-            $this->rowIsUnusedAfter24Hrs($row);
-
-        }
+        $sql = "DELETE FROM plan WHERE saved = 0 AND last_saved + INTERVAL 1 DAY < NOW()";
+        $statement = $this->_db->prepare($sql);
+        $statement->execute();    
     }
 
     function getTokens()
     {
         if ($this->_db) {
+
             // prepared statement
             $sql = "SELECT token, last_saved, saved FROM plan";
             $statement = $this->_db->prepare($sql);
             $statement->execute();
 
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
             // return 
-            return $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
         } else {
             return false;
         }

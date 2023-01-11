@@ -32,17 +32,17 @@ class Controller
 
     function route_create_new()
     {
-    		// $prevTokens = $this->_db->getTokens();
-    		$isUnique = $this->_db->addNewPlan();
+		// $prevTokens = $this->_db->getTokens();
+		$isUnique = $this->_db->addNewPlan();
 
-    		if ($isUnique['status'] == true) {
-    			$this->_f3->reroute('plan?abc=123');
-    		} else {
-    			$view = new Template();
-        	echo $view->render('views/error.html');
-    		} 
+		if ($isUnique['status'] == true) {
+			$this->_f3->reroute('plan?token=' . $isUnique['token']);
+		} else {
+			$view = new Template();
+    	echo $view->render('views/error.html');
+		} 
 
-    		// echo print_r($prevTokens);
+		// echo print_r($prevTokens);
     }
 
     function route_plan()
