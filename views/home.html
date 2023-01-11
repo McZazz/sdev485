@@ -14,7 +14,7 @@
 			<h1>Home</h1>		
 		</div>
 		<div>
-			<button>Create New</button>
+			<a href="create-new" class="link-btn">Create New</a>
 		</div>
 	</section>
 

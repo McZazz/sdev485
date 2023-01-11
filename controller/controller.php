@@ -25,6 +25,23 @@ class Controller
         echo $view->render('views/home.html');
     }
 
+    function route_create_new()
+    {
+    		// $prevTokens = $this->_db->getTokens();
+    		$isUnique = $this->_db->tokenIsUnique('srwU24');
+
+    		if ($isUnique == true) {
+    			echo 'true';
+    		}
+    		else if ($isUnique == false) {
+    			echo 'false';
+    		} else {
+    			echo 'broke';
+    		}
+
+    		// echo print_r($prevTokens);
+    }
+
     /**
     * route 404
     */

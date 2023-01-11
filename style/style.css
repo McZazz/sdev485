@@ -18,6 +18,12 @@ body {
 	height: 100vh;
 }
 
+.not-found {
+	user-select: none;
+	color: var(--text-dark);
+	justify-content: center;
+}
+
 .home section {
 	display: flex;
 	flex-direction: column;
@@ -45,7 +51,8 @@ body {
 }
 
 
-button {
+.link-btn {
+	text-decoration: none;
   color: var(--text-light);
 	font-size: 1.5rem;
 	user-select: none;
@@ -56,14 +63,14 @@ button {
   font-weight: bold;
 }
 
-button:hover {
+.link-btn:hover {
   background: #6E727F;
 }
 
-button:active {
+.link-btn:active {
   background: #5B5F6C;
 }
 
-button:focus {
+.link-btn:focus {
   box-shadow: 0 0 0 5px #999DAC;
 }

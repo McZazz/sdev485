@@ -3,11 +3,12 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="style/style.css">
 	<title></title>
 </head>
-<body>
+<body class="not-found">
 
-	<h1>Error</h1>
+	<h1>404 Not Found</h1>
 
 </body>
 </html>
