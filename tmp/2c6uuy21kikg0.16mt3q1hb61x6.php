@@ -10,7 +10,8 @@
 
 	<section>
 		<div>
-			<h1>Advise-It home</h1>		
+			<h1>Advise-It</h1>		
+			<h1>Home</h1>		
 		</div>
 		<div>
 			<button>Create New</button>
