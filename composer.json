@@ -1,0 +1,14 @@
+{
+  "description": "project",
+  "minimum-stability": "stable",
+  "license": "CC0",
+  "authors": [
+    {
+      "name": "name",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "bcosca/fatfree-core": "dev-master"
+  }
+}
