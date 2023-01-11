@@ -52,8 +52,28 @@ class Controller
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_SESSION['token'])) {
 
+                $fall = '';
+                $winter = '';
+                $spring = '';
+                $summer = '';
+
+                if (isset($_POST['fall'])) {
+                    $fall = $_POST['fall'];
+                }
+                if (isset($_POST['winter'])) {
+                    $winter = $_POST['winter'];
+                }                
+                if (isset($_POST['spring'])) {
+                    $spring = $_POST['spring'];
+                }                
+                if (isset($_POST['summer'])) {
+                    $summer = $_POST['summer'];
+                }
+
+                echo $fall . ' ' . $winter . ' ' . $spring . ' ' . $summer;
+
             // echo 'saving stuff ' .$_SESSION['token'];
-            $this->_f3->reroute('plan/' . $_SESSION['token']);
+            // $this->_f3->reroute('plan/' . $_SESSION['token']);
             }
         } else {
             $view = new Template();
