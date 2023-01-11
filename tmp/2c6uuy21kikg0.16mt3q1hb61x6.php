@@ -14,7 +14,9 @@
 			<h1>Home</h1>		
 		</div>
 		<div>
-			<a href="create-new" class="link-btn">Create New</a>
+			<form action="#" method="POST">
+				<button type="submit" class="link-btn">Create New</button>
+			</form>
 		</div>
 	</section>
 

@@ -52,6 +52,7 @@ body {
 
 
 .link-btn {
+	cursor: pointer;
 	text-decoration: none;
   color: var(--text-light);
 	font-size: 1.5rem;

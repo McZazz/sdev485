@@ -29,9 +29,17 @@ $f3->route('GET /', function()
 /**
  * home route
  */
-$f3->route('GET /create-new', function()
+$f3->route('POST /', function()
 {
     $GLOBALS['controller']->route_create_new();
+});
+
+/**
+ * home route
+ */
+$f3->route('GET /plan', function()
+{
+    $GLOBALS['controller']->route_plan();
 });
 
 $f3->set('ONERROR', function()

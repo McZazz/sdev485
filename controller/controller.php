@@ -31,15 +31,20 @@ class Controller
     		$isUnique = $this->_db->addNewPlan();
 
     		if ($isUnique['status'] == true) {
-    			echo 'true ' . $isUnique['token'];
-    		}
-    		else if ($isUnique['status'] == false) {
-    			echo 'false';
+    			$this->_f3->reroute('plan?abc=123');
     		} else {
-    			echo 'broke';
-    		}
+    			$view = new Template();
+        	echo $view->render('views/error.html');
+    		} 
 
     		// echo print_r($prevTokens);
+    }
+
+    function route_plan()
+    {
+        // goto home
+        $view = new Template();
+        echo $view->render('views/plan.html');
     }
 
     /**
