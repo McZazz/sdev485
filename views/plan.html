@@ -8,21 +8,21 @@
 </head>
 <body class="plan">
 
-	<form action="#" method="POST">
+	<form action="" method="POST">
 		<div>
 			<label>Fall
-				<textarea name="fall"></textarea>
+				<textarea name="fall">{{ @SESSION.plan->getFall() }}</textarea>
 			</label>
 			<label>Winter
-				<textarea name="winter"></textarea>
+				<textarea name="winter">{{ @SESSION.plan->getWinter() }}</textarea>
 			</label>
 		</div>
 		<div>
 			<label>Spring
-				<textarea name="spring"></textarea>
+				<textarea name="spring">{{ @SESSION.plan->getSpring() }}</textarea>
 			</label>
 			<label>Summer
-				<textarea name="summer"></textarea>
+				<textarea name="summer">{{ @SESSION.plan->getSummer() }}</textarea>
 			</label>
 		</div>
 		<button type="submit" class="link-btn">Save</button>

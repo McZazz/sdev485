@@ -75,7 +75,7 @@ body {
 }
 
 .link-btn:focus {
-  box-shadow: 0 0 0 5px #999DAC;
+  box-shadow: 0 0 0 4px #999DAC;
 }
 
 /* PLAN  */
@@ -83,6 +83,7 @@ body {
 	padding: 17px 0 20px 0;
 	height: 100%;
 }
+
 .plan form {
 /*	width: 1200px;*/
 	display: flex;
@@ -108,7 +109,7 @@ body {
 }
 
 .plan .link-btn {
-	margin-top: 4px;
+	margin-top: 3px;
 }
 
 textarea:focus {

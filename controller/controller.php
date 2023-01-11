@@ -36,8 +36,11 @@ class Controller
 		$isUnique = $this->_db->addNewPlan();
 
 		if ($isUnique['status'] == true) {
-            $_SESSION['token'] = $isUnique['token'];
-			$this->_f3->reroute('plan/' . $isUnique['token']);
+
+            // create plan model obj. all quarter fields blank
+            $_SESSION['plan'] = new Plan($isUnique['token']);
+
+			$this->_f3->reroute('plan/' . $_SESSION['plan']->getToken());
             // $this->_f3->reroute('plan');
 		} else {
 			$view = new Template();
@@ -50,35 +53,12 @@ class Controller
     function route_plan()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if (isset($_SESSION['token'])) {
-
-                $fall = '';
-                $winter = '';
-                $spring = '';
-                $summer = '';
-
-                if (isset($_POST['fall'])) {
-                    $fall = $_POST['fall'];
-                }
-                if (isset($_POST['winter'])) {
-                    $winter = $_POST['winter'];
-                }                
-                if (isset($_POST['spring'])) {
-                    $spring = $_POST['spring'];
-                }                
-                if (isset($_POST['summer'])) {
-                    $summer = $_POST['summer'];
-                }
-
-                echo $fall . ' ' . $winter . ' ' . $spring . ' ' . $summer;
-
-            // echo 'saving stuff ' .$_SESSION['token'];
-            // $this->_f3->reroute('plan/' . $_SESSION['token']);
-            }
-        } else {
-            $view = new Template();
-            echo $view->render('views/plan.html');
+            // reacquire fields, instantiation automatically gets from post
+            $_SESSION['plan'] = new Plan($_SESSION['plan']->getToken());
         }
+
+        $view = new Template();
+        echo $view->render('views/plan.html');
     }
 
     /**

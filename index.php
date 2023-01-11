@@ -35,11 +35,6 @@ $f3->route('POST /', function()
 });
 
 
-$f3->route('GET /test', function()
-{
-    $GLOBALS['controller']->test();
-});
-
 /**
  * home route
  */
