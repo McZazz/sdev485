@@ -43,6 +43,11 @@ $f3->route('GET|POST /plan/@token', function()
     $GLOBALS['controller']->route_plan();
 });
 
+$f3->route('GET /test', function()
+{
+    $GLOBALS['controller']->test();
+});
+
 
 $f3->set('ONERROR', function()
 {

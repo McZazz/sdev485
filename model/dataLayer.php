@@ -105,26 +105,52 @@ class DataLayer
 
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
+        // invalid token
+        // if ()
+
         return new Plan($result[0]);
 
     }
 
+    // function tokenIsUnique($token)
+    // {
+
+    //     /////////////////////////////////////////////////
+    //     $prevTokens = $this->getTokens();
+
+    //     if (sizeof($prevTokens) == 0) {
+    //         return true;
+    //     }
+
+    //     // check that token is unique
+    //     foreach ($prevTokens as $row) {
+    //         if ($row['token'] == $token) {
+    //             return false;
+    //         }
+    //     }
+
+    //     return true;
+    //     ////////////////////////////////////////////////
+    // }
+
+
     function tokenIsUnique($token)
     {
-        $prevTokens = $this->getTokens();
 
-        if (sizeof($prevTokens) == 0) {
+        $sql = "SELECT token FROM plan WHERE token = :token";
+
+        $statement = $this->_db->prepare($sql);
+        $statement->bindParam(':token', $token);
+        $statement->execute();
+
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if (sizeof($result) == 0) {
             return true;
+        } else {
+            return false;
         }
 
-        // check that token is unique
-        foreach ($prevTokens as $row) {
-            if ($row['token'] == $token) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
 

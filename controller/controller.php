@@ -27,7 +27,7 @@ class Controller
 
     function test()
     {
-        $this->_db->deleteUnusedToken();
+        $this->_db->tokenIsUnique2('3211PP');
     }
 
     function route_create_new()
