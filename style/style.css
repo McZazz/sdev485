@@ -227,6 +227,19 @@ textarea:focus {
 /*	image-rendering: pixelated;*/
 }
 
+#message-btn .btn-x{
+	fill: #045A46;
+}
+
+#message-btn:hover .btn-x {
+	fill: #034C3B;
+}
+
+#message-btn:active .btn-x {
+	fill: #023A2D;
+}
+
+
 #message-btn:hover {
 	background: #078065;
 	border: 1px solid #067A60;
