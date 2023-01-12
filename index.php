@@ -38,7 +38,7 @@ $f3->route('POST /', function()
 /**
  * home route
  */
-$f3->route('GET|POST /plan/@token', function()
+$f3->route('GET|POST /@token', function()
 {
     $GLOBALS['controller']->route_plan();
 });

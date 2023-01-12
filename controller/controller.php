@@ -40,7 +40,7 @@ class Controller
             // create plan model obj. all quarter fields blank
             $_SESSION['plan'] = new Plan($isUnique['token']);
 
-			$this->_f3->reroute('plan/' . $_SESSION['plan']->getToken());
+			$this->_f3->reroute('/' . $_SESSION['plan']->getToken());
             // $this->_f3->reroute('plan');
 		} else {
 			$view = new Template();
