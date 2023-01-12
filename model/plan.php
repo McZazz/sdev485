@@ -14,7 +14,7 @@ class Plan
     {
     		// we pass a token string or entire database obj
     		if (is_string($token)) {
-    			
+
     				$this->_token = $token;
 
 		        if (isset($_POST['fall'])) {
@@ -79,6 +79,14 @@ class Plan
     {
     		$this->_saved = $saved;
     }   
+
+		function getLastSaved()
+    {
+    		// echo 'aaaaaa';
+    		// $dtg = new DateTime($this->_last_saved);
+    		// return $dtg->format('Y-m-d H:i:s');
+    		return $this->_last_saved;
+    }  
 
     function echoAll()
     {

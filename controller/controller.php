@@ -59,6 +59,8 @@ class Controller
 
             // update record in db
             $this->_db->updatePlan($_SESSION['plan']);
+            // get new dtg
+            $_SESSION['plan'] = $this->_db->getPlan($_SESSION['plan']->getToken());
             // make sure it shows as saved
             $_SESSION['plan']->setSaved('1');
             // show saved message

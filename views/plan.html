@@ -34,13 +34,9 @@
 				<div id="last-updated-cont">
 					<div id="last-updated-text">
 
-						<check if="{{ isset(@SESSION.plan) && @SESSION.plan->getSaved() == '1' }}">
-							Last Updated: 2003/00/00 24:24:24
-						</check>
+						<check if="{{ isset(@SESSION.plan) && @SESSION.plan->getSaved() == '1' }}">Last Updated: {{@SESSION.plan->getLastSaved()}}</check>
 
-						<check if="{{ isset(@SESSION.plan) && @SESSION.plan->getSaved() == '0' }}">
-							Last Updated: Unsaved
-						</check>
+						<check if="{{ isset(@SESSION.plan) && @SESSION.plan->getSaved() == '0' }}">Last Updated: Unsaved</check>
 
 					</div>
 				</div>
@@ -50,7 +46,7 @@
 
 			<button type="submit" class="link-btn">Save</button>
 
-			
+
 			<div id="saved-confirm">
 				
 				<check if="{{ (isset(@opened) && @opened == 'f') || !isset(@opened) }}">
