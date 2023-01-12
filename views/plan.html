@@ -11,18 +11,18 @@
 	<form action="" method="POST">
 		<div>
 			<label>Fall
-				<textarea name="fall">{{ @SESSION.plan->getFall() }}</textarea>
+				<textarea spellcheck="false" name="fall">{{ @SESSION.plan->getFall() }}</textarea>
 			</label>
 			<label>Winter
-				<textarea name="winter">{{ @SESSION.plan->getWinter() }}</textarea>
+				<textarea spellcheck="false" name="winter">{{ @SESSION.plan->getWinter() }}</textarea>
 			</label>
 		</div>
 		<div>
 			<label>Spring
-				<textarea name="spring">{{ @SESSION.plan->getSpring() }}</textarea>
+				<textarea spellcheck="false" name="spring">{{ @SESSION.plan->getSpring() }}</textarea>
 			</label>
 			<label>Summer
-				<textarea name="summer">{{ @SESSION.plan->getSummer() }}</textarea>
+				<textarea spellcheck="false" name="summer">{{ @SESSION.plan->getSummer() }}</textarea>
 			</label>
 		</div>
 		<button type="submit" class="link-btn">Save</button>

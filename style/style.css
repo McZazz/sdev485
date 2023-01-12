@@ -9,6 +9,14 @@
 	--text-dark: #373A40;
 }
 
+::-moz-selection {
+	background: #D5D7E2;
+}
+
+::selection {
+	background: #D5D7E2;
+}
+
 body {
 	font-family: Arial;
 	background: var(--text-light);
@@ -75,13 +83,13 @@ body {
 }
 
 .link-btn:focus {
-  box-shadow: 0 0 0 4px #999DAC;
+  box-shadow: 0 0 0 4px #AFB3C1;
 }
 
 /* PLAN  */
 .plan {
 	padding: 17px 0 20px 0;
-	height: 100%;
+	height: auto;
 }
 
 .plan form {
@@ -101,11 +109,11 @@ body {
 	border-radius: 2px;
 	border: 2px solid #D5D6DB;
 	width: 275px;
-	height: 300px;
+	height: 275px;
 	overflow-x: hidden;
 	overflow-y: auto;
 	padding: 3px;
-	margin-top: 3px;
+	margin-top: 5px;
 }
 
 .plan .link-btn {
@@ -113,12 +121,14 @@ body {
 }
 
 textarea:focus {
+	color: var(--text-dark);
 	outline: none;
-	box-shadow: 0 0 0 3px #999DAC;
+	box-shadow: 0 0 0 4px #E1E3EA;
 
 }
 
 .plan label {
+	color: var(--text-dark);
 	user-select: none;
 	display: flex;
 	flex-direction: column;

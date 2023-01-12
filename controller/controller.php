@@ -52,9 +52,23 @@ class Controller
 
     function route_plan()
     {
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // reacquire fields, instantiation automatically gets from post
             $_SESSION['plan'] = new Plan($_SESSION['plan']->getToken());
+
+            // update record in db
+            $this->_db->updatePlan($_SESSION['plan']);
+            // make sure it shows as saved
+            $_SESSION['plan']->setSaved('1');
+
+        } else {
+            // we only need this if opening a new plan from route_create_new()
+            if ($_SESSION['plan']->getSaved() == '1') {
+                // echo $this->_f3->get('PARAMS.token');
+                $_SESSION['plan'] = $this->_db->getPlan($this->_f3->get('PARAMS.token'));
+                
+            }
         }
 
         $view = new Template();
