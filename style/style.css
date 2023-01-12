@@ -105,6 +105,7 @@ body {
 }
 
 .plan textarea {
+	font-size: 1.15rem;
 	resize: none;
 	border-radius: 2px;
 	border: 2px solid #D5D6DB;
@@ -116,19 +117,15 @@ body {
 	margin-top: 5px;
 }
 
-.plan .link-btn {
-	margin-top: 3px;
-}
-
 textarea:focus {
 	color: var(--text-dark);
 	outline: none;
 	box-shadow: 0 0 0 4px #E1E3EA;
-
 }
 
 .plan label {
 	color: var(--text-dark);
+	font-size: 1.5rem;
 	user-select: none;
 	display: flex;
 	flex-direction: column;
@@ -142,6 +139,30 @@ textarea:focus {
 	margin-left: 5px;
 }
 
-.plan form div {
+.plan form div:nth-child(2) {
+	margin-top: 17px;
+	margin-bottom: 22px;
+}
+
+/*.plan form div:not(.save-row) {
 	margin-bottom: 17px;
+}*/
+
+#save-row {
+	margin-top: 3px;
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+
+#save-row, #save-row .link-btn {
+	height: 37px;
+}
+
+#saved-confirm, #last-updated {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	flex-grow: 1;
 }
