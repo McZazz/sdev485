@@ -67,12 +67,17 @@ class Controller
             $this->_f3->set('opened', 't');
 
         } else {
-            // we only need this if opening a new plan from route_create_new()
-                // echo $this->_f3->get('PARAMS.token');
-            // if ($_SESSION['plan']->getSaved() == '1') {
+            // this fires when creating new token, and when getting a previusly saved token
             if ($this->_f3->get('PARAMS.token') != '' && null != $this->_f3->get('PARAMS.token')) {
-                echo $this->_f3->get('PARAMS.token');
-                $_SESSION['plan'] = $this->_db->getPlan($this->_f3->get('PARAMS.token'));
+
+                $plan = $this->_db->getPlan($this->_f3->get('PARAMS.token'));
+
+                // if plan is false, reroute to home
+                if ($plan == false) {
+                    $this->_f3->reroute('/');
+                }
+
+                $_SESSION['plan'] = $plan;
             }
         }
 

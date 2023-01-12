@@ -106,10 +106,12 @@ class DataLayer
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         // invalid token
-        // if ()
+        if (sizeof($result) == 0) {
+            return false;
+        }
 
+        // return valid plan
         return new Plan($result[0]);
-
     }
 
 
