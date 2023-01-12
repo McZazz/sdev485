@@ -72,6 +72,9 @@ body {
 	border: none;
   background: #989CA9;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .link-btn:hover {
@@ -110,7 +113,7 @@ body {
 	border-radius: 2px;
 	border: 2px solid #D5D6DB;
 	width: 275px;
-	height: 275px;
+	height: 225px;
 	overflow-x: hidden;
 	overflow-y: auto;
 	padding: 3px;
@@ -172,7 +175,7 @@ textarea:focus {
 #message {
 	visibility: hidden;
 	position: absolute;
-	padding: 5px 25px;
+	padding: 5px 18px;
 	width: 100%;
 	height: 100%;
 }
@@ -220,6 +223,27 @@ textarea:focus {
 
 #message-btn:active {
 	background: #05785D;
+}
+
+#last-updated-cont {
+	position: absolute;
+	padding: 5px 18px;
+	width: 100%;
+	height: 100%;
+}
+
+#last-updated-text {
+	user-select: none;
+	display: flex;
+	border-radius: 3px;
+	justify-content: center;
+	align-items: center;
+	font-size: .73rem;
+	font-weight: bold;
+	color: var(--text-light);
+	width: 100%;
+	height: 100%;
+	background: #989CA9;
 }
 
 
