@@ -63,13 +63,14 @@ body {
 
 .link-btn {
 	cursor: pointer;
+	box-sizing: border-box;
 	text-decoration: none;
   color: var(--text-light);
 	font-size: 1.5rem;
 	user-select: none;
-	border-radius: 2px;
+	border-radius: 3px;
 	padding: 5px 10px;
-	border: none;
+	border: 1px solid #8F93A2;
   background: #989CA9;
   font-weight: bold;
   display: flex;
@@ -79,10 +80,12 @@ body {
 
 .link-btn:hover {
   background: #8C909E;
+  border: 1px solid #838795;
 }
 
 .link-btn:active {
   background: #767A88;
+  border: 1px solid #737785;
 }
 
 .link-btn:focus {
@@ -110,7 +113,7 @@ body {
 .plan textarea {
 	font-size: 1.15rem;
 	resize: none;
-	border-radius: 2px;
+	border-radius: 3px;
 	border: 2px solid #D5D6DB;
 	width: 275px;
 	height: 225px;
@@ -188,6 +191,7 @@ textarea:focus {
 	width: 100%;
 	height: 100%;
 	background: #2BB287;
+	border: 1px solid #21A67B;
 }
 
 #message-text {
@@ -203,26 +207,29 @@ textarea:focus {
 
 #message-btn-cont {
 	display: flex;
-	width: 30px;
+	width: 27px;
 	height: 100%;
-	padding: 3px;
+	padding: 3px 0 3px 3px;
 }
 
 #message-btn {
 	cursor: pointer;
 	display: flex;
 	background: #05896B;
+	border: 1px solid #068366;
 	border-radius: 3px;
 	width: 100%;
 	height: 100%;
 }
 
 #message-btn:hover {
-	background: #119577;
+	background: #078065;
+	border: 1px solid #067A60;
 }
 
 #message-btn:active {
-	background: #05785D;
+	background: #06755D;
+	border: 1px solid #046C56;
 }
 
 #last-updated-cont {
@@ -244,6 +251,7 @@ textarea:focus {
 	width: 100%;
 	height: 100%;
 	background: #989CA9;
+	border: 1px solid #8F93A2;
 }
 
 
