@@ -20,11 +20,11 @@ $controller = new Controller($f3);
  */
 $f3->route('GET /', function()
 {
-		// token, last_saved, fall, winter, spring, summer
-
-		//echo bin2hex(random_bytes(3));
+	// token, last_saved, fall, winter, spring, summer
+	// echo bin2hex(random_bytes(3));
     $GLOBALS['controller']->route_home();
 });
+
 
 /**
  * home route
@@ -42,6 +42,7 @@ $f3->route('GET|POST /plan/@token', function()
 {
     $GLOBALS['controller']->route_plan();
 });
+
 
 $f3->set('ONERROR', function()
 {

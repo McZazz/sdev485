@@ -70,16 +70,16 @@ body {
 	border-radius: 2px;
 	padding: 5px 10px;
 	border: none;
-  background: #7D818E;
+  background: #989CA9;
   font-weight: bold;
 }
 
 .link-btn:hover {
-  background: #6E727F;
+  background: #8C909E;
 }
 
 .link-btn:active {
-  background: #5B5F6C;
+  background: #767A88;
 }
 
 .link-btn:focus {
@@ -139,9 +139,9 @@ textarea:focus {
 	margin-left: 5px;
 }
 
-.plan form div:nth-child(2) {
+.plan .row-2 {
 	margin-top: 17px;
-	margin-bottom: 22px;
+	margin-bottom: 20px;
 }
 
 /*.plan form div:not(.save-row) {
@@ -149,6 +149,7 @@ textarea:focus {
 }*/
 
 #save-row {
+	position: relative;
 	margin-top: 3px;
 	display: flex;
 	align-items: center;
@@ -160,9 +161,66 @@ textarea:focus {
 }
 
 #saved-confirm, #last-updated {
+	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	height: 100%;
 	flex-grow: 1;
 }
+
+#message {
+	visibility: hidden;
+	position: absolute;
+	padding: 5px 25px;
+	width: 100%;
+	height: 100%;
+}
+
+#message-cont {
+	display: flex;
+	border-radius: 3px;
+	overflow: hidden;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	background: #2BB287;
+}
+
+#message-text {
+	display: flex;
+	color: var(--text-light);
+	font-weight: bold;
+	user-select: none;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+}
+
+#message-btn-cont {
+	display: flex;
+	width: 30px;
+	height: 100%;
+	padding: 3px;
+}
+
+#message-btn {
+	cursor: pointer;
+	display: flex;
+	background: #05896B;
+	border-radius: 3px;
+	width: 100%;
+	height: 100%;
+}
+
+#message-btn:hover {
+	background: #119577;
+}
+
+#message-btn:active {
+	background: #05785D;
+}
+
+
+

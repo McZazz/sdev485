@@ -14,6 +14,7 @@ class Plan
     {
     		// we pass a token string or entire database obj
     		if (is_string($token)) {
+    			
     				$this->_token = $token;
 
 		        if (isset($_POST['fall'])) {

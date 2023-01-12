@@ -61,13 +61,14 @@ class Controller
             $this->_db->updatePlan($_SESSION['plan']);
             // make sure it shows as saved
             $_SESSION['plan']->setSaved('1');
+            // show saved message
+            $this->_f3->set('opened', 't');
 
         } else {
             // we only need this if opening a new plan from route_create_new()
             if ($_SESSION['plan']->getSaved() == '1') {
                 // echo $this->_f3->get('PARAMS.token');
                 $_SESSION['plan'] = $this->_db->getPlan($this->_f3->get('PARAMS.token'));
-                
             }
         }
 
