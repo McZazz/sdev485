@@ -112,27 +112,6 @@ class DataLayer
 
     }
 
-    // function tokenIsUnique($token)
-    // {
-
-    //     /////////////////////////////////////////////////
-    //     $prevTokens = $this->getTokens();
-
-    //     if (sizeof($prevTokens) == 0) {
-    //         return true;
-    //     }
-
-    //     // check that token is unique
-    //     foreach ($prevTokens as $row) {
-    //         if ($row['token'] == $token) {
-    //             return false;
-    //         }
-    //     }
-
-    //     return true;
-    //     ////////////////////////////////////////////////
-    // }
-
 
     function tokenIsUnique($token)
     {
