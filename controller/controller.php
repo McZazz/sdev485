@@ -68,8 +68,10 @@ class Controller
 
         } else {
             // we only need this if opening a new plan from route_create_new()
-            if ($_SESSION['plan']->getSaved() == '1') {
                 // echo $this->_f3->get('PARAMS.token');
+            // if ($_SESSION['plan']->getSaved() == '1') {
+            if ($this->_f3->get('PARAMS.token') != '' && null != $this->_f3->get('PARAMS.token')) {
+                echo $this->_f3->get('PARAMS.token');
                 $_SESSION['plan'] = $this->_db->getPlan($this->_f3->get('PARAMS.token'));
             }
         }
