@@ -41,19 +41,11 @@ class DataLayer
 
         $this->deleteIfUnusedAfter24Hrs();
 
-        while (true) {
-            $newToken = $this->createToken(6);
-            $isUnique = $this->tokenIsUnique($newToken);
+        $newToken = $this->createUniqueToken();
 
-            if ($isUnique) {
-                break;
-            }
-
-            $cntr++;
-            if ($cntr == 5000) {
-                // just in case it's full
-                return NULL;
-            }
+        // database can't take any more tokens, show 404
+        if ($newToken == false) {
+            return false;
         }
 
         // add plan
@@ -182,6 +174,24 @@ class DataLayer
         }
 
         return $token;
+    }
+
+    function createUniqueToken()
+    {
+        while (true) {
+            $newToken = $this->createToken(6);
+            $isUnique = $this->tokenIsUnique($newToken);
+
+            if ($isUnique) {
+                return $newToken;
+            }
+
+            $cntr++;
+            if ($cntr == 5000) {
+                // just in case it's full
+                return false;
+            }
+        }
     }
 
 }
