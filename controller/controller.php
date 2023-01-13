@@ -37,15 +37,6 @@ class Controller
 
 
     /**
-     * Test route for dev
-     */
-    function test()
-    {
-        // $this->_db->tokenIsUnique2('3211PP');
-    }
-
-
-    /**
      * Route for creating new token
      */
     function route_create_new()
