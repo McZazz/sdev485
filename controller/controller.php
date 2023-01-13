@@ -1,22 +1,33 @@
 <?php
+/**
+ * @author: Kevin Price
+ * @date: Jan 12, 2023
+ * @filename: controller.php
+ * @description: Php F3 controller
+ */
 
 /**
-* Controller class for routes
-*/
+ * Controller class for routes
+ * @param $f3 Base
+ */
 class Controller
 {
     private $_f3;
     private $_db;
 
+    /**
+     * Constructor 
+     */
     function __construct($f3)
     {
         $this->_f3 = $f3;
         $this->_db = new DataLayer();
     }
 
+
     /**
-    * route to home page
-    */
+     * Route to home page
+     */
     function route_home()
     {
         // goto home
@@ -24,11 +35,19 @@ class Controller
         echo $view->render('views/home.html');
     }
 
+
+    /**
+     * Test route for dev
+     */
     function test()
     {
-        $this->_db->tokenIsUnique2('3211PP');
+        // $this->_db->tokenIsUnique2('3211PP');
     }
 
+
+    /**
+     * Route for creating new token
+     */
     function route_create_new()
     {
 		// $prevTokens = $this->_db->getTokens();
@@ -48,12 +67,12 @@ class Controller
 			$view = new Template();
             echo $view->render('views/error.html');
 		} 
-
-		// echo print_r($prevTokens);
     }
 
+
     /**
-     * 
+     * Route for displaing plan page, 
+     * redirected from route_create_new for new tokens only
      */
     function route_plan()
     {
@@ -95,9 +114,10 @@ class Controller
         echo $view->render('views/plan.html');
     }
 
+
     /**
-    * route 404
-    */
+     * Route 404
+     */
     function error()
     {
         // goto home

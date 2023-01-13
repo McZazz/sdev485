@@ -1,18 +1,24 @@
 <?php
+/**
+ * @author: Kevin Price
+ * @date: Jan 12, 2023
+ * @filename: dataLayer.php
+ * @description: PDO data layer for F3
+ */
 
-require $_SERVER['DOCUMENT_ROOT'].'/../local_db_creds.php'; // local
-// require $_SERVER['DOCUMENT_ROOT'].'/../pdo-config.php'; 
+require $_SERVER['DOCUMENT_ROOT'].'/../local_db_creds.php'; // use for local dev
+// require $_SERVER['DOCUMENT_ROOT'].'/../pdo-config.php'; // use for deployment
 
 /**
-* datalayer
-*/
+ * DataLayer class for PDO database management 
+ */
 class DataLayer
 {
     private $_db;
 
     /**
-    * Constructor of datalayer
-    */
+     * Constructor
+     */
     function __construct()
     {
         try {
@@ -24,6 +30,10 @@ class DataLayer
         }
     }
 
+
+    /**
+     * 
+     */
     function addNewPlan()
     {
 
