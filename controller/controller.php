@@ -50,7 +50,6 @@ class Controller
      */
     function route_create_new()
     {
-		// $prevTokens = $this->_db->getTokens();
 		$isUnique = $this->_db->addNewPlan();
 
 		if ($isUnique['status'] == true) {
@@ -112,6 +111,16 @@ class Controller
 
         $view = new Template();
         echo $view->render('views/plan.html');
+    }
+
+
+    /**
+     * Route 404
+     */
+    function error_reroute()
+    {
+        // goto home
+        $this->_f3->reroute('/error404');
     }
 
 

@@ -32,7 +32,7 @@ class DataLayer
 
 
     /**
-     * 
+     * Create new plan row
      */
     function addNewPlan()
     {
@@ -51,15 +51,10 @@ class DataLayer
         // add plan
         $sql = "INSERT INTO plan (token, last_saved, saved)
                 VALUES (:token, NOW(), 0)";
-
         $saved = '0';
-        // $timeNow = new DateTime();
-        // $timeNow = $timeNow->format('Y-m-d H:i:s');
 
         $statement = $this->_db->prepare($sql);
         $statement->bindParam(':token', $newToken);
-        // $statement->bindParam(':last_saved', $timeNow);
-        // $statement->bindParam(':saved', $saved);
         $statement->execute();
 
         $insertSuccess = $this->tokenIsUnique($newToken);
@@ -145,30 +140,14 @@ class DataLayer
         $statement->execute();    
     }
 
-    function getTokens()
-    {
-        if ($this->_db) {
-
-            // prepared statement
-            $sql = "SELECT token, last_saved, saved FROM plan";
-            $statement = $this->_db->prepare($sql);
-            $statement->execute();
-
-            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-            // return 
-            return $result;
-        } else {
-            return false;
-        }
-    }
 
     function createToken($len)
     {
+        // pool of chars for tokens
         $chars = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890123456789012345678901234567890123456789012';
 
         $token = '';
-
+        // use cryptographically secure random ints to select each char
         for ($i = 0; $i < $len; $i++) {
             $token .= $chars[random_int(0, strlen($chars)-1)];
         }
@@ -178,10 +157,14 @@ class DataLayer
 
     function createUniqueToken()
     {
+        $cntr = 0;
+
+        // loop until unique token is made
         while (true) {
             $newToken = $this->createToken(6);
             $isUnique = $this->tokenIsUnique($newToken);
 
+            // if token is unique, return it
             if ($isUnique) {
                 return $newToken;
             }
@@ -193,5 +176,4 @@ class DataLayer
             }
         }
     }
-
 }

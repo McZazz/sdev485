@@ -44,10 +44,15 @@ $f3->route('GET|POST /@token', function()
     $GLOBALS['controller']->route_plan();
 });
 
+$f3->route('GET|POST /error404', function()
+{
+    $GLOBALS['controller']->error();
+});
+
 
 $f3->set('ONERROR', function()
 {
-	$GLOBALS['controller']->error();
+	$GLOBALS['controller']->error_reroute();
 });
 
 
