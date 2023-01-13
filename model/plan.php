@@ -9,13 +9,14 @@ class Plan
     private $_winter = '';
     private $_spring = '';
     private $_summer = '';
+    private $_is_new = false;
 
     function __construct($token)
     {
     		// we pass a token string or entire database obj
     		if (is_string($token)) {
 
-    				$this->_token = $token;
+				$this->_token = $token;
 
 		        if (isset($_POST['fall'])) {
 		            $this->_fall = $_POST['fall'];
@@ -42,51 +43,58 @@ class Plan
 
     function getFall()
     {
-    		return $this->_fall;
+		return $this->_fall;
     }
 
     function getWinter()
     {
-    		return $this->_winter;
+		return $this->_winter;
     }
 
     function getSpring()
     {
-    		return $this->_spring;
+		return $this->_spring;
     }
 
     function getSummer()
     {
-    		return $this->_summer;
+		return $this->_summer;
     }
 
     function getToken()
     {
-    		return $this->_token;
+		return $this->_token;
     }
 
     function getTime()
     {
-    		return $this->_last_saved;
+		return $this->_last_saved;
     }
 
     function getSaved()
     {
-    		return $this->_saved;
+		return $this->_saved;
     }
 
-		function setSaved($saved)
+	function setSaved($saved)
     {
-    		$this->_saved = $saved;
+		$this->_saved = $saved;
     }   
 
-		function getLastSaved()
+	function getLastSaved()
     {
-    		// echo 'aaaaaa';
-    		// $dtg = new DateTime($this->_last_saved);
-    		// return $dtg->format('Y-m-d H:i:s');
-    		return $this->_last_saved;
+		return $this->_last_saved;
     }  
+
+    function isNew()
+    {
+        return $this->_is_new;
+    }
+
+    function setIsNew($state) 
+    {
+        $this->_is_new = $state;
+    }
 
     function echoAll()
     {

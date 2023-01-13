@@ -1,6 +1,7 @@
 <?php
 
 require $_SERVER['DOCUMENT_ROOT'].'/../local_db_creds.php'; // local
+// require $_SERVER['DOCUMENT_ROOT'].'/../pdo-config.php'; 
 
 /**
 * datalayer

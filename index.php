@@ -15,6 +15,7 @@ session_start();
 $f3 = Base::instance();
 $controller = new Controller($f3);
 
+
 /**
  * home route
  */
@@ -43,16 +44,12 @@ $f3->route('GET|POST /@token', function()
     $GLOBALS['controller']->route_plan();
 });
 
-$f3->route('GET /test', function()
-{
-    $GLOBALS['controller']->test();
-});
-
 
 $f3->set('ONERROR', function()
 {
 	$GLOBALS['controller']->error();
 });
+
 
 // run f3 and clear output buffer
 $f3->run();
