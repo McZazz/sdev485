@@ -78,10 +78,11 @@ class Controller
             $this->_f3->set('opened', 't');
 
         } else {
+
             // this fires when creating new token, and when getting a previusly saved token
             if ($this->_f3->get('PARAMS.token') != '' && null != $this->_f3->get('PARAMS.token')) {
 
-                if ($_SESSION['plan']->isNew() == false) {
+                if ((isset($_SESSION['plan']) && $_SESSION['plan']->isNew() == false) || !isset($_SESSION['plan'])) {
                     // purge unused tokens if this is unused. 24 hour grace period applies.
                     $this->_db->deleteIfUnusedAfter24Hrs();
                 }
