@@ -32,13 +32,12 @@ class DataLayer
 
 
     /**
-     * Create new plan row
+     * Create new plan row in db and return the token
+     * @return array, with 'token' and 'status' keys 
      */
     function addNewPlan()
     {
-
-        $cntr = 0;
-
+        // clean out unused tokens older than 24 hours
         $this->deleteIfUnusedAfter24Hrs();
 
         $newToken = $this->createUniqueToken();
@@ -48,7 +47,7 @@ class DataLayer
             return false;
         }
 
-        // add plan
+        // add plan to db with new token
         $sql = "INSERT INTO plan (token, last_saved, saved)
                 VALUES (:token, NOW(), 0)";
         $saved = '0';
@@ -66,11 +65,16 @@ class DataLayer
         } else {
             return array('token'=>$newToken, 'status'=>true);
         }
-
     }
 
+
+    /**
+     * Save / update a pre-existing plan
+     * @param $plan Plan object
+     */
     function updatePlan($plan)
     {
+        // create sql statement to update plan
         $sql = "UPDATE plan 
                 SET fall = :fall, winter = :winter, spring = :spring, summer = :summer, saved = :saved, last_saved = NOW() 
                 WHERE token = :token";
@@ -89,9 +93,16 @@ class DataLayer
         $statement->bindParam(':spring', $spring);
         $statement->bindParam(':summer', $summer);
 
+        // execute sql
         $statement->execute();
     }
 
+
+    /**
+     * getPlan getter, gets entire plan from db as Plan object
+     * @param $token String, 6 digit token
+     * @return boolean: false if plan was not present, Plan object if plan present
+     */
     function getPlan($token)
     {
         $sql = "SELECT last_saved, token, fall, winter, spring, summer, saved
@@ -113,9 +124,14 @@ class DataLayer
     }
 
 
+    /**
+     * Checks if token is unique
+     * @param $token, String: 6 digit token
+     * @return boolean, true if unique, false if not
+     */
     function tokenIsUnique($token)
     {
-
+        // create and run sql to check if token is present
         $sql = "SELECT token FROM plan WHERE token = :token";
 
         $statement = $this->_db->prepare($sql);
@@ -124,6 +140,7 @@ class DataLayer
 
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
+        // empty return means token is unique
         if (sizeof($result) == 0) {
             return true;
         } else {
@@ -133,14 +150,23 @@ class DataLayer
     }
 
 
+    /**
+     * Deletes unsaved tokens after 24 hours
+     */
     function deleteIfUnusedAfter24Hrs()
     {
+        // sql statement deltes all plans not saved after 24 hours
         $sql = "DELETE FROM plan WHERE saved = 0 AND last_saved + INTERVAL 1 DAY < NOW()";
         $statement = $this->_db->prepare($sql);
         $statement->execute();    
     }
 
 
+    /**
+     * Create random token
+     * @param $len, integer, sets length of token
+     * @return String, token
+     */
     function createToken($len)
     {
         // pool of chars for tokens
@@ -155,6 +181,11 @@ class DataLayer
         return $token;
     }
 
+
+    /**
+     * Create unique token, checked against db
+     * @return String, unique token
+     */
     function createUniqueToken()
     {
         $cntr = 0;

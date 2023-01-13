@@ -1,3 +1,10 @@
+<!-- 
+  * @author: Kevin Price
+  * @date: Jan 12, 2023
+  * @filename: green-x.svg
+  * @description: x graphic made in incsape for buttons
+-->
+
 <svg style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
  <g transform="matrix(.49011 -.49011 .82851 .82851 -3.6334 7.6531)">
   <rect x="9.345" y="2.493" width="4.339" height="19.129" style="fill:#137856"/>

@@ -52,20 +52,17 @@ class Controller
     {
 		$isUnique = $this->_db->addNewPlan();
 
-		if ($isUnique['status'] == true) {
+        if ($isUnique == false) {
+            // go home, database is full of 6 char tokens
+            $this->_f3->reroute('/');
+        }
 
-            // create plan model obj. all quarter fields blank
-            $_SESSION['plan'] = new Plan($isUnique['token']);
-            $_SESSION['plan']->setIsNew(true);
+        // create plan model obj. all quarter fields blank, mark as new
+        $_SESSION['plan'] = new Plan($isUnique['token']);
+        $_SESSION['plan']->setIsNew(true);
 
-            // $this->_f3->set('new', 't');
-
-			$this->_f3->reroute('/' . $_SESSION['plan']->getToken());
-            // $this->_f3->reroute('plan');
-		} else {
-			$view = new Template();
-            echo $view->render('views/error.html');
-		} 
+        // goto plan page with this token in url
+		$this->_f3->reroute('/' . $_SESSION['plan']->getToken());
     }
 
 
@@ -75,7 +72,7 @@ class Controller
      */
     function route_plan()
     {
-
+        // POST means we are saving / updating an existing token
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // reacquire fields, instantiation automatically gets from post
             $_SESSION['plan'] = new Plan($_SESSION['plan']->getToken());
@@ -86,7 +83,7 @@ class Controller
             $_SESSION['plan'] = $this->_db->getPlan($_SESSION['plan']->getToken());
             // make sure it shows as saved
             $_SESSION['plan']->setSaved('1');
-            // show saved message
+            // show saved message on front end
             $this->_f3->set('opened', 't');
 
         } else {
@@ -100,11 +97,12 @@ class Controller
                 
                 $plan = $this->_db->getPlan($this->_f3->get('PARAMS.token'));
 
-                // if plan is false, reroute to home
+                // if token is false, reroute to home
                 if ($plan == false) {
                     $this->_f3->reroute('/');
                 }
 
+                // set for use in templating
                 $_SESSION['plan'] = $plan;
             }
         }
@@ -115,11 +113,11 @@ class Controller
 
 
     /**
-     * Route 404
+     * Re-route to 404
      */
     function error_reroute()
     {
-        // goto home
+        // goto 404 route
         $this->_f3->reroute('/error404');
     }
 
@@ -129,7 +127,7 @@ class Controller
      */
     function error()
     {
-        // goto home
+        // goto error view
         $view = new Template();
         echo $view->render('views/error.html');
     }

@@ -1,4 +1,10 @@
 <?php
+/**
+ * @author: Kevin Price
+ * @date: Jan 12, 2023
+ * @filename: index.php
+ * @description: index of routes for F3 MVC
+ */
 
 // output buffering
 ob_start();
@@ -17,18 +23,16 @@ $controller = new Controller($f3);
 
 
 /**
- * home route
+ * Home route GET
  */
 $f3->route('GET /', function()
 {
-	// token, last_saved, fall, winter, spring, summer
-	// echo bin2hex(random_bytes(3));
     $GLOBALS['controller']->route_home();
 });
 
 
 /**
- * home route
+ * Home route POST
  */
 $f3->route('POST /', function()
 {
@@ -37,19 +41,26 @@ $f3->route('POST /', function()
 
 
 /**
- * home route
+ * Route for plan entry and viewing
  */
 $f3->route('GET|POST /@token', function()
 {
     $GLOBALS['controller']->route_plan();
 });
 
+
+/**
+ * Route for displaying 404
+ */
 $f3->route('GET|POST /error404', function()
 {
     $GLOBALS['controller']->error();
 });
 
 
+/**
+ * route for all multi-folder 404 requests
+ */
 $f3->set('ONERROR', function()
 {
 	$GLOBALS['controller']->error_reroute();
