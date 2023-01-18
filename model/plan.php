@@ -11,6 +11,9 @@
  */
 class Plan
 {
+    private $_ADVISOR_LEN = 50;
+    private $_QUARTER_LEN = 1000;
+
     private $_token;
     private $_last_saved = '';
     private $_saved = '0';
@@ -35,19 +38,20 @@ class Plan
 
             // cehck POST for correct keys, update if available
 	        if (isset($_POST['fall'])) {
-	            $this->_fall = $_POST['fall'];
+	            $this->_fall = substr($_POST['fall'], 0, $this->_QUARTER_LEN);
 	        }
 	        if (isset($_POST['winter'])) {
-	            $this->_winter = $_POST['winter'];
+	            $this->_winter = substr($_POST['winter'], 0, $this->_QUARTER_LEN);
 	        }                
 	        if (isset($_POST['spring'])) {
-	            $this->_spring = $_POST['spring'];
+	            $this->_spring = substr($_POST['spring'], 0, $this->_QUARTER_LEN);
 	        }                
 	        if (isset($_POST['summer'])) {
-	            $this->_summer = $_POST['summer'];
+	            $this->_summer = substr($_POST['summer'], 0, $this->_QUARTER_LEN);
 	        }
             if (isset($_POST['advisor'])) {
-                $this->_advisor = $_POST['advisor'];
+                $this->_advisor = substr($_POST['advisor'], 0, $this->_ADVISOR_LEN);
+                // $this->_advisor = $_POST['advisor'];
             }
 		} else {
             // PDO db return, fill into this new obj
@@ -172,3 +176,4 @@ class Plan
         $this->_is_new = $state;
     }
 }
+
