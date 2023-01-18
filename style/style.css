@@ -121,7 +121,7 @@ body {
 	display: flex;
 }
 
-.plan textarea {
+.plan textarea, .plan input {
 	font-size: 1.15rem;
 	resize: none;
 	border-radius: 3px;
@@ -134,7 +134,12 @@ body {
 	margin-top: 5px;
 }
 
-textarea:focus {
+.plan input {
+	height: auto;
+	margin-left: 15px;
+}
+
+.plan textarea:focus, .plan input:focus {
 	color: var(--text-dark);
 	outline: none;
 	box-shadow: 0 0 0 4px #E1E3EA;
@@ -148,6 +153,12 @@ textarea:focus {
 	flex-direction: column;
 }
 
+.plan .row-3 label {
+	flex-direction: row;
+	align-items: flex-end;
+	margin-bottom: 17px;
+}
+
 .plan form div label:nth-child(1) {
 	margin-right: 5px;
 }
@@ -157,8 +168,7 @@ textarea:focus {
 }
 
 .plan .row-2 {
-	margin-top: 17px;
-	margin-bottom: 20px;
+	margin: 17px 0;
 }
 
 
