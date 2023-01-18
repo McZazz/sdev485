@@ -19,6 +19,7 @@ class Plan
     private $_spring = '';
     private $_summer = '';
     private $_is_new = false;
+    private $_advisor = '';
 
     /**
      * Constructor
@@ -29,7 +30,7 @@ class Plan
     {
 		// we pass a token string or entire database obj
 		if (is_string($token)) {
-
+            // its a string, so we need to get from POST
 			$this->_token = $token;
 
             // cehck POST for correct keys, update if available
@@ -45,10 +46,14 @@ class Plan
 	        if (isset($_POST['summer'])) {
 	            $this->_summer = $_POST['summer'];
 	        }
+            if (isset($_POST['advisor'])) {
+                $this->_advisor = $_POST['advisor'];
+            }
 		} else {
             // PDO db return, fill into this new obj
 			$this->_token = $token['token'];
 			$this->_last_saved = $token['last_saved'];
+            $this->_advisor = $token['advisor'];
 			$this->_saved = $token['saved'];
 			$this->_fall = $token['fall'];
 			$this->_winter = $token['winter'];
@@ -105,6 +110,16 @@ class Plan
     function getToken()
     {
 		return $this->_token;
+    }
+
+
+    /**
+     * Get advisor
+     * @return String, data
+     */
+    function getAdvisor()
+    {
+        return $this->_advisor;
     }
 
 

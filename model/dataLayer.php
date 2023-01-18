@@ -76,9 +76,10 @@ class DataLayer
     {
         // create sql statement to update plan
         $sql = "UPDATE plan 
-                SET fall = :fall, winter = :winter, spring = :spring, summer = :summer, saved = :saved, last_saved = NOW() 
+                SET fall = :fall, winter = :winter, spring = :spring, summer = :summer, advisor = :advisor, saved = :saved, last_saved = NOW() 
                 WHERE token = :token";
         $token = $plan->getToken();
+        $advisor = $plan->getAdvisor();
         $saved = '1';
         $fall = $plan->getFall();
         $winter = $plan->getWinter();
@@ -87,6 +88,7 @@ class DataLayer
 
         $statement = $this->_db->prepare($sql);
         $statement->bindParam(':token', $token);
+        $statement->bindParam(':advisor', $advisor);
         $statement->bindParam(':saved', $saved);
         $statement->bindParam(':fall', $fall);
         $statement->bindParam(':winter', $winter);
@@ -105,7 +107,7 @@ class DataLayer
      */
     function getPlan($token)
     {
-        $sql = "SELECT last_saved, token, fall, winter, spring, summer, saved
+        $sql = "SELECT last_saved, token, advisor, fall, winter, spring, summer, saved
                 FROM plan WHERE token = :token";
 
         $statement = $this->_db->prepare($sql);
