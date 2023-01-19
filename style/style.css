@@ -179,6 +179,7 @@ body {
 }
 
 .login-modal-bg_visible {
+	cursor: pointer;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -189,6 +190,7 @@ body {
 }
 
 #login-modal-card {
+	cursor: default;
 	width: 400px;
 	padding-top: 15px;
 	display: flex;
@@ -210,6 +212,49 @@ body {
 #login-modal-card button {
 	margin: 20px 0 50px 0;
 }
+
+#login-message-btn {
+	width: 30px;
+	height: 30px;
+}
+
+#login-modal-card .btn-row {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	padding-right: 15px;
+}
+
+#login-message-btn {
+	background: #BEC1CA;
+	border: 1px solid #B2B5C0;
+}
+
+#login-message-btn:hover {
+	background: #989CA8;
+	border: 1px solid #9194A0;
+}
+
+#login-message-btn:active {
+	background: #7A7E8A;
+	border: 1px solid #696E7C;
+}
+
+#login-message-btn .btn-x {
+	fill: #646977;
+}
+
+#login-message-btn:hover .btn-x {
+	fill: #4F5462;
+}
+
+#login-message-btn:active .btn-x {
+	fill: #3B404D;
+}
+
+
+
+
 
 
 
@@ -388,7 +433,7 @@ body {
 	padding: 3px 0 3px 3px;
 }
 
-#message-btn {
+.message-btn {
 	cursor: pointer;
 	display: flex;
 	background: #05896B;
@@ -398,24 +443,24 @@ body {
 	height: 100%;
 }
 
-#message-btn .btn-x{
+.message-btn .btn-x{
 	fill: #045A46;
 }
 
-#message-btn:hover .btn-x {
+.message-btn:hover .btn-x {
 	fill: #034C3B;
 }
 
-#message-btn:active .btn-x {
+.message-btn:active .btn-x {
 	fill: #023A2D;
 }
 
-#message-btn:hover {
+.message-btn:hover {
 	background: #078065;
 	border: 1px solid #067A60;
 }
 
-#message-btn:active {
+.message-btn:active {
 	background: #06755D;
 	border: 1px solid #046C56;
 }

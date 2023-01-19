@@ -10,6 +10,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="style/style.css">
+	<script type="text/javascript" defer src="script/home.js"></script>
 	<title></title>
 </head>
 <body class="home">
@@ -38,13 +39,26 @@
 
 	<footer>
 		<div class="center-area">
-			<div class="div-as-link">Login</div>
+			<div id="open-login-modal" class="div-as-link">Login</div>
 		</div>
 	</footer>
 
-	<div id="login-modal-bg" class="login-modal-bg_visible">
-		<div id="login-modal-card">
-			<h1>Login</h1>
+	<div id="login-modal-bg" class="login-modal-bg_hidden">
+		<form id="login-modal-card" method="POST">
+
+			<div class="btn-row">
+				<div id="login-message-btn" class="message-btn">
+					<svg style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2" version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+					 <g class="btn-x"  transform="matrix(.49011 -.49011 .82851 .82851 -3.6334 7.6531)">
+					  <rect x="9.345" y="2.493" width="4.339" height="19.129"/>
+					 </g>
+					 <g class="btn-x"  transform="matrix(.49011 .49011 -.82851 .82851 16.347 -3.6334)">
+					  <rect x="9.345" y="2.493" width="4.339" height="19.129"/>
+					 </g>
+					</svg>
+				</div> 				
+			</div>
+
 			<label>User Name
 				<input class="textinput2" type="text" name="username">
 			</label>
@@ -52,11 +66,8 @@
 				<input class="textinput2" type="text" name="password">
 			</label>
 
-			<button class="link-btn" type="button">Login</button>
-
-
-
-		</div>		
+			<button id="login-btn" class="link-btn" onclick="return loginClicked();" type="submit">Login</button>
+		</form>		
 	</div>
 
 </body>
