@@ -20,6 +20,7 @@
 	--text-dark-3: #0B0D0F;
 	--header-footer-col: #DDDEE4;
 	--page-width: 600px;
+	--warning-height: 37px;
 }
 
 ::-moz-selection {
@@ -190,9 +191,10 @@ body {
 }
 
 #login-modal-card {
+	position: relative;
 	cursor: default;
 	width: 400px;
-	padding-top: 15px;
+	padding: 15px 0 8px 0;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -210,7 +212,7 @@ body {
 }
 
 #login-modal-card button {
-	margin: 20px 0 50px 0;
+	margin: 20px 0 8px 0;
 }
 
 #login-message-btn {
@@ -382,7 +384,7 @@ body {
 }
 
 #save-row, #save-row .link-btn {
-	height: 37px;
+	height: var(--warning-height);
 }
 
 #saved-confirm, #last-updated {
@@ -393,6 +395,20 @@ body {
 	height: 100%;
 	flex-grow: 1;
 }
+
+
+
+
+#saved-confirm_home {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: var(--warning-height);
+	width: 100%;
+}
+
+
 
 
 /*------- Saved message Area -------*/
