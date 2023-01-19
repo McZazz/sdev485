@@ -41,13 +41,15 @@ const print_format = () => {
 // get keys and add to set on keydown
 window.addEventListener('keydown', (event) => {
 	// add key to set
-	keys.add(event.which);
+	keys.add(event.keyCode);
 
 	// cehck for "ctrl + p", hijack and fil fields
 	if (keys.size === 2) {
 		if (keys.has(80) && keys.has(17)) {
 			event.preventDefault();
 
+			// print dialog prevents keyup form firing, remove all now
+			keys = new Set();
 			// load stuff in fields in case plan is unsaved (php had no chance to template it in)
 			print_format();
 		}
@@ -57,6 +59,6 @@ window.addEventListener('keydown', (event) => {
 
 // remove keys on keyup
 window.addEventListener('keyup', (event) => {
-	keys.delete(event.which);
+	keys.delete(event.keyCode);
 });
 

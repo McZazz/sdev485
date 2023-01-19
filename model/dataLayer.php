@@ -6,8 +6,8 @@
  * @description: PDO data layer for F3
  */
 
-require $_SERVER['DOCUMENT_ROOT'].'/../local_db_creds.php'; ////////////////////////// use for local dev
-// require $_SERVER['DOCUMENT_ROOT'].'/../pdo-config.php'; ////////////////////////// use for deployment
+// require $_SERVER['DOCUMENT_ROOT'].'/../local_db_creds.php'; ////////////////////////// use for local dev
+require $_SERVER['DOCUMENT_ROOT'].'/../pdo-config.php'; ////////////////////////// use for deployment
 
 /**
  * DataLayer class for PDO database management 
