@@ -251,4 +251,30 @@
 	border: 1px solid #8F93A2;
 }
 
+/*-------- Plan Print ---------*/
+#plan-print {
+	display: none;
+}
 
+@media print {
+	#plan-print {
+		display: flex;
+	}
+
+	.plan form {
+		display: none;
+	}
+}
+
+.plan td {
+	white-space: pre-wrap;
+}
+
+.plan table:nth-of-type(1) tr:nth-of-type(3) th, .plan table:nth-of-type(1) tr:nth-of-type(1) th {
+	padding-top: 35px;
+}
+
+.plan table:nth-of-type(1) td {
+	border: 1px solid black;
+	padding: 10px;
+}
