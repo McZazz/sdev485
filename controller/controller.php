@@ -14,8 +14,8 @@ class Controller
 {
     private $_f3;
     private $_db;
-    // private $_SERVER_ROOT = 'http://localhost/sdev485/'; //////////////////////////////// local
-    private $_SERVER_ROOT = 'https://kprice.greenriverdev.com/485/'; ///////////////// server
+    private $_SERVER_ROOT = 'http://localhost/sdev485/'; //////////////////////////////// local
+    // private $_SERVER_ROOT = 'https://kprice.greenriverdev.com/485/'; ///////////////// server
 
     /**
      * Constructor 
