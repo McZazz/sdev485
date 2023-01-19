@@ -101,6 +101,8 @@ class Controller
             }
         }
 
+        $this->_f3->set('root', $this->_SERVER_ROOT);
+
         $view = new Template();
         echo $view->render('views/plan.html');
     }

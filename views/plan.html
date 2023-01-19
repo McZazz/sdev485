@@ -99,8 +99,20 @@
 
 	</form>
 
-	<div id="plan-print">
-		
+	<div id="plan-print">		
+
+		<table>
+			<tr>
+				<th>Token</th>
+				<th>Link</th>
+				<th>Advisor</th>
+			</tr>
+			<tr>
+				<td>{{ @SESSION.plan->getToken() }}</td>
+				<td>{{ @root . @SESSION.plan->getToken() }}</td>
+				<td>{{ @SESSION.plan->getAdvisor() }}</td>
+			</tr>
+		</table>
 	
 		<table>
 			<tr>
