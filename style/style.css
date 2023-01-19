@@ -7,6 +7,7 @@
 
 
 /*------- Home Page, Overall Styles -------*/
+
 #home-content section {
 	display: flex;
 	flex-direction: column;
@@ -45,7 +46,6 @@
 .home section .center-area div:nth-child(2) {
 	padding-bottom: 50px;
 }
-
 
 .home nav {
 	min-width: 100%;
@@ -110,9 +110,8 @@
 }
 
 
-
-
 /*------- Plan Page Overall Styles -------*/
+
 .plan {
 	padding: 17px 0 20px 0;
 	height: auto;
@@ -197,6 +196,7 @@
 
 
 /*------- Plan button and messages row  -------*/
+
 #save-row {
 	position: relative;
 	margin-top: 3px;
@@ -251,32 +251,4 @@
 	border: 1px solid #8F93A2;
 }
 
-/*-------- Plan Print ---------*/
-#plan-print {
-	display: none;
-}
 
-@media print {
-	#plan-print {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-
-	.plan form {
-		display: none;
-	}
-}
-
-.plan td {
-	white-space: pre-wrap;
-}
-
-.plan table tr th {
-	padding-top: 35px;
-}
-
-.plan table td {
-	border: 1px solid black;
-	padding: 10px;
-}

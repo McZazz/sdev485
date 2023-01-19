@@ -1,3 +1,10 @@
+/**
+ * @author: Kevin Price
+ * @date: Jan 19, 2023
+ * @filename: print.js
+ * @description: javascript for print formatting and ctrl + p hijacking
+ */
+
 
 // get text areas for quarters
 const fall_input = document.getElementById('fall_input');
@@ -14,6 +21,11 @@ const summer_table_cell = document.getElementById('summer_table_cell');
 // set of keys pressed
 let keys = new Set();
 
+
+/**
+ * Formats tables of print data in case php is not disabled
+ * or in case plan was not saved after changes were made
+ */
 const print_format = () => {
 	// put inner text in print tables
 	fall_table_cell.innerText = fall_input.value;
@@ -25,6 +37,8 @@ const print_format = () => {
 	window.print();
 }
 
+
+// get keys and add to set on keydown
 window.addEventListener('keydown', (event) => {
 	// add key to set
 	keys.add(event.which);
@@ -38,8 +52,8 @@ window.addEventListener('keydown', (event) => {
 			print_format();
 		}
 	}
-
 });
+
 
 // remove keys on keyup
 window.addEventListener('keyup', (event) => {

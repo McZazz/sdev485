@@ -6,8 +6,8 @@
  * @description: PDO data layer for F3
  */
 
-require $_SERVER['DOCUMENT_ROOT'].'/../local_db_creds.php'; // use for local dev
-// require $_SERVER['DOCUMENT_ROOT'].'/../pdo-config.php'; // use for deployment
+require $_SERVER['DOCUMENT_ROOT'].'/../local_db_creds.php'; ////////////////////////// use for local dev
+// require $_SERVER['DOCUMENT_ROOT'].'/../pdo-config.php'; ////////////////////////// use for deployment
 
 /**
  * DataLayer class for PDO database management 
@@ -68,8 +68,13 @@ class DataLayer
     }
 
 
+    /**
+     * Gets all plans for admin view
+     * @return array, array of all plans
+     */
     function getPlansForAdmin()
     {
+        // do sql to get plans
         $sql = "SELECT created, token, advisor
                 FROM plan WHERE saved = 1";
 
@@ -78,29 +83,36 @@ class DataLayer
 
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-
+        // if there are rows, we have plans
         if (sizeof($result) > 0) {
+            // format all dtg for y m d and return
             $result = $this->formatDatetime($result, 'Y-m-d');
             return $result;
-        } else {
-            return [];
         }
+
+        // return empty array in all other cases
         return [];
-    
     }
 
 
+    /**
+     * Format datetime group of plans for display
+     * @param $plans, array, array of plans form db
+     * @param $format, string, format for date formatting
+     */
     function formatDatetime($plans, $format)
     {
         $result = [];
 
+        // iterate all plans
         foreach ($plans as $plan) {
+            // format them one by one
             $dtg = new DateTime($plan['created']);
             $plan['created'] = $dtg->format($format);
             $result[] = $plan;
-
         }
 
+        // return the formatted array
         return $result;
     }
 
@@ -163,8 +175,14 @@ class DataLayer
     }
 
 
+    /**
+     * Check database for user authenticity fo creds given
+     * @param $hash, sha256 hash of user's password
+     * @param $user, string, user name
+     */
     function authUser($user, $hash) 
     {   
+        // do sql of username / password
         $sql = "SELECT username FROM admins WHERE hash = :hash";
 
         $statement = $this->_db->prepare($sql);
@@ -173,7 +191,7 @@ class DataLayer
 
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        // invalid admin user
+        // invalid admin user if no return
         if (sizeof($result) == 0) {
             return false;
         }

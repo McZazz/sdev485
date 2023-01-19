@@ -1,0 +1,40 @@
+/**
+ * @author: Kevin Price
+ * @date: Jan 19, 2023
+ * @filename: print.css
+ * @description: stylesheet for print plan page
+ */
+
+
+/*-------- Plan Print ---------*/
+
+#plan-print {
+	display: none;
+}
+
+@media print {
+	#plan-print {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.plan form {
+		display: none;
+	}
+}
+
+.plan td {
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+
+	border: 1px solid black;
+	padding: 10px;
+	max-width: 310px;
+}
+
+.plan table tr th {
+	padding-top: 35px;
+}
+
