@@ -145,6 +145,11 @@ class Controller
     {
         // make sure user is logged in to go to admin page
         if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+
+            // get all plans
+            $plans = $this->_db->getPlansForAdmin();
+            $this->_f3->set('plans', $plans);
+
             $view = new Template();
             echo $view->render('views/admin.html');
         } else {

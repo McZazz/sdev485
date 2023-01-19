@@ -10,11 +10,32 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="style/style.css">
+	<link rel="stylesheet" type="text/css" href="style/admin.css">
 	<title>Advise-It</title>
 </head>
-<body>
+<body class="admin">
 
 	<h1>admin page</h1>
+
+	<table>
+		
+		<tr>
+			<th>Token</th>
+			<th>Link</th>
+			<th>Creation Date</th>
+			<th>Advisor</th>
+		</tr>
+
+		<repeat group="{{ @plans }}"  value="{{ @plan }}">
+			<tr>
+				<td>{{ @plan['token'] }}</td>
+				<td>{{ @plan['token'] }}</td>
+				<td>{{ @plan['created'] }}</td>
+				<td>{{ @plan['advisor'] }}</td>
+			</tr>
+		</repeat>
+
+	</table>
 
 </body>
 </html>

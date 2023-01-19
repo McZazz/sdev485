@@ -48,8 +48,8 @@ class DataLayer
         }
 
         // add plan to db with new token
-        $sql = "INSERT INTO plan (token, last_saved, saved)
-                VALUES (:token, NOW(), 0)";
+        $sql = "INSERT INTO plan (token, last_saved, created, saved)
+                VALUES (:token, NOW(), NOW(), 0)";
         $saved = '0';
 
         $statement = $this->_db->prepare($sql);
@@ -65,6 +65,43 @@ class DataLayer
         } else {
             return array('token'=>$newToken, 'status'=>true);
         }
+    }
+
+
+    function getPlansForAdmin()
+    {
+        $sql = "SELECT created, token, advisor
+                FROM plan WHERE saved = 1";
+
+        $statement = $this->_db->prepare($sql);
+        $statement->execute();
+
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+
+        if (sizeof($result) > 0) {
+            $result = $this->formatDatetime($result, 'Y-m-d');
+            return $result;
+        } else {
+            return [];
+        }
+        return [];
+    
+    }
+
+
+    function formatDatetime($plans, $format)
+    {
+        $result = [];
+
+        foreach ($plans as $plan) {
+            $dtg = new DateTime($plan['created']);
+            $plan['created'] = $dtg->format($format);
+            $result[] = $plan;
+
+        }
+
+        return $result;
     }
 
 
