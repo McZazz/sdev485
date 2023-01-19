@@ -121,8 +121,7 @@ class Controller
         if ($userIsValid) {
             $_SESSION['loggedin'] = true;
 
-            $view = new Template();
-            echo $view->render('views/admin.html');
+            $this->_f3->reroute('/admin');
         } else {
             $this->_f3->set('invalid_login', true);
             $view = new Template();
@@ -130,6 +129,19 @@ class Controller
         }
 
         // echo '{"res":"' . $userIsValid . '", "username":"'.$username.'","password":"'.$password.'"}';
+    }
+
+
+    function admin()
+    {
+        // make sure user is logged in to go to admin page
+        if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+            $view = new Template();
+            echo $view->render('views/admin.html');
+        } else {
+            // otherwise go to home page
+            $this->_f3->reroute('/');
+        }
     }
 
 

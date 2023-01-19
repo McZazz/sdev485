@@ -40,10 +40,6 @@ $f3->route('POST /create-new', function()
 });
 
 
-
-
-
-
 /**
  * Route for plan entry and viewing
  */
@@ -58,9 +54,16 @@ $f3->route('GET|POST /@token', function()
  */
 $f3->route('POST /login', function()
 {
-
     $GLOBALS['controller']->login();
-    // echo '{"res":"stuff"}';
+});
+
+
+/**
+ * Route for admin page
+ */
+$f3->route('GET /admin', function()
+{
+    $GLOBALS['controller']->admin();
 });
 
 
