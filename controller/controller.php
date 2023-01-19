@@ -113,12 +113,23 @@ class Controller
             $username = $_POST['username'];
         }
         if (isset($_POST['password'])) {
-            $password = $_POST['password'];
+            $password = hash('sha256', $_POST['password']);
         }
 
-        $stuff = json_encode($_POST);
+        $userIsValid = $this->_db->authUser($username, $password);
 
-        echo '{"res":"invalid_creds", "username":"'.$username.'","password":"'.$password.'"}';
+        if ($userIsValid) {
+            $_SESSION['loggedin'] = true;
+
+            $view = new Template();
+            echo $view->render('views/admin.html');
+        } else {
+            $this->_f3->set('invalid_login', true);
+            $view = new Template();
+            echo $view->render('views/home.html');
+        }
+
+        // echo '{"res":"' . $userIsValid . '", "username":"'.$username.'","password":"'.$password.'"}';
     }
 
 

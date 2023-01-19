@@ -29,7 +29,7 @@
 					<h1>Home</h1>		
 				</div>
 				<div>
-					<form action="#" method="POST">
+					<form action="create-new" method="POST">
 						<button type="submit" class="link-btn">Create New</button>
 					</form>
 				</div>	
@@ -43,8 +43,15 @@
 		</div>
 	</footer>
 
-	<div id="login-modal-bg" class="login-modal-bg_hidden">
-		<form id="login-modal-card" method="POST">
+	<check if="{{ isset(@invalid_login) && @invalid_login == true }}">
+		<div id="login-modal-bg" class="login-modal-bg_visible">
+	</check>
+
+	<check if="{{ !isset(@invalid_login) }}">
+		<div id="login-modal-bg" class="login-modal-bg_hidden">
+	</check>
+
+		<form action="login" id="login-modal-card" method="POST">
 
 			<div class="btn-row">
 				<div id="login-message-btn" class="message-btn">
@@ -66,9 +73,10 @@
 				<input class="textinput2" type="text" name="password" id="login_password">
 			</label>
 
-			<button id="login-btn" class="link-btn" onclick="return loginClicked();" type="submit">Login</button>
+			<button id="login-btn" class="link-btn" type="submit">Login</button>
 		</form>		
 	</div>
 
 </body>
 </html>
+

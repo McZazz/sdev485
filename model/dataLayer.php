@@ -126,6 +126,30 @@ class DataLayer
     }
 
 
+    function authUser($user, $hash) 
+    {   
+        $sql = "SELECT username FROM admins WHERE hash = :hash";
+
+        $statement = $this->_db->prepare($sql);
+        $statement->bindParam(':hash', $hash);
+        $statement->execute();
+
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        // invalid admin user
+        if (sizeof($result) == 0) {
+            return false;
+        }
+
+        // return exists, cehck if user matches
+        if ($result[0]['username'] == $user) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     /**
      * Checks if token is unique
      * @param $token, String: 6 digit token
