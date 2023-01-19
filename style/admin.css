@@ -1,3 +1,43 @@
 .admin table {
-	width: var(--page-width-2);
+	width: 100%;
+}
+
+.admin {
+	padding: 25px 25px 15px 25px;
+}
+
+.admin h1 {
+	margin-bottom: 25px;
+}
+
+.admin table {
+	background: #D7D9E0;
+	padding: 10px;
+	border-radius: 5px;
+}
+
+.admin table td {
+	font-size: .75rem;
+	padding: 3px;
+}
+
+.admin table tr:nth-child(even) {
+	background: #E0E2EA;
+}
+
+.admin table tr:hover {
+	background: var(--text-light);
+}
+
+.admin table a {
+	text-decoration: none;
+	color: var(--text-dark);
+}
+
+.admin table a:hover {
+	color: var(--text-dark-2);
+}
+
+.admin table a:active {
+	color: var(--text-dark-3);
 }

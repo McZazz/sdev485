@@ -15,7 +15,7 @@
 </head>
 <body class="admin">
 
-	<h1>admin page</h1>
+	<h1>All Plans</h1>
 
 	<table>
 		
@@ -29,7 +29,7 @@
 		<repeat group="{{ @plans }}"  value="{{ @plan }}">
 			<tr>
 				<td>{{ @plan['token'] }}</td>
-				<td>{{ @plan['token'] }}</td>
+				<td>{{ '<a href="' . @root . @plan['token'] . '">' . @root . @plan['token'] . '</a>'}}</td>
 				<td>{{ @plan['created'] }}</td>
 				<td>{{ @plan['advisor'] }}</td>
 			</tr>

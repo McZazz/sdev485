@@ -14,6 +14,8 @@ class Controller
 {
     private $_f3;
     private $_db;
+    private $_SERVER_ROOT = 'http://localhost/sdev485/'; // local
+    // private $_SERVER_ROOT = 'https://kprice.greenriverdev.com/485/'; // server
 
     /**
      * Constructor 
@@ -149,6 +151,8 @@ class Controller
             // get all plans
             $plans = $this->_db->getPlansForAdmin();
             $this->_f3->set('plans', $plans);
+            // set server root for link
+            $this->_f3->set('root', $this->_SERVER_ROOT);
 
             $view = new Template();
             echo $view->render('views/admin.html');
