@@ -11,12 +11,14 @@ const fall_input = document.getElementById('fall_input');
 const winter_input = document.getElementById('winter_input');
 const spring_input = document.getElementById('spring_input');
 const summer_input = document.getElementById('summer_input');
+const advisor_input = document.getElementById('advisor_input');
 
 // get table cells for quarters
 const fall_table_cell = document.getElementById('fall_table_cell');
 const winter_table_cell = document.getElementById('winter_table_cell');
 const spring_table_cell = document.getElementById('spring_table_cell');
 const summer_table_cell = document.getElementById('summer_table_cell');
+const advisor_table_cell = document.getElementById('advisor_table_cell');
 
 // set of keys pressed
 let keys = new Set();
@@ -32,6 +34,7 @@ const print_format = () => {
 	winter_table_cell.innerText = winter_input.value;
 	spring_table_cell.innerText = spring_input.value;
 	summer_table_cell.innerText = summer_input.value;
+	advisor_table_cell.innerText = advisor_input.value;
 
 	// call up print preview
 	window.print();
