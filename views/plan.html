@@ -14,6 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="style/warning.css">
 	<link rel="stylesheet" type="text/css" href="style/buttons.css">
 	<script defer type="text/javascript" src="script/plan.js"></script>
+	<script defer type="text/javascript" src="script/print.js"></script>
 	<title>Advise-It</title>
 </head>
 <body class="plan">
@@ -21,18 +22,18 @@
 	<form method="POST">
 		<div>
 			<label>Fall
-				<textarea spellcheck="false" name="fall">{{ @SESSION.plan->getFall() }}</textarea>
+				<textarea spellcheck="false" id="fall_input" name="fall">{{ @SESSION.plan->getFall() }}</textarea>
 			</label>
 			<label>Winter
-				<textarea spellcheck="false" name="winter">{{ @SESSION.plan->getWinter() }}</textarea>
+				<textarea spellcheck="false" id="winter_input" name="winter">{{ @SESSION.plan->getWinter() }}</textarea>
 			</label>
 		</div>
 		<div class="row-2">
 			<label>Spring
-				<textarea spellcheck="false" name="spring">{{ @SESSION.plan->getSpring() }}</textarea>
+				<textarea spellcheck="false" id="spring_input" name="spring">{{ @SESSION.plan->getSpring() }}</textarea>
 			</label>
 			<label>Summer
-				<textarea spellcheck="false" name="summer">{{ @SESSION.plan->getSummer() }}</textarea>
+				<textarea spellcheck="false" id="summer_input" name="summer">{{ @SESSION.plan->getSummer() }}</textarea>
 			</label>
 		</div>
 
@@ -95,7 +96,7 @@
 			</div>
 		</div>
 
-		<button class="link-btn print-btn" type="button" onclick="print();">Print</button>
+		<button class="link-btn print-btn" type="button" onclick="print_format();">Print</button>
 
 	</form>
 
@@ -120,25 +121,19 @@
 				<th>Winter</th>
 			</tr>
 			<tr>
-				<td>asdfasdfasdfsdf asdf asdf sfd asf </td>
-				<td>sadfasasdf asdzzzz z z z zasfasd
-					fasdfasdf asdf 
-				asdf asd f asdf asdf asd f asdf asdf asd fasd f asdf asd fasd fsd af sdaf z z z z zzzzzzzzz</td>
+				<td id="fall_table_cell">{{ @SESSION.plan->getFall() }}</td>
+				<td id="winter_table_cell">{{ @SESSION.plan->getWinter() }}</td>
 			</tr>
 			<tr>
 				<th>Spring</th>
 				<th>Summer</th>
 			</tr>
 			<tr>
-				<td>asdfasdfasdfsdf asdf asdf sfd asf </td>
-				<td>sadfasasdf asdzzzz z z z z z z z z zzzzzzzzz</td>
+				<td id="spring_table_cell">{{ @SESSION.plan->getSpring() }}</td>
+				<td id="summer_table_cell">{{ @SESSION.plan->getSummer() }}</td>
 			</tr>
 		</table>
 		
-
-
-
-
 	</div>
 
 </body>
