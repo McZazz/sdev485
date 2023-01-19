@@ -190,17 +190,26 @@ body {
 
 #login-modal-card {
 	width: 400px;
-	height: 300px;
+	padding-top: 15px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	background: var(--text-light);
 	box-shadow: 0 0 15px 5px #1E244230;
 	border-radius: 10px;
 }
 
+#login-modal-card label {
+	margin-top: 15px;
+}
 
+#login-modal-card {
+	border: 1px solid #C7CAD3;
+}
 
-
-
-
+#login-modal-card button {
+	margin: 20px 0 50px 0;
+}
 
 
 
@@ -255,7 +264,7 @@ body {
 	display: flex;
 }
 
-.plan textarea, .plan input {
+.plan textarea, .textinput {
 	font-size: 1.15rem;
 	resize: none;
 	border-radius: 3px;
@@ -268,12 +277,24 @@ body {
 	margin-top: 5px;
 }
 
-.plan input {
+.textinput {
 	height: auto;
 	margin-left: 15px;
 }
 
-.plan textarea:focus, .plan input:focus {
+.textinput2 {
+	display: flex;
+	flex-direction: column;
+	font-size: 1.15rem;
+	border-radius: 3px;
+	border: 2px solid #D5D6DB;
+	width: 275px;
+	overflow: hidden;
+	padding: 3px;
+	margin-top: 5px;
+}
+
+.plan textarea:focus, .textinput:focus, .textinput2:focus {
 	color: var(--text-dark);
 	outline: none;
 	box-shadow: 0 0 0 4px #E1E3EA;
