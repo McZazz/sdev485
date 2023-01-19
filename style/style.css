@@ -50,9 +50,6 @@ body {
 }
 
 
-
-
-
 /*------- 404 Page -------*/
 .not-found {
 	user-select: none;
@@ -147,9 +144,6 @@ body {
 }
 
 
-
-
-
 .div-as-link {
 	width: fit-content;
 	padding: 0 0 2px 0;
@@ -159,7 +153,6 @@ body {
 }
 
 .div-as-link:hover {
-/*	padding: 0 0 3px 0;*/
 	color: var(--text-dark-2);
 	text-decoration: underline;
 }
@@ -168,10 +161,6 @@ body {
 	padding: 2px 0 0 0;
 	color: var(--text-dark-3);
 }
-
-
-
-
 
 
 /*-------- modal ---------*/
@@ -253,13 +242,6 @@ body {
 #login-message-btn:active .btn-x {
 	fill: #3B404D;
 }
-
-
-
-
-
-
-
 
 
 /*------- Buttons, global -------*/
@@ -396,9 +378,6 @@ body {
 	flex-grow: 1;
 }
 
-
-
-
 #saved-confirm_home {
 	position: relative;
 	display: flex;
@@ -407,8 +386,6 @@ body {
 	height: var(--warning-height);
 	width: 100%;
 }
-
-
 
 
 /*------- Saved message Area -------*/
@@ -504,6 +481,5 @@ body {
 	background: #989CA9;
 	border: 1px solid #8F93A2;
 }
-
 
 

@@ -104,34 +104,43 @@ class Controller
     }
 
 
+    /**
+     * Login button press route handling
+     */
     function login() 
     {
         $username = '';
         $password = '';
 
+        // get username and pass from POST
         if (isset($_POST['username'])) {
             $username = $_POST['username'];
         }
         if (isset($_POST['password'])) {
+            // hash the pass immediately out of POST
             $password = hash('sha256', $_POST['password']);
         }
 
+        // check database for user valid name and pass
         $userIsValid = $this->_db->authUser($username, $password);
 
+        // if user is valid, go to admin route
         if ($userIsValid) {
             $_SESSION['loggedin'] = true;
-
             $this->_f3->reroute('/admin');
         } else {
+            // if user is not valid, re-render home page with modal visible,
+            // showing invalid credentials flag
             $this->_f3->set('invalid_login', true);
             $view = new Template();
             echo $view->render('views/home.html');
         }
-
-        // echo '{"res":"' . $userIsValid . '", "username":"'.$username.'","password":"'.$password.'"}';
     }
 
 
+    /**
+     * Admin route handling
+     */
     function admin()
     {
         // make sure user is logged in to go to admin page

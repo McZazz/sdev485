@@ -16,8 +16,6 @@
 </head>
 <body class="home">
 
-
-
 	<div id="home-content">
 		{{ Views::header() }}
 
@@ -74,21 +72,17 @@
 
 			<button id="login-btn" class="link-btn" type="submit">Login</button>
 
-
 			<div id="saved-confirm_home">
 				
 				<check if="{{  isset(@invalid_login) && @invalid_login == true }}">
-					<div id="message" _is_visible="t">
+					<input type="hidden" id="_is_visible" value="t">
 				</check>
 
 				<check if="{{ !isset(@invalid_login) }}">
-					<div id="message" _is_visible="f">
+					<input type="hidden" id="_is_visible" value="f">
 				</check>
 
-
-
-
-
+				<div id="message">
 
 					<div id="message-cont">
 						<div id="message-btn-cont">
@@ -108,20 +102,9 @@
 						<div id="message-text">Invalid Credentials</div>
 					</div>
 
-
-
-
-
 				</div>	
 
 			</div>
-
-
-
-
-
-
-
 
 		</form>		
 	</div>

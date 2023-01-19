@@ -60,12 +60,14 @@
 			<div id="saved-confirm">
 				
 				<check if="{{ (isset(@opened) && @opened == 'f') || !isset(@opened) }}">
-					<div id="message" _is_visible="f">
+					<input type="hidden" id="_is_visible" value="f">
 				</check>
 
 				<check if="{{ isset(@opened) && @opened == 't' }}">
-					<div id="message" _is_visible="t">
+					<input type="hidden" id="_is_visible" value="t">
 				</check>
+				
+					<div id="message">
 
 					<div id="message-cont">
 						<div id="message-btn-cont">
