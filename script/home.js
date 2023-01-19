@@ -25,6 +25,26 @@ modal_close_btn.addEventListener('click', (event) => {
 });
 
 const loginClicked = () => {
-	console.log('login clidke');
+  const params = {
+  	method: 'POST',
+  	mode: 'cors',
+  	headers: {
+		'Accept': 'application/json',
+		'Content-Type': 'application/json'
+  	}
+  }
+
+  fetch('http://localhost/sdev485/login', params)
+    .then(res => {
+        return res.json();
+    })
+    .then(json => {
+        console.log('returned res:', json);
+    })
+    .catch(err => {
+        // if errCallback is supplied, use it, otherwise just console log
+        console.log('xhr error:', err);
+		});
+
 	return false;
 }

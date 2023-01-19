@@ -50,6 +50,16 @@ $f3->route('GET|POST /@token', function()
 
 
 /**
+ * Route for login button press
+ */
+$f3->route('POST /login', function()
+{
+    // $GLOBALS['controller']->route_plan();
+    echo '{"res":"stuff"}';
+});
+
+
+/**
  * Route for displaying 404
  */
 $f3->route('GET|POST /error404', function()
