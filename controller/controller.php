@@ -104,6 +104,24 @@ class Controller
     }
 
 
+    function login() 
+    {
+        $username = '';
+        $password = '';
+
+        if (isset($_POST['username'])) {
+            $username = $_POST['username'];
+        }
+        if (isset($_POST['password'])) {
+            $password = $_POST['password'];
+        }
+
+        $stuff = json_encode($_POST);
+
+        echo '{"res":"invalid_creds", "username":"'.$username.'","password":"'.$password.'"}';
+    }
+
+
     /**
      * Re-route to 404
      */

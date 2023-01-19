@@ -54,8 +54,9 @@ $f3->route('GET|POST /@token', function()
  */
 $f3->route('POST /login', function()
 {
-    // $GLOBALS['controller']->route_plan();
-    echo '{"res":"stuff"}';
+
+    $GLOBALS['controller']->login();
+    // echo '{"res":"stuff"}';
 });
 
 
