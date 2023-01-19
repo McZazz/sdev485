@@ -1,0 +1,51 @@
+/**
+ * @author: Kevin Price
+ * @date: Jan 19, 2023
+ * @filename: globals.css
+ * @description: stylesheet for all pages basic styling
+ */
+
+
+/*------- Global Styles -------*/
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+:root {
+	--text-light: #EFF1F6;
+	--text-dark: #373A40;
+	--text-dark-2: #212428;
+	--text-dark-3: #0B0D0F;
+	--header-footer-col: #DDDEE4;
+	--page-width: 600px;
+	--page-width-2: 100%;
+	--warning-height: 37px;
+}
+
+::-moz-selection {
+	background: #D5D7E2;
+}
+
+::selection {
+	background: #D5D7E2;
+}
+
+
+html, body {
+	/* begin sticky footer */
+	height: 100%;
+	/* end sticky footer */
+}
+
+
+body {
+	font-family: Arial;
+	background: var(--text-light);
+	/* begin sticky footer */
+	display: flex;
+	flex-direction: column;
+	/* end sticky footer */
+	align-items: center;
+}

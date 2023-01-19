@@ -1,0 +1,87 @@
+/**
+ * @author: Kevin Price
+ * @date: Jan 19, 2023
+ * @filename: modal.css
+ * @description: stylesheet modals
+ */
+
+
+/*-------- modal ---------*/
+.login-modal-bg_hidden {
+	display: none;
+}
+
+.login-modal-bg_visible {
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background: #23284235;
+}
+
+#login-modal-card {
+	position: relative;
+	cursor: default;
+	width: 400px;
+	padding: 15px 0 8px 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background: var(--text-light);
+	box-shadow: 0 0 15px 5px #1E244230;
+	border-radius: 10px;
+}
+
+#login-modal-card label {
+	margin-top: 15px;
+}
+
+#login-modal-card {
+	border: 1px solid #C7CAD3;
+}
+
+#login-modal-card button {
+	margin: 20px 0 8px 0;
+}
+
+#login-message-btn {
+	width: 30px;
+	height: 30px;
+}
+
+#login-modal-card .btn-row {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	padding-right: 15px;
+}
+
+#login-message-btn {
+	background: #BEC1CA;
+	border: 1px solid #B2B5C0;
+}
+
+#login-message-btn:hover {
+	background: #989CA8;
+	border: 1px solid #9194A0;
+}
+
+#login-message-btn:active {
+	background: #7A7E8A;
+	border: 1px solid #696E7C;
+}
+
+#login-message-btn .btn-x {
+	fill: #646977;
+}
+
+#login-message-btn:hover .btn-x {
+	fill: #4F5462;
+}
+
+#login-message-btn:active .btn-x {
+	fill: #3B404D;
+}

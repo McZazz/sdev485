@@ -1,0 +1,39 @@
+/**
+ * @author: Kevin Price
+ * @date: Jan 12, 2023
+ * @filename: buttons.css
+ * @description: stylesheet for buttons
+ */
+
+
+/*------- Buttons, global -------*/
+.link-btn {
+	cursor: pointer;
+	box-sizing: border-box;
+	text-decoration: none;
+  color: var(--text-light);
+	font-size: 1.5rem;
+	user-select: none;
+	border-radius: 3px;
+	padding: 5px 10px;
+	border: 1px solid #8F93A2;
+  background: #989CA9;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.link-btn:hover {
+  background: #8C909E;
+  border: 1px solid #838795;
+}
+
+.link-btn:active {
+  background: #767A88;
+  border: 1px solid #737785;
+}
+
+.link-btn:focus {
+  box-shadow: 0 0 0 4px #AFB3C1;
+}

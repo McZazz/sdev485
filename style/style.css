@@ -6,59 +6,6 @@
  */
 
 
-/*------- Global Styles -------*/
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-}
-
-:root {
-	--text-light: #EFF1F6;
-	--text-dark: #373A40;
-	--text-dark-2: #212428;
-	--text-dark-3: #0B0D0F;
-	--header-footer-col: #DDDEE4;
-	--page-width: 600px;
-	--page-width-2: 100%;
-	--warning-height: 37px;
-}
-
-::-moz-selection {
-	background: #D5D7E2;
-}
-
-::selection {
-	background: #D5D7E2;
-}
-
-
-html, body {
-	/* begin sticky footer */
-	height: 100%;
-	/* end sticky footer */
-}
-
-
-body {
-	font-family: Arial;
-	background: var(--text-light);
-	/* begin sticky footer */
-	display: flex;
-	flex-direction: column;
-	/* end sticky footer */
-	align-items: center;
-}
-
-
-/*------- 404 Page -------*/
-.not-found {
-	user-select: none;
-	color: var(--text-dark);
-	justify-content: center;
-}
-
-
 /*------- Home Page, Overall Styles -------*/
 #home-content section {
 	display: flex;
@@ -163,118 +110,6 @@ body {
 }
 
 
-/*-------- modal ---------*/
-.login-modal-bg_hidden {
-	display: none;
-}
-
-.login-modal-bg_visible {
-	cursor: pointer;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	background: #23284235;
-}
-
-#login-modal-card {
-	position: relative;
-	cursor: default;
-	width: 400px;
-	padding: 15px 0 8px 0;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	background: var(--text-light);
-	box-shadow: 0 0 15px 5px #1E244230;
-	border-radius: 10px;
-}
-
-#login-modal-card label {
-	margin-top: 15px;
-}
-
-#login-modal-card {
-	border: 1px solid #C7CAD3;
-}
-
-#login-modal-card button {
-	margin: 20px 0 8px 0;
-}
-
-#login-message-btn {
-	width: 30px;
-	height: 30px;
-}
-
-#login-modal-card .btn-row {
-	width: 100%;
-	display: flex;
-	justify-content: flex-end;
-	padding-right: 15px;
-}
-
-#login-message-btn {
-	background: #BEC1CA;
-	border: 1px solid #B2B5C0;
-}
-
-#login-message-btn:hover {
-	background: #989CA8;
-	border: 1px solid #9194A0;
-}
-
-#login-message-btn:active {
-	background: #7A7E8A;
-	border: 1px solid #696E7C;
-}
-
-#login-message-btn .btn-x {
-	fill: #646977;
-}
-
-#login-message-btn:hover .btn-x {
-	fill: #4F5462;
-}
-
-#login-message-btn:active .btn-x {
-	fill: #3B404D;
-}
-
-
-/*------- Buttons, global -------*/
-.link-btn {
-	cursor: pointer;
-	box-sizing: border-box;
-	text-decoration: none;
-  color: var(--text-light);
-	font-size: 1.5rem;
-	user-select: none;
-	border-radius: 3px;
-	padding: 5px 10px;
-	border: 1px solid #8F93A2;
-  background: #989CA9;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.link-btn:hover {
-  background: #8C909E;
-  border: 1px solid #838795;
-}
-
-.link-btn:active {
-  background: #767A88;
-  border: 1px solid #737785;
-}
-
-.link-btn:focus {
-  box-shadow: 0 0 0 4px #AFB3C1;
-}
 
 
 /*------- Plan Page Overall Styles -------*/
@@ -343,6 +178,11 @@ body {
 	margin-bottom: 17px;
 }
 
+.print-btn {
+	margin-top: 15px;
+	padding: 4px 11px;
+}
+
 .plan form div label:nth-child(1) {
 	margin-right: 5px;
 }
@@ -385,77 +225,6 @@ body {
 	justify-content: center;
 	height: var(--warning-height);
 	width: 100%;
-}
-
-
-/*------- Saved message Area -------*/
-#message {
-	visibility: hidden;
-	position: absolute;
-	padding: 5px 18px;
-	width: 100%;
-	height: 100%;
-}
-
-#message-cont {
-	display: flex;
-	border-radius: 3px;
-	overflow: hidden;
-	align-items: center;
-	width: 100%;
-	height: 100%;
-	background: #2BB287;
-	border: 1px solid #21A67B;
-}
-
-#message-text {
-	display: flex;
-	color: var(--text-light);
-	font-weight: bold;
-	user-select: none;
-	align-items: center;
-	justify-content: center;
-	width: 100%;
-	height: 100%;
-}
-
-#message-btn-cont {
-	display: flex;
-	width: 27px;
-	height: 100%;
-	padding: 3px 0 3px 3px;
-}
-
-.message-btn {
-	cursor: pointer;
-	display: flex;
-	background: #05896B;
-	border: 1px solid #068366;
-	border-radius: 3px;
-	width: 100%;
-	height: 100%;
-}
-
-.message-btn .btn-x{
-	fill: #045A46;
-}
-
-.message-btn:hover .btn-x {
-	fill: #034C3B;
-}
-
-.message-btn:active .btn-x {
-	fill: #023A2D;
-}
-
-.message-btn:hover {
-	background: #078065;
-	border: 1px solid #067A60;
-}
-
-.message-btn:active {
-	background: #06755D;
-	border: 1px solid #046C56;
 }
 
 

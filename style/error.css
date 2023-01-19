@@ -1,0 +1,13 @@
+/**
+ * @author: Kevin Price
+ * @date: Jan 19, 2023
+ * @filename: error.css
+ * @description: stylesheet error 404 page
+ */
+
+/*------- 404 Page -------*/
+.not-found {
+	user-select: none;
+	color: var(--text-dark);
+	justify-content: center;
+}
