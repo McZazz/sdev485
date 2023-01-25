@@ -20,7 +20,15 @@
 </head>
 <body class="plan">
 
+
 	<form method="POST">
+
+		<nav>
+			<a href="prior-year" class="link-btn">Prior Year</a>
+			<div>2022 / 2023</div>
+			<a href="next-year" class="link-btn">Next Year</a>
+		</nav>
+
 		<div>
 			<label>Fall
 				<textarea spellcheck="false" id="fall_input" name="fall">{{ @SESSION.plan->getFall() }}</textarea>
