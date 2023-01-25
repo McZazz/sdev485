@@ -43,17 +43,20 @@ class Controller
      */
     function route_create_new()
     {
-		$isUnique = $this->_db->addNewPlan();
+		$newPlan = $this->_db->addNewToken();
 
-        if ($isUnique == false) {
+
+        if ($newPlan == false) {
             // go home, database is full of 6 char tokens
             $this->_f3->reroute('/');
         }
 
+
         // create plan model obj. all quarter fields blank, mark as new
-        $_SESSION['plan'] = new Plan($isUnique['token']);
+        $_SESSION['plan'] = new Plan($newPlan['token'], $newPlan['year']);
         $_SESSION['plan']->setIsNew(true);
 
+        // echo $_SESSION['plan']->getToken();
         // goto plan page with this token in url
 		$this->_f3->reroute('/' . $_SESSION['plan']->getToken());
     }
@@ -97,32 +100,37 @@ class Controller
             // show saved message on front end
             $this->_f3->set('opened', 't');
 
-        } else {
 
-            // this fires when creating new token, and when getting a previusly saved token
+        } else {
+            // GET
+            // this fires when getting a previusly saved token, or after a new token is made, it's rerouted to here
             if ($this->_f3->get('PARAMS.token') != '' && null != $this->_f3->get('PARAMS.token')) {
 
                 if ((isset($_SESSION['plan']) && $_SESSION['plan']->isNew() == false) || !isset($_SESSION['plan'])) {
                     // purge unused tokens if this is unused. 24 hour grace period applies.
                     $this->_db->deleteIfUnusedAfter24Hrs();
                 }
-                
-                $plan = $this->_db->getPlan($this->_f3->get('PARAMS.token'));
 
-                // if token is false, reroute to home
-                if ($plan == false) {
-                    $this->_f3->reroute('/');
+                // getting plan on return to site
+                if (!isset($_SESSION['plan'])) {
+                    $plan = $this->_db->getPlan($_SESSION['plan']->getToken());
+
+                    // if token is false, reroute to home
+                    if ($plan == false) {
+                        $this->_f3->reroute('/');
+                    }
+
+                    // set for use in templating
+                    $_SESSION['plan'] = $plan;
+
                 }
-
-                // set for use in templating
-                $_SESSION['plan'] = $plan;
             }
         }
 
-        $this->_f3->set('root', $this->_SERVER_ROOT);
+        $this->_f3->set('root', $this->_SERVER_ROOT); ////////////////////// use
 
-        $view = new Template();
-        echo $view->render('views/plan.html');
+        $view = new Template(); ////////////////////// use
+        echo $view->render('views/plan.html'); ////////////////////// use
     }
 
 

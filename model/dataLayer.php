@@ -35,7 +35,7 @@ class DataLayer
      * Create new plan row in db and return the token
      * @return array, with 'token' and 'status' keys 
      */
-    function addNewPlan()
+    function addNewToken()
     {
         // clean out unused tokens older than 24 hours
         $this->deleteIfUnusedAfter24Hrs();
@@ -47,23 +47,37 @@ class DataLayer
             return false;
         }
 
+
         // add plan to db with new token
-        $sql = "INSERT INTO plan (token, last_saved, created, saved)
-                VALUES (:token, NOW(), NOW(), 0)";
-        $saved = '0';
+        $sql = "INSERT INTO adviseit_tokens (token, last_saved, created, advisor, saved)
+                VALUES (:token, NOW(), NOW(), :advisor, 0)";
+
+        $advisor = '';
 
         $statement = $this->_db->prepare($sql);
         $statement->bindParam(':token', $newToken);
+        $statement->bindParam(':advisor', $advisor);
         $statement->execute();
 
-        $insertSuccess = $this->tokenIsUnique($newToken);
+        $insertSuccess = $this->getToken($newToken);
 
+        // return $insertSuccess;
         // swapping the meaning of $insertSuccess, it's a success if false
         // because we need to know its already in the db after creating it
-        if ($this->tokenIsUnique($newToken)) {
-            return array('token'=>$newToken, 'status'=>false);
+        if ($insertSuccess == false) {
+            return false;
         } else {
-            return array('token'=>$newToken, 'status'=>true);
+            $dtg = new DateTime($insertSuccess['created']);
+            $month = intval($dtg->format('m'));
+            $year = '20' . $dtg->format('y');
+
+            if ($month >= 1 && $month <= 6) {
+                $year = intval($year) - 1;
+                $year = $year;
+            }
+            
+            // created date, jan - june means subtract 1 year
+            return array('token'=>$newToken, 'year'=>$year, 'status'=>true);
         }
     }
 
@@ -117,19 +131,20 @@ class DataLayer
     }
 
 
+
     /**
      * Save / update a pre-existing plan
      * @param $plan Plan object
      */
-    function updatePlan($plan)
+    function updateYear($plan)
     {
         // create sql statement to update plan
-        $sql = "UPDATE plan 
-                SET fall = :fall, winter = :winter, spring = :spring, summer = :summer, advisor = :advisor, saved = :saved, last_saved = NOW() 
+        $sql = "UPDATE adviseit_:year
+                SET fall = :fall, winter = :winter, spring = :spring, summer = :summer 
                 WHERE token = :token";
+
         $token = $plan->getToken();
-        $advisor = $plan->getAdvisor();
-        $saved = '1';
+        $year = $year->getYear();
         $fall = $plan->getFall();
         $winter = $plan->getWinter();
         $spring = $plan->getSpring();
@@ -137,8 +152,7 @@ class DataLayer
 
         $statement = $this->_db->prepare($sql);
         $statement->bindParam(':token', $token);
-        $statement->bindParam(':advisor', $advisor);
-        $statement->bindParam(':saved', $saved);
+        $statement->bindParam(':year', $year);
         $statement->bindParam(':fall', $fall);
         $statement->bindParam(':winter', $winter);
         $statement->bindParam(':spring', $spring);
@@ -149,18 +163,108 @@ class DataLayer
     }
 
 
+
+
+
+
+    /**
+     * Save / update a pre-existing plan
+     * @param $plan Plan object
+     */
+    function updateToken($plan)
+    {
+        // create sql statement to update plan
+        $sql = "UPDATE adviseit_tokens
+                SET advisor = :advisor, saved = :saved, last_saved = NOW() 
+                WHERE token = :token";
+
+        $token = $plan->getToken();
+        $advisor = $plan->getAdvisor();
+        $saved = '1';
+
+        $statement = $this->_db->prepare($sql);
+        $statement->bindParam(':token', $token);
+        $statement->bindParam(':advisor', $advisor);
+        $statement->bindParam(':saved', $saved);
+
+        // execute sql
+        $statement->execute();
+    }
+
+
+
+
+
+    /**
+     * getToken getter, gets token and it's data from database
+     * @param $token String, 6 digit token
+     * @return boolean: false if plan was not present, array of values if present
+     */
+    function getToken($token)
+    {
+        $sql = "SELECT token, created, last_saved, advisor, saved
+                FROM adviseit_tokens WHERE token = :token";
+
+        $statement = $this->_db->prepare($sql);
+        $statement->bindParam(':token', $token);
+        $statement->execute();
+
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        // invalid token
+        if (sizeof($result) == 0) {
+            return false;
+        }
+
+        // return token and its data
+        return $result[0];
+    }
+
+
+    /**
+     * returns all years labels available in database
+     * @return array, array of strings
+     */
+    function getYears()
+    {
+        return array(
+            '2020',
+            '2021',
+            '2022',
+            '2023',
+            '2024',
+            '2025',
+            '2026',
+            '2027',
+            '2028',
+            '2029',
+            '2030',
+            '2031',
+            '2032',
+            '2033',
+            '2034',
+            '2035',
+            '2036',
+            '2037',
+            '2038',
+            '2039'
+        );
+    }
+
+
     /**
      * getPlan getter, gets entire plan from db as Plan object
      * @param $token String, 6 digit token
      * @return boolean: false if plan was not present, Plan object if plan present
      */
-    function getPlan($token)
+    function getPlan($token, $year)
     {
-        $sql = "SELECT last_saved, token, advisor, fall, winter, spring, summer, saved
-                FROM plan WHERE token = :token";
+        $sql = "SELECT fall, winter, spring, summer
+                FROM adviseit_:year WHERE token = :token";
 
         $statement = $this->_db->prepare($sql);
         $statement->bindParam(':token', $token);
+        $statement->bindParam(':year', $year);
         $statement->execute();
 
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -213,7 +317,7 @@ class DataLayer
     function tokenIsUnique($token)
     {
         // create and run sql to check if token is present
-        $sql = "SELECT token FROM plan WHERE token = :token";
+        $sql = "SELECT token FROM adviseit_tokens WHERE token = :token";
 
         $statement = $this->_db->prepare($sql);
         $statement->bindParam(':token', $token);
@@ -237,7 +341,7 @@ class DataLayer
     function deleteIfUnusedAfter24Hrs()
     {
         // sql statement deltes all plans not saved after 24 hours
-        $sql = "DELETE FROM plan WHERE saved = 0 AND last_saved + INTERVAL 1 DAY < NOW()";
+        $sql = "DELETE FROM adviseit_tokens WHERE saved = 0 AND last_saved + INTERVAL 1 DAY < NOW()";
         $statement = $this->_db->prepare($sql);
         $statement->execute();    
     }

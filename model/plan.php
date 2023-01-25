@@ -23,20 +23,22 @@ class Plan
     private $_summer = '';
     private $_is_new = false;
     private $_advisor = '';
+    private $_year = '';
 
     /**
      * Constructor
      * @param $token, String, token for new Plans. Or an existing
      * PDO return directly from the database for updated plans
      */
-    function __construct($token)
+    function __construct($token, $year)
     {
 		// we pass a token string or entire database obj
 		if (is_string($token)) {
             // its a string, so we need to get from POST
 			$this->_token = $token;
+            $this->_year = $year;
 
-            // cehck POST for correct keys, update if available
+            // check POST for correct keys, update if available
 	        if (isset($_POST['fall'])) {
 	            $this->_fall = substr($_POST['fall'], 0, $this->_QUARTER_LEN);
 	        }
@@ -51,8 +53,8 @@ class Plan
 	        }
             if (isset($_POST['advisor'])) {
                 $this->_advisor = substr($_POST['advisor'], 0, $this->_ADVISOR_LEN);
-                // $this->_advisor = $_POST['advisor'];
             }
+
 		} else {
             // PDO db return, fill into this new obj
 			$this->_token = $token['token'];
@@ -63,7 +65,28 @@ class Plan
 			$this->_winter = $token['winter'];
 			$this->_spring = $token['spring'];
 			$this->_summer = $token['summer'];
+            $this->_year = $token['year'];
 		}
+    }
+
+
+    /**
+     * Get Fall data
+     * @return String, data
+     */
+    function getYear()
+    {
+        return $this->_year;
+    }
+
+
+    /**
+     * Set year data
+     * @param $year String, data
+     */
+    function setYear($year)
+    {
+        $this->_year = $year;
     }
 
 
