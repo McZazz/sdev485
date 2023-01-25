@@ -32,18 +32,18 @@
 		<!-- begin templated area -->
 
 		<div>
-			<label>Fall
+			<label>{{ 'Fall ' . @SESSION.plan->getYear() }}
 				<textarea spellcheck="false" id="fall_input" name="fall">{{ @SESSION.plan->getFall() }}</textarea>
 			</label>
-			<label>Winter
+			<label>{{ 'Fall ' . @SESSION.plan->getYear() + 1 }}
 				<textarea spellcheck="false" id="winter_input" name="winter">{{ @SESSION.plan->getWinter() }}</textarea>
 			</label>
 		</div>
 		<div class="row-2">
-			<label>Spring
+			<label>{{ 'Fall ' . @SESSION.plan->getYear() + 1 }}
 				<textarea spellcheck="false" id="spring_input" name="spring">{{ @SESSION.plan->getSpring() }}</textarea>
 			</label>
-			<label>Summer
+			<label>{{ 'Fall ' . @SESSION.plan->getYear() + 1 }}
 				<textarea spellcheck="false" id="summer_input" name="summer">{{ @SESSION.plan->getSummer() }}</textarea>
 			</label>
 		</div>
