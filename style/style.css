@@ -131,6 +131,10 @@
 	align-items: center;
 }
 
+.plan form a {
+	width: 145px;
+}
+
 .plan form div {
 	display: flex;
 }

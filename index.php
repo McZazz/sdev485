@@ -50,6 +50,24 @@ $f3->route('GET|POST /@token', function()
 
 
 /**
+ * Route for creating / navigating to prior year plans
+ */
+$f3->route('GET|POST /prior-year', function()
+{
+    $GLOBALS['controller']->route_prior_year();
+});
+
+
+/**
+ * Route for creating / navigating to next year plans
+ */
+$f3->route('GET|POST /next-year', function()
+{
+    $GLOBALS['controller']->route_next_year();
+});
+
+
+/**
  * Route for login button press
  */
 $f3->route('POST /login', function()

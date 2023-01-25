@@ -60,6 +60,24 @@ class Controller
 
 
     /**
+     * Route for creating / going to prior year
+     */
+    function route_prior_year()
+    {
+        echo "goto / create prior year";
+    }
+
+
+    /**
+     * Route for creating / going to next year
+     */
+    function route_next_year()
+    {
+        echo "goto / create next year";
+    }
+
+
+    /**
      * Route for displaing plan page, 
      * redirected from route_create_new for new tokens only
      */
