@@ -23,11 +23,13 @@
 
 	<form method="POST">
 
+		<h3>Advise It</h3>
+
 		<nav>
-			<a href="prior-year" class="link-btn">Prior Year</a>
-			<div>2022 / 2023</div>
-			<a href="next-year" class="link-btn">Next Year</a>
+			<a href="prior-year" class="link-btn">Add Year</a>
 		</nav>
+
+		<!-- begin templated area -->
 
 		<div>
 			<label>Fall
@@ -46,6 +48,16 @@
 			</label>
 		</div>
 
+
+		<!-- end templated area -->
+
+
+		<nav>
+			<a href="next-year" class="link-btn">Add Year</a>
+		</nav>
+
+
+		
 		<div class="row-3">
 
 			<label for="advisor_input">Advisor
@@ -106,12 +118,13 @@
 		</div>
 
 		<button class="link-btn print-btn" type="button" onclick="print_format();">Print</button>
+		
 
 	</form>
 
 	<div id="plan-print">		
 
-		<h3>Advise-It - Advising Plan</h3>
+		<h3>Advise It</h3>
 
 		<table>
 			<tr>
@@ -125,6 +138,8 @@
 				<td id="advisor_table_cell">{{ @SESSION.plan->getAdvisor() }}</td>
 			</tr>
 		</table>
+
+		<!-- Begin templated area -->
 	
 		<table>
 			<tr>
@@ -144,6 +159,8 @@
 				<td id="summer_table_cell">{{ @SESSION.plan->getSummer() }}</td>
 			</tr>
 		</table>
+
+		<!-- end templated area -->
 		
 	</div>
 

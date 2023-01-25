@@ -120,7 +120,7 @@
 .plan nav {
 	width: 100%;
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
 	align-items: center;
 	padding-bottom: 15px;
 }
@@ -175,12 +175,16 @@
 	box-shadow: 0 0 0 4px #E1E3EA;
 }
 
-.plan label, .plan nav div {
+.plan label, .plan form nav div, .plan form h3 {
 	color: var(--text-dark);
 	font-size: 1.5rem;
 	user-select: none;
 	display: flex;
 	flex-direction: column;
+}
+
+.plan form h3 {
+	padding-bottom: 15px;
 }
 
 .plan .row-3 label {
