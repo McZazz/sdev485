@@ -26,7 +26,7 @@ class Token
 
             $new_plan = new Plan(intval($year_str));
 
-            if (isset($_POST['fall_'.$cntr])) {
+            if (isset($_POST['fall_'.$year_str])) {
                 $new_plan->setFall($_POST['fall_'.$year_str]);
             }
             if (isset($_POST['winter_'.$year_str])) {

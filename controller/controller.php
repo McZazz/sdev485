@@ -33,6 +33,7 @@ class Controller
     function route_home()
     {
         // goto home
+        $_SESSION['is_new'] = false;
         $view = new Template();
         echo $view->render('views/home.html');
     }
@@ -53,6 +54,7 @@ class Controller
         // echo $_SESSION['plan']->getToken();
         // goto plan page with this token in url
         $_SESSION['plan'] = $newPlan;
+        $_SESSION['is_new'] = true;
         // echo $_SESSION['plan']->getToken() . ' ' . $_SESSION['plan']->getAdvisor() . ' ' . $_SESSION['plan']->getLastSaved();
 		$this->_f3->reroute('/' . $_SESSION['plan']->getToken());
     }
@@ -84,7 +86,7 @@ class Controller
     {
         // POST means we are saving / updating an existing token
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
+            $_SESSION['is_new'] = false;
             // reacquire fields, instantiation automatically gets from post
             $old_token_obj = $_SESSION['plan']->getToken();
 
@@ -124,8 +126,7 @@ class Controller
                     $this->_db->deleteIfUnusedAfter24Hrs();
                 }
 
-                // getting plan on return to site
-                if (!isset($_SESSION['plan'])) {
+                if (isset($_SESSION['is_new']) && $_SESSION['is_new'] == false || !isset($_SESSION['is_new'])) {
                     $plan = $this->_db->getTokenObj($this->_f3->get('PARAMS.token'));
 
                     // if token is false, reroute to home
@@ -135,10 +136,8 @@ class Controller
 
                     // set for use in templating
                     $_SESSION['plan'] = $plan;
-                }
-            // } else {
 
-                // }
+                }
 
             }
 
@@ -161,7 +160,7 @@ class Controller
     {
         $username = '';
         $password = '';
-
+        $_SESSION['is_new'] = false;
         // get username and pass from POST
         if (isset($_POST['username'])) {
             $username = $_POST['username'];
@@ -193,6 +192,7 @@ class Controller
      */
     function admin()
     {
+        $_SESSION['is_new'] = false;
         // make sure user is logged in to go to admin page
         if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
 
@@ -217,6 +217,7 @@ class Controller
     function error_reroute()
     {
         // goto 404 route
+        $_SESSION['is_new'] = false;
         $this->_f3->reroute('/error404');
     }
 
@@ -227,6 +228,7 @@ class Controller
     function error()
     {
         // goto error view
+        $_SESSION['is_new'] = false;
         $view = new Template();
         echo $view->render('views/error.html');
     }

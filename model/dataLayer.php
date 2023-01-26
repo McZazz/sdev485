@@ -97,7 +97,7 @@ class DataLayer
     {
         // do sql to get plans
         $sql = "SELECT created, token, advisor
-                FROM plan WHERE saved = 1";
+                FROM adviseit_tokens WHERE saved = 1";
 
         $statement = $this->_db->prepare($sql);
         $statement->execute();
@@ -308,6 +308,19 @@ class DataLayer
         $token_obj = new Token($token_from_db['token'], $token_from_db['advisor'], $token_from_db['last_saved']);
         $token_obj->setlastSaved($token_from_db['last_saved']);
         $token_obj->setSaved($token_from_db['saved']);
+
+        // if ($token_obj->getSaved() == '0') {
+        //     $empty_plan = new Plan(
+        //         array(
+        //             'winter'=>'',
+        //             'fall'=>'',
+        //             'summer'=>'',
+        //             'spring'=>'',
+        //             'summer'=>'',
+        //             ''=>'',
+        //         )
+        //     );
+        // }
 
         $token_obj = $this->getAllPlans($token_obj);
 
