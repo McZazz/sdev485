@@ -30,30 +30,29 @@ class Plan
      * @param $token, String, token for new Plans. Or an existing
      * PDO return directly from the database for updated plans
      */
-    function __construct($token, $year)
+    function __construct($year)
     {
 		// we pass a token string or entire database obj
-		if (is_string($token)) {
+		if (is_int($year)) {
             // its a string, so we need to get from POST
-			$this->_token = $token;
             $this->_year = $year;
 
             // check POST for correct keys, update if available
-	        if (isset($_POST['fall'])) {
-	            $this->_fall = substr($_POST['fall'], 0, $this->_QUARTER_LEN);
-	        }
-	        if (isset($_POST['winter'])) {
-	            $this->_winter = substr($_POST['winter'], 0, $this->_QUARTER_LEN);
-	        }                
-	        if (isset($_POST['spring'])) {
-	            $this->_spring = substr($_POST['spring'], 0, $this->_QUARTER_LEN);
-	        }                
-	        if (isset($_POST['summer'])) {
-	            $this->_summer = substr($_POST['summer'], 0, $this->_QUARTER_LEN);
-	        }
-            if (isset($_POST['advisor'])) {
-                $this->_advisor = substr($_POST['advisor'], 0, $this->_ADVISOR_LEN);
-            }
+	        // if (isset($_POST['fall'])) {
+	        //     $this->_fall = substr($_POST['fall'], 0, $this->_QUARTER_LEN);
+	        // }
+	        // if (isset($_POST['winter'])) {
+	        //     $this->_winter = substr($_POST['winter'], 0, $this->_QUARTER_LEN);
+	        // }                
+	        // if (isset($_POST['spring'])) {
+	        //     $this->_spring = substr($_POST['spring'], 0, $this->_QUARTER_LEN);
+	        // }                
+	        // if (isset($_POST['summer'])) {
+	        //     $this->_summer = substr($_POST['summer'], 0, $this->_QUARTER_LEN);
+	        // }
+            // if (isset($_POST['advisor'])) {
+            //     $this->_advisor = substr($_POST['advisor'], 0, $this->_ADVISOR_LEN);
+            // }
 
 		} else {
             // PDO db return, fill into this new obj
@@ -68,6 +67,32 @@ class Plan
             $this->_year = $token['year'];
 		}
     }
+
+
+    // public static function getAllPlansFromPOST()
+    // {
+
+    //     if (isset($_POST['fall']) && isset($_POST['winter']) && isset($_POST['spring']) && isset($_POST['summer']) && isset($_POST['year']) && isset($_POST['advisor'])) {
+
+    //         $plans_arr = array();
+
+    //         for ($i = 0; $i < sizeof($_POST['fall']); $i++) {
+    //             $new_plan = new Plan($_SESSION['plan'][0]->getToken(), $_POST['year']);
+    //             $new_plan->setFall($_POST['fall'][$i]);
+    //             $new_plan->setWinter($_POST['winter'][$i]);
+    //             $new_plan->setSpring($_POST['spring'][$i]);
+    //             $new_plan->setSummer($_POST['summer'][$i]);
+    //             $new_plan->setAdvisor($_POST['advisor']);
+
+    //             $plans_arr[] = $new_plan;
+    //         }
+
+    //         return $plans_arr;
+
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
 
     /**
@@ -101,12 +126,32 @@ class Plan
 
 
     /**
+     * Get Fall data
+     * @return String, data
+     */
+    function setFall($fall)
+    {
+        $this->_fall = $fall;
+    }
+
+
+    /**
      * Get Winter data
      * @return String, data
      */
     function getWinter()
     {
 		return $this->_winter;
+    }
+
+
+    /**
+     * Get Winter data
+     * @return String, data
+     */
+    function setWinter($winter)
+    {
+        $this->_winter = $winter;
     }
 
 
@@ -121,12 +166,32 @@ class Plan
 
 
     /**
+     * Get Spring data
+     * @return String, data
+     */
+    function setSpring($spring)
+    {
+        $this->_spring = $spring;
+    }
+
+
+    /**
      * Get Summer data
      * @return String, data
      */
     function getSummer()
     {
 		return $this->_summer;
+    }
+
+
+    /**
+     * Get Summer data
+     * @param $summer, String
+     */
+    function setSummer($summer)
+    {
+        $this->_summer = $summer;
     }
 
 
@@ -147,6 +212,16 @@ class Plan
     function getAdvisor()
     {
         return $this->_advisor;
+    }
+
+
+    /**
+     * Get advisor
+     * @return String, data
+     */
+    function setAdvisor($advisor)
+    {
+        $this->_advisor = $advisor;
     }
 
 

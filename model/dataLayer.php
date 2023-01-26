@@ -47,7 +47,6 @@ class DataLayer
             return false;
         }
 
-
         // add plan to db with new token
         $sql = "INSERT INTO adviseit_tokens (token, last_saved, created, advisor, saved)
                 VALUES (:token, NOW(), NOW(), :advisor, 0)";
@@ -76,11 +75,16 @@ class DataLayer
                 $year = $year;
             }
 
-            $plan = new Plan($newToken, $year);
-            $plan->setIsNew(true);
+            $plan = new Plan($year);
             
             // created date, jan - june means subtract 1 year
-            return array($plan);
+            $plans = new Token($newToken, '', '');
+            $plans->setIsNew(true);
+            $plans->addPlan($plan);
+
+            return $plans;
+
+            // return $plans;
         }
     }
 

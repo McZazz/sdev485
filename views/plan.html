@@ -28,23 +28,24 @@
 			<a href="prior-year" class="link-btn">Add Year</a>
 		</nav>
 
+
 		<!-- begin templated area -->
-		<repeat group="{{ @SESSION.plan }}"  value="{{ @plan }}" >
+		<repeat group="{{ @SESSION.plan->getPlansArray() }}" key="{{ @num }}" value="{{ @plan }}" >
 
 			<div>
 				<label>{{ 'Fall ' . @plan->getYear() }}
-					<textarea spellcheck="false" id="fall_input" name="fall">{{ @plan->getFall() }}</textarea>
+					<textarea spellcheck="false" class="fall_input" name="{{ 'fall_'.@num }}">{{ @plan->getFall() }}</textarea>
 				</label>
-				<label>{{ 'Fall ' . @plan->getYear() + 1 }}
-					<textarea spellcheck="false" id="winter_input" name="winter">{{ @plan->getWinter() }}</textarea>
+				<label>{{ 'Winter ' . @plan->getYear() + 1 }}
+					<textarea spellcheck="false" class="winter_input" name="{{ 'winter_'.@num }}">{{ @plan->getWinter() }}</textarea>
 				</label>
 			</div>
 			<div class="row-2">
-				<label>{{ 'Fall ' . @plan->getYear() + 1 }}
-					<textarea spellcheck="false" id="spring_input" name="spring">{{ @plan->getSpring() }}</textarea>
+				<label>{{ 'Spring ' . @plan->getYear() + 1 }}
+					<textarea spellcheck="false" class="spring_input" name="{{ 'spring_'.@num }}">{{ @plan->getSpring() }}</textarea>
 				</label>
-				<label>{{ 'Fall ' . @plan->getYear() + 1 }}
-					<textarea spellcheck="false" id="summer_input" name="summer">{{ @plan->getSummer() }}</textarea>
+				<label>{{ 'Summer ' . @plan->getYear() + 1 }}
+					<textarea spellcheck="false" class="summer_input" name="{{ 'summer_'.@num }}">{{ @plan->getSummer() }}</textarea>
 				</label>
 			</div>
 
@@ -58,12 +59,11 @@
 			<a href="next-year" class="link-btn">Add Year</a>
 		</nav>
 
-
 		
 		<div class="row-3">
 
 			<label for="advisor_input">Advisor
-				<input class="textinput" id="advisor_input" type="text" name="advisor" spellcheck="false" value="{{ @SESSION.plan[0]->getAdvisor() }}">
+				<input class="textinput" id="advisor_input" type="text" name="advisor" spellcheck="false" value="{{ @SESSION.plan->getAdvisor() }}">
 			</label>
 		</div>
 
@@ -74,9 +74,9 @@
 				<div id="last-updated-cont">
 					<div id="last-updated-text">
 
-						<check if="{{ isset(@SESSION.plan) && @SESSION.plan[0]->getSaved() == '1' }}">Last Updated: {{@SESSION.plan[0]->getLastSaved()}}</check>
+						<check if="{{ isset(@SESSION.plan) && @SESSION.plan->getSaved() == '1' }}">Last Updated: {{ @SESSION.plan->getLastSaved() }}</check>
 
-						<check if="{{ isset(@SESSION.plan) && @SESSION.plan[0]->getSaved() == '0' }}">Last Updated: Unsaved</check>
+						<check if="{{ isset(@SESSION.plan) && @SESSION.plan->getSaved() == '0' }}">Last Updated: Unsaved</check>
 
 					</div>
 				</div>
@@ -135,15 +135,15 @@
 				<th>Advisor</th>
 			</tr>
 			<tr>
-				<td>{{ @SESSION.plan[0]->getToken() }}</td>
-				<td>{{ @root . @SESSION.plan[0]->getToken() }}</td>
-				<td id="advisor_table_cell">{{ @SESSION.plan[0]->getAdvisor() }}</td>
+				<td>{{ @SESSION.plan->getToken() }}</td>
+				<td>{{ @root . @SESSION.plan->getToken() }}</td>
+				<td id="advisor_table_cell">{{ @SESSION.plan->getAdvisor() }}</td>
 			</tr>
 		</table>
 
 		<!-- Begin templated area -->
 
-		<repeat group="{{ @SESSION.plan }}"  value="{{ @plan }}" >
+		<repeat group="{{ @SESSION.plan->getPlansArray() }}" value="{{ @plan }}" >
 	
 			<table>
 				<tr>
@@ -151,16 +151,16 @@
 					<th>Winter</th>
 				</tr>
 				<tr>
-					<td id="fall_table_cell">{{ @plan->getFall() }}</td>
-					<td id="winter_table_cell">{{ @plan->getWinter() }}</td>
+					<td class="fall_table_cell">{{ @plan->getFall() }}</td>
+					<td class="winter_table_cell">{{ @plan->getWinter() }}</td>
 				</tr>
 				<tr>
 					<th>Spring</th>
 					<th>Summer</th>
 				</tr>
 				<tr>
-					<td id="spring_table_cell">{{ @plan->getSpring() }}</td>
-					<td id="summer_table_cell">{{ @plan->getSummer() }}</td>
+					<td class="spring_table_cell">{{ @plan->getSpring() }}</td>
+					<td class="summer_table_cell">{{ @plan->getSummer() }}</td>
 				</tr>
 			</table>
 

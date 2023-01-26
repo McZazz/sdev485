@@ -45,7 +45,6 @@ class Controller
     {
 		$newPlan = $this->_db->addNewToken();
 
-
         if ($newPlan == false) {
             // go home, database is full of 6 char tokens
             $this->_f3->reroute('/');
@@ -54,8 +53,8 @@ class Controller
         // echo $_SESSION['plan']->getToken();
         // goto plan page with this token in url
         $_SESSION['plan'] = $newPlan;
-        // echo print_r($_SESSION['plan'][0]->getToken());
-		$this->_f3->reroute('/' . $_SESSION['plan'][0]->getToken());
+        // echo $_SESSION['plan']->getToken() . ' ' . $_SESSION['plan']->getAdvisor() . ' ' . $_SESSION['plan']->getLastSaved();
+		$this->_f3->reroute('/' . $_SESSION['plan']->getToken());
     }
 
 
@@ -85,13 +84,44 @@ class Controller
     {
         // POST means we are saving / updating an existing token
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
             // reacquire fields, instantiation automatically gets from post
-            $_SESSION['plan'] = new Plan($_SESSION['plan']->getToken(), $_SESSION['plan']->getYear());
+            $old_token = $_SESSION['plan']->getToken();
+
+            if (isset($_POST['advisor'])) {
+                $advisor = $_POST['advisor'];
+            }
+
+            $new_token = new Token($old_token, $advisor);
+
+            $cntr = 0;
+            foreach ($_SESSION['plan']->getPlansArray() as &$plan) {
+                
+                $new_plan = new Plan($plan->getYear());
+
+                if (isset($_POST['fall_'.$cntr])) {
+                    $new_plan->setFall($_POST['fall_'.$cntr]);
+                }
+                if (isset($_POST['winter_'.$cntr])) {
+                    $new_plan->setWinter($_POST['winter_'.$cntr]);
+                }
+                if (isset($_POST['spring_'.$cntr])) {
+                    $new_plan->setSpring($_POST['spring_'.$cntr]);
+                }
+                if (isset($_POST['summer_'.$cntr])) {
+                    $new_plan->setSummer($_POST['summer_'.$cntr]);
+                }
+
+                $new_token->addPlan($new_plan);
+                $cntr++;
+            }
+
 
             // update records in db
-            $this->_db->updateYear($_SESSION['plan']);
+            $this->_db->updateToken($new_token);
 
 
+            // echo 'aaaaaaaaaaaa '.$new_token->getAdvisor();
 
 
             // // get new dtg
@@ -102,12 +132,13 @@ class Controller
             // $this->_f3->set('opened', 't');
 
 
+
         } else {
             // GET
             // this fires when getting a previusly saved token, or after a new token is made, it's rerouted to here
             if ($this->_f3->get('PARAMS.token') != '' && null != $this->_f3->get('PARAMS.token')) {
 
-                if ((isset($_SESSION['plan']) && $_SESSION['plan'][0]->isNew() == false) || !isset($_SESSION['plan'])) {
+                if ((isset($_SESSION['plan']) && $_SESSION['plan']->isNew() == false) || !isset($_SESSION['plan'])) {
                     // purge unused tokens if this is unused. 24 hour grace period applies.
                     $this->_db->deleteIfUnusedAfter24Hrs();
                 }
@@ -123,15 +154,18 @@ class Controller
 
                     // set for use in templating
                     $_SESSION['plan'] = $plan;
-
                 }
             }
+
+            $this->_f3->set('root', $this->_SERVER_ROOT); ////////////////////// use
+
+            $view = new Template(); ////////////////////// use
+            echo $view->render('views/plan.html'); ////////////////////// use
         }
 
-        $this->_f3->set('root', $this->_SERVER_ROOT); ////////////////////// use
+        // echo print_r($_SESSION['plan']);
 
-        $view = new Template(); ////////////////////// use
-        echo $view->render('views/plan.html'); ////////////////////// use
+
     }
 
 
