@@ -30,12 +30,12 @@ class Plan
      * @param $token, String, token for new Plans. Or an existing
      * PDO return directly from the database for updated plans
      */
-    function __construct($year)
+    function __construct($data)
     {
 		// we pass a token string or entire database obj
-		if (is_int($year)) {
+		if (is_int($data)) {
             // its a string, so we need to get from POST
-            $this->_year = $year;
+            $this->_year = $data;
 
             // check POST for correct keys, update if available
 	        // if (isset($_POST['fall'])) {
@@ -56,15 +56,12 @@ class Plan
 
 		} else {
             // PDO db return, fill into this new obj
-			$this->_token = $token['token'];
-			$this->_last_saved = $token['last_saved'];
-            $this->_advisor = $token['advisor'];
-			$this->_saved = $token['saved'];
-			$this->_fall = $token['fall'];
-			$this->_winter = $token['winter'];
-			$this->_spring = $token['spring'];
-			$this->_summer = $token['summer'];
-            $this->_year = $token['year'];
+			$this->_token = $data['token'];
+			$this->_year = $data['year'];
+            $this->_fall = $data['fall'];
+			$this->_winter = $data['winter'];
+			$this->_spring = $data['spring'];
+			$this->_summer = $data['summer'];
 		}
     }
 

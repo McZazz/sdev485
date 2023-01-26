@@ -210,6 +210,7 @@ class DataLayer
 
 
 
+
     /**
      * Save / update a pre-existing plan
      * @param $plan Plan object
@@ -295,30 +296,61 @@ class DataLayer
     }
 
 
-    /**
-     * getPlan getter, gets entire plan from db as Plan object
-     * @param $token String, 6 digit token
-     * @return boolean: false if plan was not present, Plan object if plan present
-     */
-    function getPlan($token, $year)
+    function getTokenObj($token)
     {
-        $sql = "SELECT fall, winter, spring, summer
-                FROM adviseit_:year WHERE token = :token";
+        $token_from_db = $this->getToken($token);
 
-        $statement = $this->_db->prepare($sql);
-        $statement->bindParam(':token', $token);
-        $statement->bindParam(':year', $year);
-        $statement->execute();
-
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-        // invalid token
-        if (sizeof($result) == 0) {
+        // no match
+        if ($token_from_db == false) {
             return false;
         }
 
+        $token_obj = new Token($token_from_db['token'], $token_from_db['advisor'], $token_from_db['last_saved']);
+        $token_obj->setlastSaved($token_from_db['last_saved']);
+        $token_obj->setSaved($token_from_db['saved']);
+
+        $token_obj = $this->getAllPlans($token_obj);
+
+        return $token_obj;
+    }
+
+
+    /**
+     * getPlan getter, gets entire plan from db as Plan object
+     * @param $token Token object
+     * @return boolean: false if plan was not present, Plan object if plan present
+     */
+    function getAllPlans($token_obj)
+    {
+        $token = $token_obj->getToken();
+        $token_obj->emptyPlans();
+
+        foreach ($this->getYears() as $year) {
+            $year_table = 'adviseit_'.$year;
+
+            $sql = "SELECT fall, winter, spring, summer, token
+                    FROM " . $year_table . " WHERE token = :token";
+
+            $statement = $this->_db->prepare($sql);
+            $statement->bindParam(':token', $token);
+            $statement->execute();
+
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+            // invalid token
+            if (sizeof($result) != 0) {
+                $result = $result[0];
+                // load with info that wasn't in db
+                $result['year'] = $year;
+
+                $token_obj->addPlan(new Plan($result));
+            }
+
+        }
+
+
         // return valid plan
-        return new Plan($result[0]);
+        return $token_obj;
     }
 
 

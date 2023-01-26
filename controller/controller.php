@@ -86,53 +86,33 @@ class Controller
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // reacquire fields, instantiation automatically gets from post
-            $old_token = $_SESSION['plan']->getToken();
+            $old_token_obj = $_SESSION['plan']->getToken();
 
             if (isset($_POST['advisor'])) {
                 $advisor = $_POST['advisor'];
             }
 
-            $new_token = new Token($old_token, $advisor);
+            $new_token_obj = new Token($old_token_obj, $advisor);
+            $new_token_obj->addPlansFromPost($_SESSION['plan']->getPlansArray());
 
-            $cntr = 0;
-            foreach ($_SESSION['plan']->getPlansArray() as &$plan) {
-                
-                $new_plan = new Plan($plan->getYear());
+            // // // update records in db
 
-                if (isset($_POST['fall_'.$cntr])) {
-                    $new_plan->setFall($_POST['fall_'.$cntr]);
-                }
-                if (isset($_POST['winter_'.$cntr])) {
-                    $new_plan->setWinter($_POST['winter_'.$cntr]);
-                }
-                if (isset($_POST['spring_'.$cntr])) {
-                    $new_plan->setSpring($_POST['spring_'.$cntr]);
-                }
-                if (isset($_POST['summer_'.$cntr])) {
-                    $new_plan->setSummer($_POST['summer_'.$cntr]);
-                }
+            $this->_db->updatePlans($new_token_obj);
+            $this->_db->updateToken($new_token_obj);
+            $_SESSION['plan'] = $this->_db->getTokenObj($new_token_obj->getToken());
 
-                $new_token->addPlan($new_plan);
-                $cntr++;
+            if ($_SESSION['plan'] == false) {
+                $this->_f3->reroute('/');
             }
 
-            // update records in db
-            $this->_db->updatePlans($new_token);
-            $this->_db->updateToken($new_token);
-            // echo $new_token->getPlansArray()[0]->getYear();
-
-
-            // echo 'aaaaaaaaaaaa '.$new_token->getAdvisor();
-
-
-            // // get new dtg
-            // $_SESSION['plan'] = $this->_db->getPlan($_SESSION['plan']->getToken());
+            // get new dtg
+            // $_SESSION['plan'] = $this->_db->getPlan($new_token);
             // // make sure it shows as saved
             // $_SESSION['plan']->setSaved('1');
             // // show saved message on front end
-            // $this->_f3->set('opened', 't');
+            $this->_f3->set('opened', 't');
 
-
+   
 
         } else {
             // GET
@@ -145,28 +125,31 @@ class Controller
                 }
 
                 // getting plan on return to site
-                if (!isset($_SESSION['plan'])) {
-                    $plan = $this->_db->getPlan($_SESSION['plan']->getToken());
+                // if (!isset($_SESSION['plan'])) {
+                $plan = $this->_db->getTokenObj($this->_f3->get('PARAMS.token'));
 
-                    // if token is false, reroute to home
-                    if ($plan == false) {
-                        $this->_f3->reroute('/');
-                    }
-
-                    // set for use in templating
-                    $_SESSION['plan'] = $plan;
+                // if token is false, reroute to home
+                if ($plan == false) {
+                    $this->_f3->reroute('/');
                 }
 
-                $this->_f3->set('root', $this->_SERVER_ROOT); ////////////////////// use
 
-                $view = new Template(); ////////////////////// use
-                echo $view->render('views/plan.html'); ////////////////////// use
+                // set for use in templating
+                $_SESSION['plan'] = $plan;
+            // } else {
+
+                // }
+
             }
+
+            // echo print_r($_SESSION['plan']);
 
         }
 
-        // echo print_r($_SESSION['plan']);
+        $this->_f3->set('root', $this->_SERVER_ROOT); ////////////////////// use
 
+        $view = new Template(); ////////////////////// use
+        echo $view->render('views/plan.html'); ////////////////////// use
 
     }
 

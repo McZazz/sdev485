@@ -16,9 +16,40 @@ class Token
 		$this->_last_saved = $last_saved;
 	}
 
+	function addPlansFromPost($plans_arr_from_session)
+	{
+        $cntr = 0;
+        $this->_plans = array();
+        foreach ($plans_arr_from_session as $plan) {
+
+            $new_plan = new Plan(intval($plan->getYear()));
+
+            if (isset($_POST['fall_'.$cntr])) {
+                $new_plan->setFall($_POST['fall_'.$cntr]);
+            }
+            if (isset($_POST['winter_'.$cntr])) {
+                $new_plan->setWinter($_POST['winter_'.$cntr]);
+            }
+            if (isset($_POST['spring_'.$cntr])) {
+                $new_plan->setSpring($_POST['spring_'.$cntr]);
+            }
+            if (isset($_POST['summer_'.$cntr])) {
+                $new_plan->setSummer($_POST['summer_'.$cntr]);
+            }
+
+            $this->addPlan($new_plan);
+            $cntr++;
+        }
+	}
+
 	function addPlan($plan)
 	{
 		$this->_plans[] = $plan;
+	}
+
+	function emptyPlans()
+	{
+		$this->_plans = array();
 	}
 
 	function isNew()
@@ -59,6 +90,11 @@ class Token
     	return $this->_saved;
     }
 
+    function setSaved($saved)
+    {
+    	$this->_saved = $saved;
+    }
+
     /**
      * Get Fall data
      * @return String, data
@@ -66,5 +102,10 @@ class Token
     function getLastSaved()
     {
         return $this->_last_saved;
+    }
+
+    function setLastSaved($last_saved)
+    {
+        $this->_last_saved = $last_saved;
     }
 }
