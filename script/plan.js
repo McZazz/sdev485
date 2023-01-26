@@ -23,3 +23,10 @@ message_btn.addEventListener('click', () => {
 	message.style.visibility = 'hidden';
 	is_visible.value = 'f';
 });
+
+
+// scrolldown if adding a future year
+const scrolldown = document.getElementById('scrolldown');
+if (scrolldown) {
+  document.getElementById('print-btn').scrollIntoView({block: "end"});
+}

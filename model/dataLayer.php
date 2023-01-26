@@ -89,10 +89,10 @@ class DataLayer
     }
 
 
-    function addPlanByYear($year, $token, $direction)
-    {
-
-    }
+    // function addPriorYearPlan($token, $year)
+    // {
+    //     $this->insertOnePlan($token, $year, '', '', '', '');
+    // }
 
 
     /**
@@ -145,7 +145,7 @@ class DataLayer
 
 
 
-    function insertOneEmptyPlan($token, $year, $fall, $winter, $spring, $summer)
+    function insertOnePlan($token, $year, $fall, $winter, $spring, $summer)
     {
         $planyear = 'adviseit_'.$year;
 
@@ -178,28 +178,14 @@ class DataLayer
 
             foreach ($plans->getPlansArray() as &$plan) {
 
-                $planyear = 'adviseit_'.$plan->getYear();
-
-                $sql = "INSERT INTO " . $planyear . " (token, fall, winter, spring, summer)
-                        VALUES (:token, :fall, :winter, :spring, :summer)";
-
                 $token = $plans->getToken();
+                $year = $plan->getYear();
                 $fall = $plan->getFall();
                 $winter = $plan->getWinter();
                 $spring = $plan->getSpring();
                 $summer = $plan->getSummer();
 
-                $statement = $this->_db->prepare($sql);
-                $statement->bindParam(':token', $token);
-                $statement->bindParam(':fall', $fall);
-                $statement->bindParam(':winter', $winter);
-                $statement->bindParam(':spring', $spring);
-                $statement->bindParam(':summer', $summer);
-
-                // echo print_r($statement);
-
-                // // execute sql
-                $statement->execute();
+                $this->insertOnePlan($token, $year, $fall, $winter, $spring, $summer);
             
             }
 

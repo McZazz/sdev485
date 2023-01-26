@@ -28,6 +28,7 @@
 			<a href="prior-year" class="link-btn">Add Year</a>
 		</nav>
 
+		<hr class="plan-separator">
 
 		<!-- begin templated area -->
 		<repeat group="{{ @SESSION.plan->getPlansArray() }}" value="{{ @plan }}" >
@@ -49,6 +50,8 @@
 				</label>
 			</div>
 
+			<hr class="plan-separator">
+
 		</repeat>
 
 
@@ -56,7 +59,7 @@
 
 
 		<nav>
-			<a href="next-year" class="link-btn">Add Year</a>
+			<a href="next-year" id="add-next-year-btn" class="link-btn">Add Year</a>
 		</nav>
 
 		
@@ -119,7 +122,11 @@
 			</div>
 		</div>
 
-		<button class="link-btn print-btn" type="button" onclick="print_format();">Print</button>
+		<button class="link-btn print-btn" type="button" id="print-btn" onclick="print_format();">Print</button>
+
+		<check if="{{ (isset(@SESSION.scrolldown) && @SESSION.scrolldown == 't') }}">
+			<input type="hidden" id="scrolldown">
+		</check>
 		
 
 	</form>

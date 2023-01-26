@@ -75,11 +75,11 @@ class Controller
 
         if ($prior_year != 2019) {
             $token = $_SESSION['plan']->getToken();
-            $this->_db->addPlanByYear($prior_year, $token, 'prior');
+            $this->_db->insertOnePlan($token, $prior_year, '', '', '', '');
+
         }
 
         $this->_f3->reroute('/' . $_SESSION['plan']->getToken());
-
     }
 
 
@@ -89,7 +89,20 @@ class Controller
     function route_next_year()
     {
         $_SESSION['is_new'] = false;
-        echo "goto / create next year";
+        $priors = $_SESSION['plan']->getPlansArray();
+        $next_year = $priors[sizeof($priors)-1]->getYear();
+        $next_year = intval($next_year);
+        $next_year++;
+
+        if ($next_year != 2040) {
+            $token = $_SESSION['plan']->getToken();
+            $this->_db->insertOnePlan($token, $next_year, '', '', '', '');
+
+        }
+
+        $_SESSION['scrolldown'] = 't';
+
+        $this->_f3->reroute('/' . $_SESSION['plan']->getToken());
     }
 
 
@@ -99,6 +112,8 @@ class Controller
      */
     function route_plan()
     {
+        
+
         // POST means we are saving / updating an existing token
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['is_new'] = false;
@@ -164,6 +179,7 @@ class Controller
 
         $view = new Template(); ////////////////////// use
         echo $view->render('views/plan.html'); ////////////////////// use
+        $_SESSION['scrolldown'] = 'f';
 
     }
 
