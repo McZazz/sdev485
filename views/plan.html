@@ -30,7 +30,7 @@
 
 
 		<!-- begin templated area -->
-		<repeat group="{{ @SESSION.plan->getPlansArray() }}" key="{{ @num }}" value="{{ @plan }}" >
+		<repeat group="{{ @SESSION.plan->getPlansArray() }}" value="{{ @plan }}" >
 
 			<div>
 				<label>{{ 'Fall ' . @plan->getYear() }}
@@ -147,16 +147,16 @@
 	
 			<table>
 				<tr>
-					<th>Fall</th>
-					<th>Winter</th>
+					<th>{{ 'Fall ' . @plan->getYear() }}</th>
+					<th>{{ 'Winter ' . @plan->getYear() + 1 }}</th>
 				</tr>
 				<tr>
 					<td class="fall_table_cell">{{ @plan->getFall() }}</td>
 					<td class="winter_table_cell">{{ @plan->getWinter() }}</td>
 				</tr>
 				<tr>
-					<th>Spring</th>
-					<th>Summer</th>
+					<th>{{ 'Spring ' . @plan->getYear() + 1 }}</th>
+					<th>{{ 'Summer ' . @plan->getYear() + 1 }}</th>
 				</tr>
 				<tr>
 					<td class="spring_table_cell">{{ @plan->getSpring() }}</td>
