@@ -51,14 +51,11 @@ class Controller
             $this->_f3->reroute('/');
         }
 
-
-        // create plan model obj. all quarter fields blank, mark as new
-        $_SESSION['plan'] = new Plan($newPlan['token'], $newPlan['year']);
-        $_SESSION['plan']->setIsNew(true);
-
         // echo $_SESSION['plan']->getToken();
         // goto plan page with this token in url
-		$this->_f3->reroute('/' . $_SESSION['plan']->getToken());
+        $_SESSION['plan'] = $newPlan;
+        // echo print_r($_SESSION['plan'][0]->getToken());
+		$this->_f3->reroute('/' . $_SESSION['plan'][0]->getToken());
     }
 
 
@@ -89,16 +86,20 @@ class Controller
         // POST means we are saving / updating an existing token
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // reacquire fields, instantiation automatically gets from post
-            $_SESSION['plan'] = new Plan($_SESSION['plan']->getToken());
+            $_SESSION['plan'] = new Plan($_SESSION['plan']->getToken(), $_SESSION['plan']->getYear());
 
-            // update record in db
-            $this->_db->updatePlan($_SESSION['plan']);
-            // get new dtg
-            $_SESSION['plan'] = $this->_db->getPlan($_SESSION['plan']->getToken());
-            // make sure it shows as saved
-            $_SESSION['plan']->setSaved('1');
-            // show saved message on front end
-            $this->_f3->set('opened', 't');
+            // update records in db
+            $this->_db->updateYear($_SESSION['plan']);
+
+
+
+
+            // // get new dtg
+            // $_SESSION['plan'] = $this->_db->getPlan($_SESSION['plan']->getToken());
+            // // make sure it shows as saved
+            // $_SESSION['plan']->setSaved('1');
+            // // show saved message on front end
+            // $this->_f3->set('opened', 't');
 
 
         } else {
@@ -106,7 +107,7 @@ class Controller
             // this fires when getting a previusly saved token, or after a new token is made, it's rerouted to here
             if ($this->_f3->get('PARAMS.token') != '' && null != $this->_f3->get('PARAMS.token')) {
 
-                if ((isset($_SESSION['plan']) && $_SESSION['plan']->isNew() == false) || !isset($_SESSION['plan'])) {
+                if ((isset($_SESSION['plan']) && $_SESSION['plan'][0]->isNew() == false) || !isset($_SESSION['plan'])) {
                     // purge unused tokens if this is unused. 24 hour grace period applies.
                     $this->_db->deleteIfUnusedAfter24Hrs();
                 }

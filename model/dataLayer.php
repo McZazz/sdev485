@@ -75,9 +75,12 @@ class DataLayer
                 $year = intval($year) - 1;
                 $year = $year;
             }
+
+            $plan = new Plan($newToken, $year);
+            $plan->setIsNew(true);
             
             // created date, jan - june means subtract 1 year
-            return array('token'=>$newToken, 'year'=>$year, 'status'=>true);
+            return array($plan);
         }
     }
 
