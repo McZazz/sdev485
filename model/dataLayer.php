@@ -146,7 +146,10 @@ class DataLayer
     function updatePlans($plans)
     {
 
-        if ($plans->getSaved() == '0') {
+        $token_table = $this->getToken($plans->getToken());
+
+        if ($token_table['saved'] == 0) {
+
             foreach ($plans->getPlansArray() as &$plan) {
 
                 $planyear = 'adviseit_'.$plan->getYear();
@@ -175,15 +178,15 @@ class DataLayer
             }
 
         } else {
+            
             foreach ($plans->getPlansArray() as &$plan) {
 
+                $planyear = 'adviseit_'.$plan->getYear();
                 // create sql statement to update plan
-                $sql = "UPDATE :planyear
-                        SET fall = :fall, winter = :winter, spring = :spring, summer = :summer 
+                $sql = "UPDATE " . $planyear . " SET fall = :fall, winter = :winter, spring = :spring, summer = :summer 
                         WHERE token = :token";
 
                 $token = $plans->getToken();
-                $planyear = 'adviseit_'.$plan->getYear();
                 $fall = $plan->getFall();
                 $winter = $plan->getWinter();
                 $spring = $plan->getSpring();
@@ -191,7 +194,6 @@ class DataLayer
 
                 $statement = $this->_db->prepare($sql);
                 $statement->bindParam(':token', $token);
-                $statement->bindParam(':planyear', $planyear);
                 $statement->bindParam(':fall', $fall);
                 $statement->bindParam(':winter', $winter);
                 $statement->bindParam(':spring', $spring);

@@ -117,9 +117,9 @@ class Controller
             }
 
             // update records in db
+            $this->_db->updatePlans($new_token);
             $this->_db->updateToken($new_token);
             // echo $new_token->getPlansArray()[0]->getYear();
-            $this->_db->updatePlans($new_token);
 
 
             // echo 'aaaaaaaaaaaa '.$new_token->getAdvisor();
