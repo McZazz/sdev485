@@ -22,19 +22,21 @@ class Token
         $this->_plans = array();
         foreach ($plans_arr_from_session as $plan) {
 
-            $new_plan = new Plan(intval($plan->getYear()));
+        	$year_str = $plan->getYear();
+
+            $new_plan = new Plan(intval($year_str));
 
             if (isset($_POST['fall_'.$cntr])) {
-                $new_plan->setFall($_POST['fall_'.$cntr]);
+                $new_plan->setFall($_POST['fall_'.$year_str]);
             }
-            if (isset($_POST['winter_'.$cntr])) {
-                $new_plan->setWinter($_POST['winter_'.$cntr]);
+            if (isset($_POST['winter_'.$year_str])) {
+                $new_plan->setWinter($_POST['winter_'.$year_str]);
             }
-            if (isset($_POST['spring_'.$cntr])) {
-                $new_plan->setSpring($_POST['spring_'.$cntr]);
+            if (isset($_POST['spring_'.$year_str])) {
+                $new_plan->setSpring($_POST['spring_'.$year_str]);
             }
-            if (isset($_POST['summer_'.$cntr])) {
-                $new_plan->setSummer($_POST['summer_'.$cntr]);
+            if (isset($_POST['summer_'.$year_str])) {
+                $new_plan->setSummer($_POST['summer_'.$year_str]);
             }
 
             $this->addPlan($new_plan);

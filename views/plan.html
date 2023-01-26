@@ -34,18 +34,18 @@
 
 			<div>
 				<label>{{ 'Fall ' . @plan->getYear() }}
-					<textarea spellcheck="false" class="fall_input" name="{{ 'fall_'.@num }}">{{ @plan->getFall() }}</textarea>
+					<textarea spellcheck="false" class="fall_input" name="{{ 'fall_'.@plan->getYear() }}">{{ @plan->getFall() }}</textarea>
 				</label>
 				<label>{{ 'Winter ' . @plan->getYear() + 1 }}
-					<textarea spellcheck="false" class="winter_input" name="{{ 'winter_'.@num }}">{{ @plan->getWinter() }}</textarea>
+					<textarea spellcheck="false" class="winter_input" name="{{ 'winter_'.@plan->getYear() }}">{{ @plan->getWinter() }}</textarea>
 				</label>
 			</div>
 			<div class="row-2">
 				<label>{{ 'Spring ' . @plan->getYear() + 1 }}
-					<textarea spellcheck="false" class="spring_input" name="{{ 'spring_'.@num }}">{{ @plan->getSpring() }}</textarea>
+					<textarea spellcheck="false" class="spring_input" name="{{ 'spring_'.@plan->getYear() }}">{{ @plan->getSpring() }}</textarea>
 				</label>
 				<label>{{ 'Summer ' . @plan->getYear() + 1 }}
-					<textarea spellcheck="false" class="summer_input" name="{{ 'summer_'.@num }}">{{ @plan->getSummer() }}</textarea>
+					<textarea spellcheck="false" class="summer_input" name="{{ 'summer_'.@plan->getYear() }}">{{ @plan->getSummer() }}</textarea>
 				</label>
 			</div>
 
