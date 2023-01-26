@@ -125,17 +125,17 @@ class Controller
                 }
 
                 // getting plan on return to site
-                // if (!isset($_SESSION['plan'])) {
-                $plan = $this->_db->getTokenObj($this->_f3->get('PARAMS.token'));
+                if (!isset($_SESSION['plan'])) {
+                    $plan = $this->_db->getTokenObj($this->_f3->get('PARAMS.token'));
 
-                // if token is false, reroute to home
-                if ($plan == false) {
-                    $this->_f3->reroute('/');
+                    // if token is false, reroute to home
+                    if ($plan == false) {
+                        $this->_f3->reroute('/');
+                    }
+
+                    // set for use in templating
+                    $_SESSION['plan'] = $plan;
                 }
-
-
-                // set for use in templating
-                $_SESSION['plan'] = $plan;
             // } else {
 
                 // }
