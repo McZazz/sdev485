@@ -60,12 +60,26 @@ class Controller
     }
 
 
+
+
+
     /**
      * Route for creating / going to prior year
      */
     function route_prior_year()
     {
-        echo "goto / create prior year";
+        $_SESSION['is_new'] = false;
+        $prior_year = $_SESSION['plan']->getPlansArray()[0]->getYear();
+        $prior_year = intval($prior_year);
+        $prior_year--;
+
+        if ($prior_year != 2019) {
+            $token = $_SESSION['plan']->getToken();
+            $this->_db->addPlanByYear($prior_year, $token, 'prior');
+        }
+
+        $this->_f3->reroute('/' . $_SESSION['plan']->getToken());
+
     }
 
 
@@ -74,6 +88,7 @@ class Controller
      */
     function route_next_year()
     {
+        $_SESSION['is_new'] = false;
         echo "goto / create next year";
     }
 

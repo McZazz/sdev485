@@ -89,6 +89,12 @@ class DataLayer
     }
 
 
+    function addPlanByYear($year, $token, $direction)
+    {
+
+    }
+
+
     /**
      * Gets all plans for admin view
      * @return array, array of all plans
@@ -135,6 +141,26 @@ class DataLayer
 
         // return the formatted array
         return $result;
+    }
+
+
+
+    function insertOneEmptyPlan($token, $year, $fall, $winter, $spring, $summer)
+    {
+        $planyear = 'adviseit_'.$year;
+
+        $sql = "INSERT INTO " . $planyear . " (token, fall, winter, spring, summer)
+                VALUES (:token, :fall, :winter, :spring, :summer)";
+
+        $statement = $this->_db->prepare($sql);
+        $statement->bindParam(':token', $token);
+        $statement->bindParam(':fall', $fall);
+        $statement->bindParam(':winter', $winter);
+        $statement->bindParam(':spring', $spring);
+        $statement->bindParam(':summer', $summer);
+
+        // // execute sql
+        $statement->execute();
     }
 
 
