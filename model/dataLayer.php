@@ -143,30 +143,64 @@ class DataLayer
      * Save / update a pre-existing plan
      * @param $plan Plan object
      */
-    function updateYear($plan)
+    function updatePlans($plans)
     {
-        // create sql statement to update plan
-        $sql = "UPDATE adviseit_:year
-                SET fall = :fall, winter = :winter, spring = :spring, summer = :summer 
-                WHERE token = :token";
 
-        $token = $plan->getToken();
-        $year = $year->getYear();
-        $fall = $plan->getFall();
-        $winter = $plan->getWinter();
-        $spring = $plan->getSpring();
-        $summer = $plan->getSummer();
+        if ($plans->getSaved() == '0') {
+            foreach ($plans->getPlansArray() as &$plan) {
 
-        $statement = $this->_db->prepare($sql);
-        $statement->bindParam(':token', $token);
-        $statement->bindParam(':year', $year);
-        $statement->bindParam(':fall', $fall);
-        $statement->bindParam(':winter', $winter);
-        $statement->bindParam(':spring', $spring);
-        $statement->bindParam(':summer', $summer);
+                $planyear = 'adviseit_'.$plan->getYear();
 
-        // execute sql
-        $statement->execute();
+                $sql = "INSERT INTO " . $planyear . " (token, fall, winter, spring, summer)
+                        VALUES (:token, :fall, :winter, :spring, :summer)";
+
+                $token = $plans->getToken();
+                $fall = $plan->getFall();
+                $winter = $plan->getWinter();
+                $spring = $plan->getSpring();
+                $summer = $plan->getSummer();
+
+                $statement = $this->_db->prepare($sql);
+                $statement->bindParam(':token', $token);
+                $statement->bindParam(':fall', $fall);
+                $statement->bindParam(':winter', $winter);
+                $statement->bindParam(':spring', $spring);
+                $statement->bindParam(':summer', $summer);
+
+                // echo print_r($statement);
+
+                // // execute sql
+                $statement->execute();
+            
+            }
+
+        } else {
+            foreach ($plans->getPlansArray() as &$plan) {
+
+                // create sql statement to update plan
+                $sql = "UPDATE :planyear
+                        SET fall = :fall, winter = :winter, spring = :spring, summer = :summer 
+                        WHERE token = :token";
+
+                $token = $plans->getToken();
+                $planyear = 'adviseit_'.$plan->getYear();
+                $fall = $plan->getFall();
+                $winter = $plan->getWinter();
+                $spring = $plan->getSpring();
+                $summer = $plan->getSummer();
+
+                $statement = $this->_db->prepare($sql);
+                $statement->bindParam(':token', $token);
+                $statement->bindParam(':planyear', $planyear);
+                $statement->bindParam(':fall', $fall);
+                $statement->bindParam(':winter', $winter);
+                $statement->bindParam(':spring', $spring);
+                $statement->bindParam(':summer', $summer);
+
+                // // execute sql
+                $statement->execute();
+            }
+        }
     }
 
 

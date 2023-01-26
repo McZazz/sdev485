@@ -116,9 +116,10 @@ class Controller
                 $cntr++;
             }
 
-
             // update records in db
             $this->_db->updateToken($new_token);
+            // echo $new_token->getPlansArray()[0]->getYear();
+            $this->_db->updatePlans($new_token);
 
 
             // echo 'aaaaaaaaaaaa '.$new_token->getAdvisor();
@@ -155,12 +156,13 @@ class Controller
                     // set for use in templating
                     $_SESSION['plan'] = $plan;
                 }
+
+                $this->_f3->set('root', $this->_SERVER_ROOT); ////////////////////// use
+
+                $view = new Template(); ////////////////////// use
+                echo $view->render('views/plan.html'); ////////////////////// use
             }
 
-            $this->_f3->set('root', $this->_SERVER_ROOT); ////////////////////// use
-
-            $view = new Template(); ////////////////////// use
-            echo $view->render('views/plan.html'); ////////////////////// use
         }
 
         // echo print_r($_SESSION['plan']);
