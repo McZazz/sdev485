@@ -68,6 +68,10 @@ class Controller
      */
     function route_prior_year()
     {
+        $old_token_obj = $this->getTokenObjFromPOST();
+        $this->_db->updatePlans($old_token_obj);
+        $this->_db->updateToken($old_token_obj);
+
         $_SESSION['is_new'] = false;
         $prior_year = $_SESSION['plan']->getPlansArray()[0]->getYear();
         $prior_year = intval($prior_year);
@@ -88,6 +92,11 @@ class Controller
      */
     function route_next_year()
     {
+
+        $old_token_obj = $this->getTokenObjFromPOST();
+        $this->_db->updatePlans($old_token_obj);
+        $this->_db->updateToken($old_token_obj);
+
         $_SESSION['is_new'] = false;
         $priors = $_SESSION['plan']->getPlansArray();
         $next_year = $priors[sizeof($priors)-1]->getYear();
@@ -97,12 +106,30 @@ class Controller
         if ($next_year != 2040) {
             $token = $_SESSION['plan']->getToken();
             $this->_db->insertOnePlan($token, $next_year, '', '', '', '');
-
         }
 
         $_SESSION['scrolldown'] = 't';
 
         $this->_f3->reroute('/' . $_SESSION['plan']->getToken());
+    }
+
+
+
+
+    function getTokenObjFromPOST()
+    {
+        $old_token_obj = $_SESSION['plan']->getToken();
+
+        if (isset($_POST['advisor'])) {
+            $advisor = $_POST['advisor'];
+        } else {
+            $advisor = '';
+        }
+
+        $new_token_obj = new Token($old_token_obj, $advisor);
+        $new_token_obj->addPlansFromPost($_SESSION['plan']->getPlansArray());
+
+        return $new_token_obj;
     }
 
 
@@ -118,14 +145,7 @@ class Controller
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['is_new'] = false;
             // reacquire fields, instantiation automatically gets from post
-            $old_token_obj = $_SESSION['plan']->getToken();
-
-            if (isset($_POST['advisor'])) {
-                $advisor = $_POST['advisor'];
-            }
-
-            $new_token_obj = new Token($old_token_obj, $advisor);
-            $new_token_obj->addPlansFromPost($_SESSION['plan']->getPlansArray());
+            $new_token_obj = $this->getTokenObjFromPOST();
 
             // // // update records in db
 
