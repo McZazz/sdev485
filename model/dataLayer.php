@@ -32,6 +32,28 @@ class DataLayer
 
 
     /**
+     * get year of new plan
+     * @param $last_saved, DateTime formatted string
+     * @return Plan object
+     */
+    function makeUnsavedPlan($last_saved)
+    {
+        // get year
+        $dtg = new DateTime($last_saved);
+        $month = intval($dtg->format('m'));
+        $year = '20' . $dtg->format('y');
+
+        // set january thru june to prior year
+        if ($month >= 1 && $month <= 6) {
+            $year = intval($year) - 1;
+            $year = $year;
+        }
+
+        return new Plan($year);
+    }
+
+
+    /**
      * Create new plan row in db and return the token
      * @return array, with 'token' and 'status' keys 
      */
@@ -62,16 +84,9 @@ class DataLayer
         if ($insertSuccess == false) {
             return false;
         } else {
-            $dtg = new DateTime($insertSuccess['created']);
-            $month = intval($dtg->format('m'));
-            $year = '20' . $dtg->format('y');
 
-            if ($month >= 1 && $month <= 6) {
-                $year = intval($year) - 1;
-                $year = $year;
-            }
-
-            $plan = new Plan($year);
+            // get empty plan
+            $plan = $this->makeUnsavedPlan($insertSuccess['created']);
             
             // created date, jan - june means subtract 1 year
             $plans = new Token($newToken, '', '');

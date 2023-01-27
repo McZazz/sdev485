@@ -198,9 +198,14 @@ class Controller
                 $this->_f3->reroute('/');
             }
 
-            $_SESSION['scrolldown'] = 'f';
-            // show saved message on front end
+            if ($_SESSION['plan']->getSaved() == '0') {
+                //setup with emtpy data when recalling unsaved plan
+                $unsaved = $this->_db->makeUnsavedPlan($_SESSION['plan']->getLastSaved());
+                $_SESSION['plan']->addPlan($unsaved);
+            }
+
             // set for use in templating
+            $_SESSION['scrolldown'] = 'f';
         }
 
         $view = new Template(); 
