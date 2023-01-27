@@ -38,7 +38,7 @@ class DataLayer
     function addNewToken()
     {
         // clean out unused tokens older than 24 hours
-        $this->deleteIfUnusedAfter24Hrs();
+        // $this->deleteIfUnusedAfter24Hrs();
 
         $newToken = $this->createUniqueToken();
 
