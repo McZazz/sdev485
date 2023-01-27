@@ -27,7 +27,7 @@ $controller = new Controller($f3);
  */
 $f3->route('GET /', function()
 {
-    $GLOBALS['controller']->route_home();
+    $GLOBALS['controller']->routeHome();
 });
 
 
@@ -36,7 +36,7 @@ $f3->route('GET /', function()
  */
 $f3->route('POST /create-new', function()
 {
-    $GLOBALS['controller']->route_create_new();
+    $GLOBALS['controller']->routeCreateNew();
 });
 
 
@@ -45,7 +45,7 @@ $f3->route('POST /create-new', function()
  */
 $f3->route('GET /@token', function()
 {
-    $GLOBALS['controller']->route_plan();
+    $GLOBALS['controller']->routePlan();
 });
 
 
