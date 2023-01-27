@@ -91,8 +91,12 @@ class Controller
 
         // update POST data in SESSION object and update in databas
         $old_token_obj = $this->getTokenObjFromPOST();
+        // echo print_r(sizeof($_POST));
         $this->_db->updatePlans($old_token_obj);
         $this->_db->updateToken($old_token_obj);
+
+
+
 
         // get plans and set year to one in the future
         $priors = $_SESSION['plan']->getPlansArray();
@@ -105,6 +109,9 @@ class Controller
             $token = $_SESSION['plan']->getToken();
             $this->_db->insertOnePlan($token, $next_year, '', '', '', '');
         }
+
+        // update everyhting in db
+        // $_SESSION['plan'] = $this->_db->getTokenObj($old_token_obj->getToken());
 
         // make sure page will scroll down
         $_SESSION['scrolldown'] = 't';
@@ -138,11 +145,7 @@ class Controller
     }
 
 
-    /**
-     * Route for displaing plan page, 
-     * redirected from route_create_new for new tokens only
-     */
-    function route_plan()
+    function route_save()
     {
         // POST means we are saving / updating an existing token
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -162,7 +165,40 @@ class Controller
             // prevent large plans from appearing to scroll up
             $_SESSION['scrolldown'] = 't';
             // show saved message on front end
-            $this->_f3->set('opened', 't');
+            // $this->_f3->set('opened', 't');
+            $_SESSION['opened'] = 't';
+
+            $this->_f3->reroute('/' . $_SESSION['plan']->getToken());
+        }
+    }
+
+
+    /**
+     * Route for displaing plan page, 
+     * redirected from route_create_new for new tokens only
+     */
+    function route_plan()
+    {
+        // POST means we are saving / updating an existing token
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // // reacquire fields, instantiation automatically gets from post
+            // $new_token_obj = $this->getTokenObjFromPOST();
+
+            // // update records in db
+            // $this->_db->updatePlans($new_token_obj);
+            // $this->_db->updateToken($new_token_obj);
+            // $_SESSION['plan'] = $this->_db->getTokenObj($new_token_obj->getToken());
+
+            // // token was invalid, go home
+            // if ($_SESSION['plan'] == false) {
+            //     $this->_f3->reroute('/');
+            // }
+
+            // // prevent large plans from appearing to scroll up
+            // $_SESSION['scrolldown'] = 't';
+            // // show saved message on front end
+            // $this->_f3->set('opened', 't');
+            // $_SESSION['opened'] = 't';
 
         } else {
             // GET
@@ -189,10 +225,12 @@ class Controller
         }
 
         // make sure proper server environment is set for links
-        $this->_f3->set('root', $this->_SERVER_ROOT); 
+        // $this->_f3->set('root', $this->_SERVER_ROOT); 
+        $_SESSION['root'] = $this->_SERVER_ROOT; 
 
         $view = new Template(); 
         echo $view->render('views/plan.html'); 
+        
         // reset so we don't always scroll down
         $_SESSION['scrolldown'] = 'f';
         // reset so we don't get empty plan pages

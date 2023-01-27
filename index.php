@@ -50,9 +50,18 @@ $f3->route('GET|POST /@token', function()
 
 
 /**
+ * Route for plan entry and viewing
+ */
+$f3->route('POST /save', function()
+{
+    $GLOBALS['controller']->route_save();
+});
+
+
+/**
  * Route for creating / navigating to prior year plans
  */
-$f3->route('GET|POST /prior-year', function()
+$f3->route('POST /prior-year', function()
 {
     $GLOBALS['controller']->route_prior_year();
 });
@@ -61,7 +70,7 @@ $f3->route('GET|POST /prior-year', function()
 /**
  * Route for creating / navigating to next year plans
  */
-$f3->route('GET|POST /next-year', function()
+$f3->route('POST /next-year', function()
 {
     $GLOBALS['controller']->route_next_year();
 });
