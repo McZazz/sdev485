@@ -93,9 +93,6 @@ class Controller
     {
         $token = $_SESSION['plan']->getToken();
 
-        $_SESSION['scrolldown'] = 'f';
-        $_SESSION['opened'] = 't';
-
         // update database from POST
         $old_token_obj = $this->getTokenObjFromPost();
         $this->_db->updatePlans($old_token_obj);
@@ -111,14 +108,20 @@ class Controller
             $this->_db->insertOnePlan($token, $prior_year, '', '', '', '');
         }
 
+        $_SESSION['opened'] = 't';
+        $_SESSION['scrolldown'] = 'f';
+
+        $_SESSION['skip_reload'] = true;
+        $_SESSION['plan'] = $this->_db->getTokenObj($token);
+
         $this->_f3->reroute('/' . $token);
-
-
     }
 
 
     function routeSave()
     {
+        $token = $_SESSION['plan']->getToken();
+
         // reacquire fields, instantiation automatically gets from post
         $new_token_obj = $this->getTokenObjFromPost();
 
@@ -136,7 +139,10 @@ class Controller
         // show saved message on front end
         $_SESSION['opened'] = 't';
 
-        $this->_f3->reroute('/' . $_SESSION['plan']->getToken());
+        $_SESSION['skip_reload'] = true;
+        $_SESSION['plan'] = $this->_db->getTokenObj($token);
+
+        $this->_f3->reroute('/' . $token);
     }
 
 
@@ -167,16 +173,10 @@ class Controller
         $_SESSION['scrolldown'] = 't';
         $_SESSION['opened'] = 't';
 
-                $_SESSION['plan'] = $this->_db->getTokenObj($token);
-
-                // set for use in templating
-        $this->_f3->set('root', $this->_SERVER_ROOT);
-
-        $_SESSION['thwart_f3_builtin_10_percent_of_the_time_crash_on_reroute_mechanism'] = true;
-        
+        $_SESSION['skip_reload'] = true;
+        $_SESSION['plan'] = $this->_db->getTokenObj($token);
+    
         $this->_f3->reroute('/' . $token);
-        // $view = new Template(); 
-        // echo $view->render('views/plan.html'); 
     }
 
 
@@ -187,9 +187,10 @@ class Controller
     function routePlan()
     {
 
-        // if (isset($_SESSION['thwart_f3_builtin_crash_on_reroute_mechanism']) && $_SESSION['thwart_f3_builtin_crash_on_reroute_mechanism'] == true) {
-            // $_SESSION['thwart_f3_builtin_crash_on_reroute_mechanism'] == false;
-        // } else {
+        if (isset($_SESSION['skip_reload']) && $_SESSION['skip_reload'] == true) {
+            $_SESSION['skip_reload'] = false;
+        } else {
+            $_SESSION['skip_reload'] = false;
             $_SESSION['plan'] = $this->_db->getTokenObj($this->_f3->get('PARAMS.token'));
 
             // if token is false, reroute to home
@@ -197,11 +198,12 @@ class Controller
                 $this->_f3->reroute('/');
             }
 
+            // empty / unsaved plans
             if ($_SESSION['plan']->getSaved() == '0') {
                 $unsaved = $this->_db->makeUnsavedPlan($_SESSION['plan']->getLastSaved());
                 $_SESSION['plan']->addPlan($unsaved);
             }
-        // }
+        }
 
 
         // set for use in templating
@@ -217,7 +219,6 @@ class Controller
      */
     function login() 
     {
-        // $_SESSION['is_new'] = false;
         $username = '';
         $password = '';
         // get username and pass from POST
@@ -251,7 +252,6 @@ class Controller
      */
     function admin()
     {
-        // $_SESSION['is_new'] = false;
         $_SESSION['opened'] = 'f';
         // make sure user is logged in to go to admin page
         if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
@@ -277,7 +277,6 @@ class Controller
      */
     function errorReroute()
     {
-        // $_SESSION['is_new'] = false;
         // goto 404 route
         $this->_f3->reroute('/error404');
     }
@@ -288,7 +287,6 @@ class Controller
      */
     function error()
     {
-        // $_SESSION['is_new'] = false;
         // goto error view
         $view = new Template();
         echo $view->render('views/error.html');
