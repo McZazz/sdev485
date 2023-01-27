@@ -140,17 +140,17 @@
 	padding-bottom: 15px;
 }
 
-.plan .form {
+.plan form {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 }
 
-.plan .form a {
+.plan form a {
 	width: 145px;
 }
 
-.plan .form div {
+.plan form div {
 	display: flex;
 }
 
@@ -190,7 +190,7 @@
 	box-shadow: 0 0 0 4px #E1E3EA;
 }
 
-.plan label, .plan .form nav div, .plan .form h3 {
+.plan label, .plan form nav div, .plan form h3 {
 	color: var(--text-dark);
 	font-size: 1.5rem;
 	user-select: none;
@@ -198,7 +198,7 @@
 	flex-direction: column;
 }
 
-.plan .form h3 {
+.plan form h3 {
 	padding-bottom: 15px;
 }
 
@@ -213,11 +213,11 @@
 	padding: 4px 11px;
 }
 
-.plan .form div label:nth-child(1) {
+.plan form div label:nth-child(1) {
 	margin-right: 5px;
 }
 
-.plan .form div label:nth-child(2) {
+.plan form div label:nth-child(2) {
 	margin-left: 5px;
 }
 

@@ -20,15 +20,13 @@
 </head>
 <body class="plan">
 
-	<form method="POST" action="save" id="plan-form"></form>
-	<form method="POST" action="prior-year" id="prior-year-form"></form>
-	<form method="POST" action="next-year" id="next-year-form"></form>
 
-	<div class="form">
+	<form method="POST">
+
 		<h3>Advise It</h3>
 
 		<nav>
-			<button type="submit" form="prior-year-form" class="link-btn">Add Year</button>
+			<button type="submit" formaction="prior-year" class="link-btn">Add Year</button>
 		</nav>
 
 		<hr class="plan-separator">
@@ -38,18 +36,18 @@
 
 			<div>
 				<label>{{ 'Fall ' . @plan->getYear() }}
-					<textarea spellcheck="false" class="fall_input" form="plan-form" name="{{ 'fall_'.@plan->getYear() }}">{{ @plan->getFall() }}</textarea>
+					<textarea spellcheck="false" class="fall_input" name="{{ 'fall_'.@plan->getYear() }}">{{ @plan->getFall() }}</textarea>
 				</label>
 				<label>{{ 'Winter ' . @plan->getYear() + 1 }}
-					<textarea spellcheck="false" class="winter_input" form="plan-form" name="{{ 'winter_'.@plan->getYear() }}">{{ @plan->getWinter() }}</textarea>
+					<textarea spellcheck="false" class="winter_input" name="{{ 'winter_'.@plan->getYear() }}">{{ @plan->getWinter() }}</textarea>
 				</label>
 			</div>
 			<div class="row-2">
 				<label>{{ 'Spring ' . @plan->getYear() + 1 }}
-					<textarea spellcheck="false" class="spring_input" form="plan-form" name="{{ 'spring_'.@plan->getYear() }}">{{ @plan->getSpring() }}</textarea>
+					<textarea spellcheck="false" class="spring_input" name="{{ 'spring_'.@plan->getYear() }}">{{ @plan->getSpring() }}</textarea>
 				</label>
 				<label>{{ 'Summer ' . @plan->getYear() + 1 }}
-					<textarea spellcheck="false" class="summer_input" form="plan-form" name="{{ 'summer_'.@plan->getYear() }}">{{ @plan->getSummer() }}</textarea>
+					<textarea spellcheck="false" class="summer_input" name="{{ 'summer_'.@plan->getYear() }}">{{ @plan->getSummer() }}</textarea>
 				</label>
 			</div>
 
@@ -59,13 +57,13 @@
 		<!-- end templated area -->
 
 		<nav>
-			<button form="next-year-form" type="submit" class="link-btn">Add Year</button>
+			<button formaction="next-year" type="submit" class="link-btn">Add Year</button>
 		</nav>
 		
 		<div class="row-3">
 
 			<label for="advisor_input">Advisor
-				<input class="textinput" id="advisor_input" type="text" form="plan-form" name="advisor" spellcheck="false" value="{{ @SESSION.plan->getAdvisor() }}">
+				<input class="textinput" id="advisor_input" type="text" name="advisor" spellcheck="false" value="{{ @SESSION.plan->getAdvisor() }}">
 			</label>
 		</div>
 
@@ -85,7 +83,7 @@
 
 			</div>
 
-			<button type="submit" form="plan-form" class="link-btn">Save</button>
+			<button type="submit" formaction="save" class="link-btn">Save</button>
 
 			<div id="saved-confirm">
 				
@@ -126,9 +124,9 @@
 		<check if="{{ (isset(@SESSION.scrolldown) && @SESSION.scrolldown == 't') }}">
 			<input type="hidden" id="scrolldown">
 		</check>
-		
-	</div> <!-- end of form -->
 
+	</form>
+		
 	<div id="plan-print">		
 
 		<h3>Advise It</h3>
