@@ -8,6 +8,9 @@
  */
 class Token
 {
+	private $_QUARTER_LEN = 1000;
+	private $_ADVISOR_LEN = 50;
+
 	private $_token;
 	private $_last_saved;
 	private $_advisor;
@@ -44,16 +47,20 @@ class Token
 
             // get POST data for all
             if (isset($_POST['fall_'.$year_str])) {
-                $new_plan->setFall($_POST['fall_'.$year_str]);
+            	$fall = substr($_POST['fall_'.$year_str], 0, $this->_QUARTER_LEN);
+                $new_plan->setFall($fall);
             }
             if (isset($_POST['winter_'.$year_str])) {
-                $new_plan->setWinter($_POST['winter_'.$year_str]);
+            	$winter = substr($_POST['winter_'.$year_str], 0, $this->_QUARTER_LEN);
+                $new_plan->setWinter($winter);
             }
             if (isset($_POST['spring_'.$year_str])) {
-                $new_plan->setSpring($_POST['spring_'.$year_str]);
+            	$spring = substr($_POST['spring_'.$year_str], 0, $this->_QUARTER_LEN);
+                $new_plan->setSpring($spring);
             }
             if (isset($_POST['summer_'.$year_str])) {
-                $new_plan->setSummer($_POST['summer_'.$year_str]);
+            	$summer = substr($_POST['summer_'.$year_str], 0, $this->_QUARTER_LEN);
+                $new_plan->setSummer($summer);
             }
 
             // add the plan to this Token obj

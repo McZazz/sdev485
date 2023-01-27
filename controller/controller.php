@@ -124,7 +124,7 @@ class Controller
 
         // get advisor if set, otherwise set as empty str
         if (isset($_POST['advisor'])) {
-            $advisor = $_POST['advisor'];
+            $advisor = substr($_POST['advisor'], 0, 50);
         } else {
             $advisor = '';
         }

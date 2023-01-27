@@ -11,9 +11,6 @@
  */
 class Plan
 {
-    private $_ADVISOR_LEN = 50;
-    private $_QUARTER_LEN = 1000;
-
     private $_token;
     private $_last_saved = '';
     private $_saved = '0';
