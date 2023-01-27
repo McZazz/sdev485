@@ -112,6 +112,8 @@ class Controller
         $_SESSION['scrolldown'] = 'f';
 
         $_SESSION['skip_reload'] = true;
+        //f3 fails to reload on reroute a small % of time
+        // so we have to reload the obj here AND again in the GET route just in case
         $_SESSION['plan'] = $this->_db->getTokenObj($token);
 
         $this->_f3->reroute('/' . $token);
@@ -140,6 +142,8 @@ class Controller
         $_SESSION['opened'] = 't';
 
         $_SESSION['skip_reload'] = true;
+        //f3 fails to reload on reroute a small % of time
+        // so we have to reload the obj here AND again in the GET route just in case
         $_SESSION['plan'] = $this->_db->getTokenObj($token);
 
         $this->_f3->reroute('/' . $token);
@@ -174,6 +178,8 @@ class Controller
         $_SESSION['opened'] = 't';
 
         $_SESSION['skip_reload'] = true;
+        //f3 fails to reload on reroute a small % of time
+        // so we have to reload the obj here AND again in the GET route just in case
         $_SESSION['plan'] = $this->_db->getTokenObj($token);
     
         $this->_f3->reroute('/' . $token);
@@ -187,7 +193,9 @@ class Controller
     function routePlan()
     {
 
-        if (isset($_SESSION['skip_reload']) && $_SESSION['skip_reload'] == true) {
+        if (isset($_SESSION['skip_reload']) && $_SESSION['skip_reload'] != false) {
+            $_SESSION['plan'] = $this->_db->getTokenObj($this->_f3->get('PARAMS.token'));
+            // $_SESSION['plan'] = $this->_db->getTokenObj($_SESSION['skip_reload']);
             $_SESSION['skip_reload'] = false;
         } else {
             $_SESSION['skip_reload'] = false;
