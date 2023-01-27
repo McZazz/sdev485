@@ -83,18 +83,9 @@ class DataLayer
         // because we need to know its already in the db after creating it
         if ($insertSuccess == false) {
             return false;
-        } else {
-
-            // get empty plan
-            $plan = $this->makeUnsavedPlan($insertSuccess['created']);
-            
-            // created date, jan - june means subtract 1 year
-            $plans = new Token($newToken, '', '');
-            $plans->setIsNew(true);
-            $plans->addPlan($plan);
-
-            return $plans;
         }
+        
+        return $newToken;
     }
 
 

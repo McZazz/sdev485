@@ -43,7 +43,7 @@ $f3->route('POST /create-new', function()
 /**
  * Route for plan entry and viewing
  */
-$f3->route('GET /@token', function()
+$f3->route('GET|POST /@token', function()
 {
     $GLOBALS['controller']->routePlan();
 });

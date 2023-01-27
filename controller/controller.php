@@ -32,9 +32,9 @@ class Controller
      */
     function routeHome()
     {
-        $_SESSION['is_new'] = false;
         $_SESSION['plan'] = '';
         $_SESSION['opened'] = 'f';
+
         // make sure proper server environment is set for links
         // goto home
         $this->_db->deleteIfUnusedAfter24hrs();
@@ -49,17 +49,15 @@ class Controller
     function routeCreateNew()
     {
         // create new plan with new token
-		$newPlan = $this->_db->addNewToken();
+		$insert_success = $this->_db->addNewToken();
 
-        if ($newPlan == false) {
+        if ($insert_success == false) {
             // go home, database is full of 6 char tokens
             $this->_f3->reroute('/');
         }
 
         // goto plan page with this token in url
-        $_SESSION['plan'] = $newPlan;
-        $_SESSION['is_new'] = true;
-		$this->_f3->reroute('/' . $_SESSION['plan']->getToken());
+		$this->_f3->reroute('/' . $insert_success);
     }
 
 
@@ -93,9 +91,11 @@ class Controller
      */
     function routePriorYear()
     {
-        $_SESSION['is_new'] = false;
+        $token = $_SESSION['plan']->getToken();
+
         $_SESSION['scrolldown'] = 'f';
         $_SESSION['opened'] = 't';
+
         // update database from POST
         $old_token_obj = $this->getTokenObjFromPost();
         $this->_db->updatePlans($old_token_obj);
@@ -108,11 +108,33 @@ class Controller
 
         // as long as there are dbs available, make prior plan year
         if ($prior_year != 2019) {
-            $token = $_SESSION['plan']->getToken();
             $this->_db->insertOnePlan($token, $prior_year, '', '', '', '');
         }
 
-        $_SESSION['plan'] = $this->_db->getTokenObj($old_token_obj->getToken());
+        $this->_f3->reroute('/' . $token);
+
+
+    }
+
+
+    function routeSave()
+    {
+        // reacquire fields, instantiation automatically gets from post
+        $new_token_obj = $this->getTokenObjFromPost();
+
+        // update records in db
+        $this->_db->updatePlans($new_token_obj);
+        $this->_db->updateToken($new_token_obj);
+
+        // token was invalid, go home
+        if ($_SESSION['plan'] == false) {
+            $this->_f3->reroute('/');
+        }
+
+        // prevent large plans from appearing to scroll up
+        $_SESSION['scrolldown'] = 't';
+        // show saved message on front end
+        $_SESSION['opened'] = 't';
 
         $this->_f3->reroute('/' . $_SESSION['plan']->getToken());
     }
@@ -123,7 +145,8 @@ class Controller
      */
     function routeNextYear()
     {
-        $_SESSION['is_new'] = false;
+        $token = $_SESSION['plan']->getToken();
+
         // update POST data in SESSION object and update in databas
         $old_token_obj = $this->getTokenObjFromPost();
         $this->_db->updatePlans($old_token_obj);
@@ -137,45 +160,23 @@ class Controller
 
         // as long as we have databases available, add a new plan
         if ($next_year != 2040) {
-            $token = $_SESSION['plan']->getToken();
             $this->_db->insertOnePlan($token, $next_year, '', '', '', '');
         }
 
-        $_SESSION['plan'] = $this->_db->getTokenObj($old_token_obj->getToken());
         // make sure page will scroll down
         $_SESSION['scrolldown'] = 't';
         $_SESSION['opened'] = 't';
 
-        $this->_f3->reroute('/' . $_SESSION['plan']->getToken());
-    }
+                $_SESSION['plan'] = $this->_db->getTokenObj($token);
 
+                // set for use in templating
+        $this->_f3->set('root', $this->_SERVER_ROOT);
 
-    function routeSave()
-    {
-        $_SESSION['is_new'] = false;
+        $_SESSION['thwart_f3_builtin_10_percent_of_the_time_crash_on_reroute_mechanism'] = true;
         
-        // POST means we are saving / updating an existing token
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // reacquire fields, instantiation automatically gets from post
-            $new_token_obj = $this->getTokenObjFromPost();
-
-            // update records in db
-            $this->_db->updatePlans($new_token_obj);
-            $this->_db->updateToken($new_token_obj);
-            $_SESSION['plan'] = $this->_db->getTokenObj($new_token_obj->getToken());
-
-            // token was invalid, go home
-            if ($_SESSION['plan'] == false) {
-                $this->_f3->reroute('/');
-            }
-
-            // prevent large plans from appearing to scroll up
-            $_SESSION['scrolldown'] = 't';
-            // show saved message on front end
-            $_SESSION['opened'] = 't';
-
-            $this->_f3->reroute('/' . $_SESSION['plan']->getToken());
-        }
+        $this->_f3->reroute('/' . $token);
+        // $view = new Template(); 
+        // echo $view->render('views/plan.html'); 
     }
 
 
@@ -185,12 +186,10 @@ class Controller
      */
     function routePlan()
     {
-        $this->_f3->set('root', $this->_SERVER_ROOT);
 
-        if (!isset($_SESSION['plan']) || 
-            (isset($_SESSION['plan']) && $_SESSION['plan'] == '') || 
-            (isset($_SESSION['plan']) && $_SESSION['plan']->getToken() != $this->_f3->get('PARAMS.token'))) {
-            // gets data on first visit
+        // if (isset($_SESSION['thwart_f3_builtin_crash_on_reroute_mechanism']) && $_SESSION['thwart_f3_builtin_crash_on_reroute_mechanism'] == true) {
+            // $_SESSION['thwart_f3_builtin_crash_on_reroute_mechanism'] == false;
+        // } else {
             $_SESSION['plan'] = $this->_db->getTokenObj($this->_f3->get('PARAMS.token'));
 
             // if token is false, reroute to home
@@ -199,18 +198,17 @@ class Controller
             }
 
             if ($_SESSION['plan']->getSaved() == '0') {
-                //setup with emtpy data when recalling unsaved plan
                 $unsaved = $this->_db->makeUnsavedPlan($_SESSION['plan']->getLastSaved());
                 $_SESSION['plan']->addPlan($unsaved);
             }
+        // }
 
-            // set for use in templating
-            $_SESSION['scrolldown'] = 'f';
-        }
 
+        // set for use in templating
+        $this->_f3->set('root', $this->_SERVER_ROOT);
+        
         $view = new Template(); 
         echo $view->render('views/plan.html'); 
-        $_SESSION['opened'] = 'f';
     }
 
 
@@ -219,7 +217,7 @@ class Controller
      */
     function login() 
     {
-        $_SESSION['is_new'] = false;
+        // $_SESSION['is_new'] = false;
         $username = '';
         $password = '';
         // get username and pass from POST
@@ -253,7 +251,7 @@ class Controller
      */
     function admin()
     {
-        $_SESSION['is_new'] = false;
+        // $_SESSION['is_new'] = false;
         $_SESSION['opened'] = 'f';
         // make sure user is logged in to go to admin page
         if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
@@ -279,7 +277,7 @@ class Controller
      */
     function errorReroute()
     {
-        $_SESSION['is_new'] = false;
+        // $_SESSION['is_new'] = false;
         // goto 404 route
         $this->_f3->reroute('/error404');
     }
@@ -290,7 +288,7 @@ class Controller
      */
     function error()
     {
-        $_SESSION['is_new'] = false;
+        // $_SESSION['is_new'] = false;
         // goto error view
         $view = new Template();
         echo $view->render('views/error.html');
