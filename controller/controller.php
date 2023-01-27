@@ -36,7 +36,7 @@ class Controller
         $_SESSION['plan'] = '';
         // make sure proper server environment is set for links
         // goto home
-        $this->_db->delete_if_unused_after_24hrs();
+        $this->_db->deleteIfUnusedAfter24hrs();
         $view = new Template();
         echo $view->render('views/home.html');
     }
@@ -48,7 +48,7 @@ class Controller
     function routeCreateNew()
     {
         // create new plan with new token
-		$newPlan = $this->_db->add_new_token();
+		$newPlan = $this->_db->addNewToken();
 
         if ($newPlan == false) {
             // go home, database is full of 6 char tokens
@@ -66,7 +66,7 @@ class Controller
      * Gets the token object form POST, filled with updated POST data
      * @return Token object, from SESSION
      */
-    function get_token_obj_from_post()
+    function getTokenObjFromPost()
     {
         // get original Token 
         $old_token_obj = $_SESSION['plan']->getToken();
@@ -90,12 +90,12 @@ class Controller
     /**
      * Route for creating / going to prior year
      */
-    function route_prior_year()
+    function routePriorYear()
     {
         $_SESSION['is_new'] = false;
         $_SESSION['scrolldown'] = 'f';
         // update database from POST
-        $old_token_obj = $this->get_token_obj_from_post();
+        $old_token_obj = $this->getTokenObjFromPost();
         $this->_db->updatePlans($old_token_obj);
         $this->_db->updateToken($old_token_obj);
 
@@ -107,10 +107,10 @@ class Controller
         // as long as there are dbs available, make prior plan year
         if ($prior_year != 2019) {
             $token = $_SESSION['plan']->getToken();
-            $this->_db->insert_one_plan($token, $prior_year, '', '', '', '');
+            $this->_db->insertOnePlan($token, $prior_year, '', '', '', '');
         }
 
-        $_SESSION['plan'] = $this->_db->get_token_obj($old_token_obj->getToken());
+        $_SESSION['plan'] = $this->_db->getTokenObj($old_token_obj->getToken());
 
         $this->_f3->reroute('/' . $_SESSION['plan']->getToken());
     }
@@ -119,11 +119,11 @@ class Controller
     /**
      * Route for creating / going to next year
      */
-    function route_next_year()
+    function routeNextYear()
     {
         $_SESSION['is_new'] = false;
         // update POST data in SESSION object and update in databas
-        $old_token_obj = $this->get_token_obj_from_post();
+        $old_token_obj = $this->getTokenObjFromPost();
         $this->_db->updatePlans($old_token_obj);
         $this->_db->updateToken($old_token_obj);
 
@@ -136,10 +136,10 @@ class Controller
         // as long as we have databases available, add a new plan
         if ($next_year != 2040) {
             $token = $_SESSION['plan']->getToken();
-            $this->_db->insert_one_plan($token, $next_year, '', '', '', '');
+            $this->_db->insertOnePlan($token, $next_year, '', '', '', '');
         }
 
-        $_SESSION['plan'] = $this->_db->get_token_obj($old_token_obj->getToken());
+        $_SESSION['plan'] = $this->_db->getTokenObj($old_token_obj->getToken());
         // make sure page will scroll down
         $_SESSION['scrolldown'] = 't';
 
@@ -147,18 +147,18 @@ class Controller
     }
 
 
-    function route_save()
+    function routeSave()
     {
         $_SESSION['is_new'] = false;
         // POST means we are saving / updating an existing token
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // reacquire fields, instantiation automatically gets from post
-            $new_token_obj = $this->get_token_obj_from_post();
+            $new_token_obj = $this->getTokenObjFromPost();
 
             // update records in db
             $this->_db->updatePlans($new_token_obj);
             $this->_db->updateToken($new_token_obj);
-            $_SESSION['plan'] = $this->_db->get_token_obj($new_token_obj->getToken());
+            $_SESSION['plan'] = $this->_db->getTokenObj($new_token_obj->getToken());
 
             // token was invalid, go home
             if ($_SESSION['plan'] == false) {
@@ -187,7 +187,7 @@ class Controller
             (isset($_SESSION['plan']) && $_SESSION['plan'] == '') || 
             (isset($_SESSION['plan']) && $_SESSION['plan']->getToken() != $this->_f3->get('PARAMS.token'))) {
             // gets data on first visit
-            $_SESSION['plan'] = $this->_db->get_token_obj($this->_f3->get('PARAMS.token'));
+            $_SESSION['plan'] = $this->_db->getTokenObj($this->_f3->get('PARAMS.token'));
 
             // if token is false, reroute to home
             if ($_SESSION['plan'] == false) {
@@ -223,7 +223,7 @@ class Controller
         }
 
         // check database for user valid name and pass
-        $userIsValid = $this->_db->auth_user($username, $password);
+        $userIsValid = $this->_db->authUser($username, $password);
 
         // if user is valid, go to admin route
         if ($userIsValid) {
@@ -249,7 +249,7 @@ class Controller
         if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
             $_SESSION['plan'] == '';
             // get all plans
-            $plans = $this->_db->get_plans_for_admin();
+            $plans = $this->_db->getPlansForAdmin();
             $this->_f3->set('plans', $plans);
             // set server root for link
             $this->_f3->set('root', $this->_SERVER_ROOT);
@@ -267,7 +267,7 @@ class Controller
     /**
      * Re-route to 404
      */
-    function error_reroute()
+    function errorReroute()
     {
         $_SESSION['is_new'] = false;
         // goto 404 route

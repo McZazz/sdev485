@@ -35,9 +35,9 @@ class DataLayer
      * Create new plan row in db and return the token
      * @return array, with 'token' and 'status' keys 
      */
-    function add_new_token()
+    function addNewToken()
     {
-        $newToken = $this->create_unique_token();
+        $newToken = $this->createUniqueToken();
 
         // database can't take any more tokens, show 404
         if ($newToken == false) {
@@ -87,7 +87,7 @@ class DataLayer
      * Gets all plans for admin view
      * @return array, array of all plans
      */
-    function get_plans_for_admin()
+    function getPlansForAdmin()
     {
         // do sql to get plans
         $sql = "SELECT created, token, advisor
@@ -101,7 +101,7 @@ class DataLayer
         // if there are rows, we have plans
         if (sizeof($result) > 0) {
             // format all dtg for y m d and return
-            $result = $this->format_datetime($result, 'Y-m-d');
+            $result = $this->formatDatetime($result, 'Y-m-d');
             return $result;
         }
 
@@ -115,7 +115,7 @@ class DataLayer
      * @param $plans, array, array of plans form db
      * @param $format, string, format for date formatting
      */
-    function format_datetime($plans, $format)
+    function formatDatetime($plans, $format)
     {
         $result = [];
 
@@ -141,7 +141,7 @@ class DataLayer
      * @param $spring String, plan data
      * @param $summer String, plan data
      */
-    function insert_one_plan($token, $year, $fall, $winter, $spring, $summer)
+    function insertOnePlan($token, $year, $fall, $winter, $spring, $summer)
     {
         // set year of database
         $planyear = 'adviseit_'.$year;
@@ -183,7 +183,7 @@ class DataLayer
                 $summer = $plan->getSummer();
 
                 // use insert function
-                $this->insert_one_plan($token, $year, $fall, $winter, $spring, $summer);
+                $this->insertOnePlan($token, $year, $fall, $winter, $spring, $summer);
             }
         } else {
             
@@ -303,7 +303,7 @@ class DataLayer
      * @param $token, string of a 6 char token
      * @return Token object
      */
-    function get_token_obj($token)
+    function getTokenObj($token)
     {
         // get token data from database
         $token_from_db = $this->getToken($token);
@@ -319,7 +319,7 @@ class DataLayer
         $token_obj->setSaved($token_from_db['saved']);
 
         // add all plans available to it in an array inside it
-        $token_obj = $this->get_all_plans($token_obj);
+        $token_obj = $this->getAllPlans($token_obj);
 
         return $token_obj;
     }
@@ -330,7 +330,7 @@ class DataLayer
      * @param $token_obj Token object
      * @return boolean: false if plan was not present, Token object if token present
      */
-    function get_all_plans($token_obj)
+    function getAllPlans($token_obj)
     {
         // set token var
         $token = $token_obj->getToken();
@@ -371,7 +371,7 @@ class DataLayer
      * @param $user, string, user name
      * @param $hash, sha256 hash of user's password
      */
-    function auth_user($user, $hash) 
+    function authUser($user, $hash) 
     {   
         // do sql of username / password
         $sql = "SELECT username FROM admins WHERE hash = :hash";
@@ -401,7 +401,7 @@ class DataLayer
      * @param $token, String: 6 digit token
      * @return boolean, true if unique, false if not
      */
-    function token_is_unique($token)
+    function tokenIsUnique($token)
     {
         // create and run sql to check if token is present
         $sql = "SELECT token FROM adviseit_tokens WHERE token = :token";
@@ -424,7 +424,7 @@ class DataLayer
     /**
      * Deletes unsaved tokens after 24 hours
      */
-    function delete_if_unused_after_24hrs()
+    function deleteIfUnusedAfter24hrs()
     {
         // sql statement deltes all plans not saved after 24 hours
         $sql = "DELETE FROM adviseit_tokens WHERE saved = 0 AND last_saved + INTERVAL 1 DAY < NOW()";
@@ -438,7 +438,7 @@ class DataLayer
      * @param $len, integer, sets length of token
      * @return String, token
      */
-    function create_token($len)
+    function createToken($len)
     {
         // pool of chars for tokens
         $chars = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890123456789012345678901234567890123456789012';
@@ -457,14 +457,14 @@ class DataLayer
      * Create unique token, checked against db
      * @return String, unique token
      */
-    function create_unique_token()
+    function createUniqueToken()
     {
         $cntr = 0;
 
         // loop until unique token is made
         while (true) {
-            $newToken = $this->create_token(6);
-            $isUnique = $this->token_is_unique($newToken);
+            $newToken = $this->createToken(6);
+            $isUnique = $this->tokenIsUnique($newToken);
 
             // if token is unique, return it
             if ($isUnique) {

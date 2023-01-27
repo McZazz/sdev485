@@ -54,7 +54,7 @@ $f3->route('GET /@token', function()
  */
 $f3->route('POST /save', function()
 {
-    $GLOBALS['controller']->route_save();
+    $GLOBALS['controller']->routeSave();
 });
 
 
@@ -63,7 +63,7 @@ $f3->route('POST /save', function()
  */
 $f3->route('POST /prior-year', function()
 {
-    $GLOBALS['controller']->route_prior_year();
+    $GLOBALS['controller']->routePriorYear();
 });
 
 
@@ -72,7 +72,7 @@ $f3->route('POST /prior-year', function()
  */
 $f3->route('POST /next-year', function()
 {
-    $GLOBALS['controller']->route_next_year();
+    $GLOBALS['controller']->routeNextYear();
 });
 
 
@@ -108,7 +108,7 @@ $f3->route('GET|POST /error404', function()
  */
 $f3->set('ONERROR', function()
 {
-	$GLOBALS['controller']->error_reroute();
+	$GLOBALS['controller']->errorReroute();
 });
 
 
