@@ -60,7 +60,6 @@ class DataLayer
 
         $insertSuccess = $this->getToken($newToken);
 
-        // return $insertSuccess;
         // swapping the meaning of $insertSuccess, it's a success if false
         // because we need to know its already in the db after creating it
         if ($insertSuccess == false) {
@@ -83,16 +82,8 @@ class DataLayer
             $plans->addPlan($plan);
 
             return $plans;
-
-            // return $plans;
         }
     }
-
-
-    // function addPriorYearPlan($token, $year)
-    // {
-    //     $this->insertOnePlan($token, $year, '', '', '', '');
-    // }
 
 
     /**
@@ -168,7 +159,7 @@ class DataLayer
         $statement->bindParam(':spring', $spring);
         $statement->bindParam(':summer', $summer);
 
-        // // execute sql
+        // execute sql
         $statement->execute();
     }
 
@@ -430,7 +421,6 @@ class DataLayer
         } else {
             return false;
         }
-
     }
 
 

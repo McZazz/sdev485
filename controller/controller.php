@@ -91,12 +91,8 @@ class Controller
 
         // update POST data in SESSION object and update in databas
         $old_token_obj = $this->getTokenObjFromPOST();
-        // echo print_r(sizeof($_POST));
         $this->_db->updatePlans($old_token_obj);
         $this->_db->updateToken($old_token_obj);
-
-
-
 
         // get plans and set year to one in the future
         $priors = $_SESSION['plan']->getPlansArray();
@@ -109,9 +105,6 @@ class Controller
             $token = $_SESSION['plan']->getToken();
             $this->_db->insertOnePlan($token, $next_year, '', '', '', '');
         }
-
-        // update everyhting in db
-        // $_SESSION['plan'] = $this->_db->getTokenObj($old_token_obj->getToken());
 
         // make sure page will scroll down
         $_SESSION['scrolldown'] = 't';
@@ -165,7 +158,6 @@ class Controller
             // prevent large plans from appearing to scroll up
             $_SESSION['scrolldown'] = 't';
             // show saved message on front end
-            // $this->_f3->set('opened', 't');
             $_SESSION['opened'] = 't';
 
             $this->_f3->reroute('/' . $_SESSION['plan']->getToken());
@@ -180,27 +172,7 @@ class Controller
     function route_plan()
     {
         // POST means we are saving / updating an existing token
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // // reacquire fields, instantiation automatically gets from post
-            // $new_token_obj = $this->getTokenObjFromPOST();
-
-            // // update records in db
-            // $this->_db->updatePlans($new_token_obj);
-            // $this->_db->updateToken($new_token_obj);
-            // $_SESSION['plan'] = $this->_db->getTokenObj($new_token_obj->getToken());
-
-            // // token was invalid, go home
-            // if ($_SESSION['plan'] == false) {
-            //     $this->_f3->reroute('/');
-            // }
-
-            // // prevent large plans from appearing to scroll up
-            // $_SESSION['scrolldown'] = 't';
-            // // show saved message on front end
-            // $this->_f3->set('opened', 't');
-            // $_SESSION['opened'] = 't';
-
-        } else {
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
             // GET
             // this fires when getting a previusly saved token, or after a new token is made, it's rerouted to here
             if ($this->_f3->get('PARAMS.token') != '' && null != $this->_f3->get('PARAMS.token')) {
@@ -211,6 +183,8 @@ class Controller
                 }
 
                 if (isset($_SESSION['is_new']) && $_SESSION['is_new'] == false || !isset($_SESSION['is_new'])) {
+                    // gets data from db after a save
+                    // this also gets data from db after adding new years above and below
                     $plan = $this->_db->getTokenObj($this->_f3->get('PARAMS.token'));
 
                     // if token is false, reroute to home
@@ -225,7 +199,6 @@ class Controller
         }
 
         // make sure proper server environment is set for links
-        // $this->_f3->set('root', $this->_SERVER_ROOT); 
         $_SESSION['root'] = $this->_SERVER_ROOT; 
 
         $view = new Template(); 

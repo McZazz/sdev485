@@ -50,7 +50,7 @@ $f3->route('GET|POST /@token', function()
 
 
 /**
- * Route for plan entry and viewing
+ * Route for saving plans
  */
 $f3->route('POST /save', function()
 {
