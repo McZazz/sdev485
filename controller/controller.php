@@ -34,6 +34,7 @@ class Controller
     {
         $_SESSION['is_new'] = false;
         $_SESSION['plan'] = '';
+        $_SESSION['opened'] = 'f';
         // make sure proper server environment is set for links
         // goto home
         $this->_db->deleteIfUnusedAfter24hrs();
@@ -94,6 +95,7 @@ class Controller
     {
         $_SESSION['is_new'] = false;
         $_SESSION['scrolldown'] = 'f';
+        $_SESSION['opened'] = 't';
         // update database from POST
         $old_token_obj = $this->getTokenObjFromPost();
         $this->_db->updatePlans($old_token_obj);
@@ -142,6 +144,7 @@ class Controller
         $_SESSION['plan'] = $this->_db->getTokenObj($old_token_obj->getToken());
         // make sure page will scroll down
         $_SESSION['scrolldown'] = 't';
+        $_SESSION['opened'] = 't';
 
         $this->_f3->reroute('/' . $_SESSION['plan']->getToken());
     }
@@ -150,6 +153,7 @@ class Controller
     function routeSave()
     {
         $_SESSION['is_new'] = false;
+        
         // POST means we are saving / updating an existing token
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // reacquire fields, instantiation automatically gets from post
@@ -196,12 +200,12 @@ class Controller
 
             $_SESSION['scrolldown'] = 'f';
             // show saved message on front end
-            $_SESSION['opened'] = 'f';
             // set for use in templating
         }
 
         $view = new Template(); 
         echo $view->render('views/plan.html'); 
+        $_SESSION['opened'] = 'f';
     }
 
 
@@ -245,6 +249,7 @@ class Controller
     function admin()
     {
         $_SESSION['is_new'] = false;
+        $_SESSION['opened'] = 'f';
         // make sure user is logged in to go to admin page
         if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
             $_SESSION['plan'] == '';
