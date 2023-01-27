@@ -16,28 +16,49 @@
 	<link rel="stylesheet" type="text/css" href="style/print.css">
 	<script defer type="text/javascript" src="script/plan.js"></script>
 	<script defer type="text/javascript" src="script/print.js"></script>
-	<title>Advise-It</title>
+	<title>Advise It</title>
 </head>
 <body class="plan">
 
 	<form method="POST">
-		<div>
-			<label>Fall
-				<textarea spellcheck="false" id="fall_input" name="fall">{{ @SESSION.plan->getFall() }}</textarea>
-			</label>
-			<label>Winter
-				<textarea spellcheck="false" id="winter_input" name="winter">{{ @SESSION.plan->getWinter() }}</textarea>
-			</label>
-		</div>
-		<div class="row-2">
-			<label>Spring
-				<textarea spellcheck="false" id="spring_input" name="spring">{{ @SESSION.plan->getSpring() }}</textarea>
-			</label>
-			<label>Summer
-				<textarea spellcheck="false" id="summer_input" name="summer">{{ @SESSION.plan->getSummer() }}</textarea>
-			</label>
-		</div>
 
+		<h3>Advise It</h3>
+
+		<nav>
+			<button type="submit" formaction="prior-year" class="link-btn">Add Year</button>
+		</nav>
+
+		<hr class="plan-separator">
+
+		<!-- begin templated area -->
+		<repeat group="{{ @SESSION.plan->getPlansArray() }}" value="{{ @plan }}" >
+
+			<div>
+				<label>{{ 'Fall ' . @plan->getYear() }}
+					<textarea spellcheck="false" class="fall_input" name="{{ 'fall_'.@plan->getYear() }}">{{ @plan->getFall() }}</textarea>
+				</label>
+				<label>{{ 'Winter ' . @plan->getYear() + 1 }}
+					<textarea spellcheck="false" class="winter_input" name="{{ 'winter_'.@plan->getYear() }}">{{ @plan->getWinter() }}</textarea>
+				</label>
+			</div>
+			<div class="row-2">
+				<label>{{ 'Spring ' . @plan->getYear() + 1 }}
+					<textarea spellcheck="false" class="spring_input" name="{{ 'spring_'.@plan->getYear() }}">{{ @plan->getSpring() }}</textarea>
+				</label>
+				<label>{{ 'Summer ' . @plan->getYear() + 1 }}
+					<textarea spellcheck="false" class="summer_input" name="{{ 'summer_'.@plan->getYear() }}">{{ @plan->getSummer() }}</textarea>
+				</label>
+			</div>
+
+			<hr class="plan-separator">
+
+		</repeat>
+		<!-- end templated area -->
+
+		<nav>
+			<button formaction="next-year" type="submit" class="link-btn">Add Year</button>
+		</nav>
+		
 		<div class="row-3">
 
 			<label for="advisor_input">Advisor
@@ -52,7 +73,7 @@
 				<div id="last-updated-cont">
 					<div id="last-updated-text">
 
-						<check if="{{ isset(@SESSION.plan) && @SESSION.plan->getSaved() == '1' }}">Last Updated: {{@SESSION.plan->getLastSaved()}}</check>
+						<check if="{{ isset(@SESSION.plan) && @SESSION.plan->getSaved() == '1' }}">Last Updated: {{ @SESSION.plan->getLastSaved() }}</check>
 
 						<check if="{{ isset(@SESSION.plan) && @SESSION.plan->getSaved() == '0' }}">Last Updated: Unsaved</check>
 
@@ -61,15 +82,15 @@
 
 			</div>
 
-			<button type="submit" class="link-btn">Save</button>
+			<button type="submit" formaction="save" class="link-btn">Save</button>
 
 			<div id="saved-confirm">
 				
-				<check if="{{ (isset(@opened) && @opened == 'f') || !isset(@opened) }}">
+				<check if="{{ (isset(@SESSION.opened) && @SESSION.opened == 'f') || !isset(@SESSION.opened) }}">
 					<input type="hidden" id="_is_visible" value="f">
 				</check>
 
-				<check if="{{ isset(@opened) && @opened == 't' }}">
+				<check if="{{ isset(@SESSION.opened) && @SESSION.opened == 't' }}">
 					<input type="hidden" id="_is_visible" value="t">
 				</check>
 				
@@ -97,15 +118,21 @@
 			</div>
 		</div>
 
-		<button class="link-btn print-btn" type="button" onclick="print_format();">Print</button>
+		<button class="link-btn print-btn" type="button" id="print-btn" onclick="print_format();">Print</button>
+
+		<check if="{{ (isset(@SESSION.scrolldown) && @SESSION.scrolldown == 't') }}">
+			<input type="hidden" id="scrolldown">
+		</check>
 
 	</form>
-
+	<!-- end visible area -->
+		
+	<!-- begin invisible print styling area -->
 	<div id="plan-print">		
 
-		<h3>Advise-It - Advising Plan</h3>
+		<h3>Advise It</h3>
 
-		<table>
+		<table class="print-tables">
 			<tr>
 				<th>Token</th>
 				<th>Link</th>
@@ -117,25 +144,35 @@
 				<td id="advisor_table_cell">{{ @SESSION.plan->getAdvisor() }}</td>
 			</tr>
 		</table>
+
+		<hr class="plan-separator2">
+
+		<!-- Begin templated area -->
+		<repeat group="{{ @SESSION.plan->getPlansArray() }}" value="{{ @plan }}" >
 	
-		<table>
-			<tr>
-				<th>Fall</th>
-				<th>Winter</th>
-			</tr>
-			<tr>
-				<td id="fall_table_cell">{{ @SESSION.plan->getFall() }}</td>
-				<td id="winter_table_cell">{{ @SESSION.plan->getWinter() }}</td>
-			</tr>
-			<tr>
-				<th>Spring</th>
-				<th>Summer</th>
-			</tr>
-			<tr>
-				<td id="spring_table_cell">{{ @SESSION.plan->getSpring() }}</td>
-				<td id="summer_table_cell">{{ @SESSION.plan->getSummer() }}</td>
-			</tr>
-		</table>
+			<table class="print-tables">
+				<tr>
+					<th>{{ 'Fall ' . @plan->getYear() }}</th>
+					<th>{{ 'Winter ' . @plan->getYear() + 1 }}</th>
+				</tr>
+				<tr>
+					<td class="fall_table_cell">{{ @plan->getFall() }}</td>
+					<td class="winter_table_cell">{{ @plan->getWinter() }}</td>
+				</tr>
+				<tr>
+					<th>{{ 'Spring ' . @plan->getYear() + 1 }}</th>
+					<th>{{ 'Summer ' . @plan->getYear() + 1 }}</th>
+				</tr>
+				<tr>
+					<td class="spring_table_cell">{{ @plan->getSpring() }}</td>
+					<td class="summer_table_cell">{{ @plan->getSummer() }}</td>
+				</tr>
+			</table>
+
+			<hr class="plan-separator2">
+
+		</repeat>
+		<!-- end templated area -->
 		
 	</div>
 

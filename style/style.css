@@ -29,9 +29,24 @@
 	align-items: center;
 }
 
+.plan-separator {
+	height: 2px;
+	width: 100%;
+	margin: 30px 0 40px 0;
+	border-width: 0;
+	background: var(--light-gray-border);
+	border-radius: 2px;
+}
+
+#add-next-year-btn {
+	margin-top: 5px;
+}
+
 .home {
 	position: relative;
 }
+
+
 
 .home h1 {
 	font-size: 2.5rem;
@@ -117,10 +132,22 @@
 	height: auto;
 }
 
+.plan nav {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding-bottom: 15px;
+}
+
 .plan form {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+}
+
+.plan form a {
+	width: 145px;
 }
 
 .plan form div {
@@ -131,7 +158,7 @@
 	font-size: 1.15rem;
 	resize: none;
 	border-radius: 3px;
-	border: 2px solid #D5D6DB;
+	border: 2px solid var(--light-gray-border);
 	width: 275px;
 	height: 225px;
 	overflow-x: hidden;
@@ -163,12 +190,16 @@
 	box-shadow: 0 0 0 4px #E1E3EA;
 }
 
-.plan label {
+.plan label, .plan form nav div, .plan form h3 {
 	color: var(--text-dark);
 	font-size: 1.5rem;
 	user-select: none;
 	display: flex;
 	flex-direction: column;
+}
+
+.plan form h3 {
+	padding-bottom: 15px;
 }
 
 .plan .row-3 label {
@@ -251,4 +282,13 @@
 	border: 1px solid #8F93A2;
 }
 
+/* scroll margin adjust for adding future years */
 
+.plan {
+	padding-bottom: 0;
+}
+
+#print-btn {
+  margin-bottom: 15px;
+  scroll-margin: 15px;
+}

@@ -11,9 +11,6 @@
  */
 class Plan
 {
-    private $_ADVISOR_LEN = 50;
-    private $_QUARTER_LEN = 1000;
-
     private $_token;
     private $_last_saved = '';
     private $_saved = '0';
@@ -23,47 +20,49 @@ class Plan
     private $_summer = '';
     private $_is_new = false;
     private $_advisor = '';
+    private $_year = '';
 
     /**
      * Constructor
      * @param $token, String, token for new Plans. Or an existing
      * PDO return directly from the database for updated plans
      */
-    function __construct($token)
+    function __construct($data)
     {
 		// we pass a token string or entire database obj
-		if (is_string($token)) {
+		if (is_int($data)) {
             // its a string, so we need to get from POST
-			$this->_token = $token;
+            $this->_year = $data;
 
-            // cehck POST for correct keys, update if available
-	        if (isset($_POST['fall'])) {
-	            $this->_fall = substr($_POST['fall'], 0, $this->_QUARTER_LEN);
-	        }
-	        if (isset($_POST['winter'])) {
-	            $this->_winter = substr($_POST['winter'], 0, $this->_QUARTER_LEN);
-	        }                
-	        if (isset($_POST['spring'])) {
-	            $this->_spring = substr($_POST['spring'], 0, $this->_QUARTER_LEN);
-	        }                
-	        if (isset($_POST['summer'])) {
-	            $this->_summer = substr($_POST['summer'], 0, $this->_QUARTER_LEN);
-	        }
-            if (isset($_POST['advisor'])) {
-                $this->_advisor = substr($_POST['advisor'], 0, $this->_ADVISOR_LEN);
-                // $this->_advisor = $_POST['advisor'];
-            }
 		} else {
             // PDO db return, fill into this new obj
-			$this->_token = $token['token'];
-			$this->_last_saved = $token['last_saved'];
-            $this->_advisor = $token['advisor'];
-			$this->_saved = $token['saved'];
-			$this->_fall = $token['fall'];
-			$this->_winter = $token['winter'];
-			$this->_spring = $token['spring'];
-			$this->_summer = $token['summer'];
+			$this->_token = $data['token'];
+			$this->_year = $data['year'];
+            $this->_fall = $data['fall'];
+			$this->_winter = $data['winter'];
+			$this->_spring = $data['spring'];
+			$this->_summer = $data['summer'];
 		}
+    }
+
+
+    /**
+     * Get Year data
+     * @return String, data
+     */
+    function getYear()
+    {
+        return $this->_year;
+    }
+
+
+    /**
+     * Set year data
+     * @param $year String, data
+     */
+    function setYear($year)
+    {
+        $this->_year = $year;
     }
 
 
@@ -78,12 +77,32 @@ class Plan
 
 
     /**
+     * Get Fall data
+     * @return String, data
+     */
+    function setFall($fall)
+    {
+        $this->_fall = $fall;
+    }
+
+
+    /**
      * Get Winter data
      * @return String, data
      */
     function getWinter()
     {
 		return $this->_winter;
+    }
+
+
+    /**
+     * Get Winter data
+     * @return String, data
+     */
+    function setWinter($winter)
+    {
+        $this->_winter = $winter;
     }
 
 
@@ -98,12 +117,32 @@ class Plan
 
 
     /**
+     * Get Spring data
+     * @return String, data
+     */
+    function setSpring($spring)
+    {
+        $this->_spring = $spring;
+    }
+
+
+    /**
      * Get Summer data
      * @return String, data
      */
     function getSummer()
     {
 		return $this->_summer;
+    }
+
+
+    /**
+     * Get Summer data
+     * @param $summer, String
+     */
+    function setSummer($summer)
+    {
+        $this->_summer = $summer;
     }
 
 
@@ -124,6 +163,16 @@ class Plan
     function getAdvisor()
     {
         return $this->_advisor;
+    }
+
+
+    /**
+     * Set advisor
+     * @return String, data
+     */
+    function setAdvisor($advisor)
+    {
+        $this->_advisor = $advisor;
     }
 
 

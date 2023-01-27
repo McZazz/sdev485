@@ -27,7 +27,7 @@ $controller = new Controller($f3);
  */
 $f3->route('GET /', function()
 {
-    $GLOBALS['controller']->route_home();
+    $GLOBALS['controller']->routeHome();
 });
 
 
@@ -36,16 +36,43 @@ $f3->route('GET /', function()
  */
 $f3->route('POST /create-new', function()
 {
-    $GLOBALS['controller']->route_create_new();
+    $GLOBALS['controller']->routeCreateNew();
 });
 
 
 /**
  * Route for plan entry and viewing
  */
-$f3->route('GET|POST /@token', function()
+$f3->route('GET /@token', function()
 {
-    $GLOBALS['controller']->route_plan();
+    $GLOBALS['controller']->routePlan();
+});
+
+
+/**
+ * Route for saving plans
+ */
+$f3->route('POST /save', function()
+{
+    $GLOBALS['controller']->routeSave();
+});
+
+
+/**
+ * Route for creating / navigating to prior year plans
+ */
+$f3->route('POST /prior-year', function()
+{
+    $GLOBALS['controller']->routePriorYear();
+});
+
+
+/**
+ * Route for creating / navigating to next year plans
+ */
+$f3->route('POST /next-year', function()
+{
+    $GLOBALS['controller']->routeNextYear();
 });
 
 
@@ -81,7 +108,7 @@ $f3->route('GET|POST /error404', function()
  */
 $f3->set('ONERROR', function()
 {
-	$GLOBALS['controller']->error_reroute();
+	$GLOBALS['controller']->errorReroute();
 });
 
 

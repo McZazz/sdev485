@@ -22,6 +22,14 @@
 	.plan form {
 		display: none;
 	}
+
+	.print-tables {
+		border: 2px solid black;
+	}
+
+	.plan-separator2 {
+		margin: 10px 0;
+	}
 }
 
 .plan td {
@@ -45,4 +53,3 @@
 .plan table:nth-of-type(1) td:nth-of-type(1), .plan table:nth-of-type(1) td:nth-of-type(3) {
 	max-width: 120px;
 }
-

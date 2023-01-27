@@ -15,6 +15,7 @@
 }
 
 :root {
+	--light-gray-border: #D5D6DB;
 	--text-light: #EFF1F6;
 	--text-dark: #373A40;
 	--text-dark-2: #212428;
