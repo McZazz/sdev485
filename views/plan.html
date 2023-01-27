@@ -131,7 +131,7 @@
 
 		<h3>Advise It</h3>
 
-		<table>
+		<table class="print-tables">
 			<tr>
 				<th>Token</th>
 				<th>Link</th>
@@ -144,10 +144,12 @@
 			</tr>
 		</table>
 
+		<hr class="plan-separator2">
+
 		<!-- Begin templated area -->
 		<repeat group="{{ @SESSION.plan->getPlansArray() }}" value="{{ @plan }}" >
 	
-			<table>
+			<table class="print-tables">
 				<tr>
 					<th>{{ 'Fall ' . @plan->getYear() }}</th>
 					<th>{{ 'Winter ' . @plan->getYear() + 1 }}</th>
@@ -165,6 +167,8 @@
 					<td class="summer_table_cell">{{ @plan->getSummer() }}</td>
 				</tr>
 			</table>
+
+			<hr class="plan-separator2">
 
 		</repeat>
 		<!-- end templated area -->
