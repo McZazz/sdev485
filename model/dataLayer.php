@@ -144,9 +144,18 @@ class DataLayer
     }
 
 
-
+    /**
+     * Inserts one plan into the database with specified data
+     * @param $token String, plan data
+     * @param $year String, plan data
+     * @param $fall String, plan data
+     * @param $winter String, plan data
+     * @param $spring String, plan data
+     * @param $summer String, plan data
+     */
     function insertOnePlan($token, $year, $fall, $winter, $spring, $summer)
     {
+        // set year of database
         $planyear = 'adviseit_'.$year;
 
         $sql = "INSERT INTO " . $planyear . " (token, fall, winter, spring, summer)
@@ -164,16 +173,16 @@ class DataLayer
     }
 
 
-
     /**
      * Save / update a pre-existing plan
-     * @param $plan Plan object
+     * @param $plans Token object with many plans
      */
     function updatePlans($plans)
     {
-
+        // get token data from token table
         $token_table = $this->getToken($plans->getToken());
 
+        // if save button was never hit, we do an insert
         if ($token_table['saved'] == 0) {
 
             foreach ($plans->getPlansArray() as &$plan) {
@@ -185,14 +194,15 @@ class DataLayer
                 $spring = $plan->getSpring();
                 $summer = $plan->getSummer();
 
+                // use insert function
                 $this->insertOnePlan($token, $year, $fall, $winter, $spring, $summer);
-            
             }
-
         } else {
             
+            // this is a plan has all plans already saved, so only need update statement here
             foreach ($plans->getPlansArray() as &$plan) {
 
+                // setup the plan table name
                 $planyear = 'adviseit_'.$plan->getYear();
                 // create sql statement to update plan
                 $sql = "UPDATE " . $planyear . " SET fall = :fall, winter = :winter, spring = :spring, summer = :summer 
@@ -211,31 +221,26 @@ class DataLayer
                 $statement->bindParam(':spring', $spring);
                 $statement->bindParam(':summer', $summer);
 
-                // // execute sql
+                // execute sql
                 $statement->execute();
             }
         }
     }
 
 
-
-
-
-
-
     /**
      * Save / update a pre-existing plan
-     * @param $plan Plan object
+     * @param $token_obj Token object
      */
-    function updateToken($plan)
+    function updateToken($token_obj)
     {
-        // create sql statement to update plan
+        // create sql statement to update Token obj
         $sql = "UPDATE adviseit_tokens
                 SET advisor = :advisor, saved = :saved, last_saved = NOW() 
                 WHERE token = :token";
 
-        $token = $plan->getToken();
-        $advisor = $plan->getAdvisor();
+        $token = $token_obj->getToken();
+        $advisor = $token_obj->getAdvisor();
         $saved = '1';
 
         $statement = $this->_db->prepare($sql);
@@ -246,9 +251,6 @@ class DataLayer
         // execute sql
         $statement->execute();
     }
-
-
-
 
 
     /**
@@ -308,32 +310,27 @@ class DataLayer
     }
 
 
+    /**
+     * Get Token obj from database
+     * @param $token, string of a 6 char token
+     * @return Token object
+     */
     function getTokenObj($token)
     {
+        // get token data from database
         $token_from_db = $this->getToken($token);
 
-        // no match
+        // no match, return false
         if ($token_from_db == false) {
             return false;
         }
 
+        // setup Token obj, and set the saved info
         $token_obj = new Token($token_from_db['token'], $token_from_db['advisor'], $token_from_db['last_saved']);
         $token_obj->setlastSaved($token_from_db['last_saved']);
         $token_obj->setSaved($token_from_db['saved']);
 
-        // if ($token_obj->getSaved() == '0') {
-        //     $empty_plan = new Plan(
-        //         array(
-        //             'winter'=>'',
-        //             'fall'=>'',
-        //             'summer'=>'',
-        //             'spring'=>'',
-        //             'summer'=>'',
-        //             ''=>'',
-        //         )
-        //     );
-        // }
-
+        // add all plans available to it in an array inside it
         $token_obj = $this->getAllPlans($token_obj);
 
         return $token_obj;
@@ -342,15 +339,19 @@ class DataLayer
 
     /**
      * getPlan getter, gets entire plan from db as Plan object
-     * @param $token Token object
-     * @return boolean: false if plan was not present, Plan object if plan present
+     * @param $token_obj Token object
+     * @return boolean: false if plan was not present, Token object if token present
      */
     function getAllPlans($token_obj)
     {
+        // set token var
         $token = $token_obj->getToken();
+        // remove plans
         $token_obj->emptyPlans();
 
+        // iterate plan tables and select from available ones
         foreach ($this->getYears() as $year) {
+            // create table name
             $year_table = 'adviseit_'.$year;
 
             $sql = "SELECT fall, winter, spring, summer, token
@@ -362,7 +363,7 @@ class DataLayer
 
             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-            // invalid token
+            // valid plan, load a Plan into the token_obj
             if (sizeof($result) != 0) {
                 $result = $result[0];
                 // load with info that wasn't in db
@@ -370,19 +371,17 @@ class DataLayer
 
                 $token_obj->addPlan(new Plan($result));
             }
-
         }
 
-
-        // return valid plan
+        // return valid Token obj
         return $token_obj;
     }
 
 
     /**
      * Check database for user authenticity fo creds given
-     * @param $hash, sha256 hash of user's password
      * @param $user, string, user name
+     * @param $hash, sha256 hash of user's password
      */
     function authUser($user, $hash) 
     {   

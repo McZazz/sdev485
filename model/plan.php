@@ -37,23 +37,6 @@ class Plan
             // its a string, so we need to get from POST
             $this->_year = $data;
 
-            // check POST for correct keys, update if available
-	        // if (isset($_POST['fall'])) {
-	        //     $this->_fall = substr($_POST['fall'], 0, $this->_QUARTER_LEN);
-	        // }
-	        // if (isset($_POST['winter'])) {
-	        //     $this->_winter = substr($_POST['winter'], 0, $this->_QUARTER_LEN);
-	        // }                
-	        // if (isset($_POST['spring'])) {
-	        //     $this->_spring = substr($_POST['spring'], 0, $this->_QUARTER_LEN);
-	        // }                
-	        // if (isset($_POST['summer'])) {
-	        //     $this->_summer = substr($_POST['summer'], 0, $this->_QUARTER_LEN);
-	        // }
-            // if (isset($_POST['advisor'])) {
-            //     $this->_advisor = substr($_POST['advisor'], 0, $this->_ADVISOR_LEN);
-            // }
-
 		} else {
             // PDO db return, fill into this new obj
 			$this->_token = $data['token'];
@@ -66,34 +49,8 @@ class Plan
     }
 
 
-    // public static function getAllPlansFromPOST()
-    // {
-
-    //     if (isset($_POST['fall']) && isset($_POST['winter']) && isset($_POST['spring']) && isset($_POST['summer']) && isset($_POST['year']) && isset($_POST['advisor'])) {
-
-    //         $plans_arr = array();
-
-    //         for ($i = 0; $i < sizeof($_POST['fall']); $i++) {
-    //             $new_plan = new Plan($_SESSION['plan'][0]->getToken(), $_POST['year']);
-    //             $new_plan->setFall($_POST['fall'][$i]);
-    //             $new_plan->setWinter($_POST['winter'][$i]);
-    //             $new_plan->setSpring($_POST['spring'][$i]);
-    //             $new_plan->setSummer($_POST['summer'][$i]);
-    //             $new_plan->setAdvisor($_POST['advisor']);
-
-    //             $plans_arr[] = $new_plan;
-    //         }
-
-    //         return $plans_arr;
-
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
-
     /**
-     * Get Fall data
+     * Get Year data
      * @return String, data
      */
     function getYear()
@@ -213,7 +170,7 @@ class Plan
 
 
     /**
-     * Get advisor
+     * Set advisor
      * @return String, data
      */
     function setAdvisor($advisor)
